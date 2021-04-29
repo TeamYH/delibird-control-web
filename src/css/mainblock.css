@@ -1,8 +1,10 @@
 .mainblock-size {
+  margin-top: 100px;
+  height: 500px;
+  justify-content: center;
+  text-align: center;
 }
 
-.config {
-}
-
-.robot {
+.button-position {
+  margin: 100px;
 }

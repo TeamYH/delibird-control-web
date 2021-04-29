@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
-import '../css/nav.css';
+import Nav from '../components/nav';
 
 
-class Nav extends Component {
+class Robot extends Component {
   constructor(props) {
     super(props);
     this.state = {  }
   }
   render() { 
     return ( 
-      <div className="nav-size">
-        
+      <div>
+        <Nav></Nav>
       </div>
     );
   }
 }
-
-export default Nav;
+export default Robot;
