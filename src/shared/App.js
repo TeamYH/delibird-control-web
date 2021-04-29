@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 import {Home, Robot, LoginPage} from '../routes';
 
 class App extends Component {
     render(){ 
         return( 
-            <div>
-                <Route exact path="/" component={LoginPage}/>
-                <Route exact path="/home" component={Home}/>
-                <Route exact path="/robot" compoent={Robot}/> 
-            </div>
+              <BrowserRouter>
+                <Route  path="/" exact={true} component={LoginPage}/>
+                <Route  path="/home" component={Home}/>
+                <Route  path="/robot" compoent={Robot}/>
+              </BrowserRouter> 
         );
     }
 }

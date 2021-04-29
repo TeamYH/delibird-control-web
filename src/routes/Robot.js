@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Nav from '../components/nav';
+import Map from '../components/map';
 
 
 class Robot extends Component {
@@ -10,7 +11,10 @@ class Robot extends Component {
   render() { 
     return ( 
       <div>
-        <Nav></Nav>
+        <div className="Home">
+          <Nav></Nav>
+          <Map></Map>
+        </div>
       </div>
     );
   }

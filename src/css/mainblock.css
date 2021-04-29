@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "GongGothicMedium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .mainblock-size {
   margin-top: 100px;
   height: 500px;
@@ -7,4 +15,20 @@
 
 .button-position {
   margin: 100px;
+}
+
+.robot-button {
+  font-family: "GongGothicMedium";
+  background-color: #ec7951;
+  border-radius: 0.3em;
+  font-size: 50px;
+  padding: 120px;
+}
+
+.config-button {
+  font-family: "GongGothicMedium";
+  background-color: rgb(211, 175, 149);
+  border-radius: 0.3em;
+  font-size: 50px;
+  padding: 120px;
 }

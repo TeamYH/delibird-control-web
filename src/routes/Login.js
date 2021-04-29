@@ -11,9 +11,9 @@ class LoginPage extends Component {
   render() { 
     return ( 
       <div className="Home">
-        <div class="banner">
+        <div className="banner">
           <a href="/">
-            <span class="blind">Delibird</span>
+            <span className="blind">Delibird</span>
           </a>
         </div>
         <Login></Login>
