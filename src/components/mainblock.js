@@ -17,7 +17,7 @@ class Mainblock extends Component {
     return ( 
       <div className="mainblock-size">
         <span className="button-position">
-          <button className="robot-button" onClick={() => this.gotoControl()}> 로 봇</button>
+          <button className="robot-button" onClick={() => this.gotoControl()}>로 봇</button>
         </span>
         <span className="button-position">
           <button className="config-button">설 정</button>

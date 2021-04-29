@@ -8,10 +8,14 @@
 }
 
 .banner {
-  width: 503px;
-  height: 130px;
+  width: 23%;
+  height: 500px;
   vertical-align: middle;
   background: url(../Image/delibird-temp-logo.png) no-repeat;
   overflow: hidden;
   display: inline-block;
+}
+
+.Home {
+  text-align: center;
 }

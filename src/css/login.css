@@ -1,0 +1,38 @@
+.loginBoxWrap {
+  display: block;
+  font-family: AppleSDGothicNeo, "Apple SD Gothic Neo", "Apple SD 산돌고딕 Neo",
+    sans-serif;
+  font-size: 12px;
+  margin: 0 auto;
+  position: relative;
+  width: 420px;
+  padding-top: 100px;
+}
+
+.headerimg {
+  box-sizing: border-box;
+  text-align: center;
+  padding: 40px;
+  width: 420px;
+}
+
+.inputbox {
+  box-sizing: border-box;
+  text-align: left;
+  border: 1px solid #ccc;
+  width: 400px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.signbtn {
+  box-sizing: border-box;
+  border: none;
+  width: 400px;
+  margin: 10px;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}

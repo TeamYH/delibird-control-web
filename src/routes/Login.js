@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Login from '../components/login';
+import '../css/delibird.css';
 
 
 class LoginPage extends Component {
