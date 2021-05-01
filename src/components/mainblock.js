@@ -7,16 +7,17 @@ class Mainblock extends Component {
     super(props);
     this.state = {  }
   }
-
+  
+  gotoControl = () => {
+    
+  }
 
   render() { 
     return ( 
       <div className="mainblock-size">
-        <Link to="/robot">
           <span className="button-position">
-            <button className="robot-button" >로 봇</button>
+            <button onClick={() => {this.props.history.push('/robot')}} className="robot-button" >로 봇</button>
           </span>
-        </Link>
         <span className="button-position">
           <button className="config-button">설 정</button>
         </span>

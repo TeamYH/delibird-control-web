@@ -11,10 +11,8 @@ class Robot extends Component {
   render() { 
     return ( 
       <div>
-        <div className="Home">
           <Nav></Nav>
           <Map></Map>
-        </div>
       </div>
     );
   }

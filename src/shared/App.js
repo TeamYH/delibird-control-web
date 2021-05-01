@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import { Route, BrowserRouter } from 'react-router-dom';
-import {Home, Robot, LoginPage} from '../routes';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import {Home, Robot, LoginPage, PageNotFound} from '../routes';
 
 class App extends Component {
     render(){ 
         return( 
               <BrowserRouter>
-                <Route  path="/" exact={true} component={LoginPage}/>
-                <Route  path="/home" component={Home}/>
-                <Route  path="/robot" compoent={Robot}/>
+                <div>
+                  <Switch>
+                    <Route exact path="/" component={LoginPage}/>
+                    <Route exact path="/control"  component={Robot}/>
+                    <Route exact path="/home"  component={Home}/>
+                    <Route component={PageNotFound} />
+                  </Switch>
+                </div>
               </BrowserRouter> 
         );
     }

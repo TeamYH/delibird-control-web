@@ -10,10 +10,11 @@ class Map extends Component {
   render() { 
     return ( 
       <div>
-        
+        <div className="image-sample">
+          이거야
+        </div>
       </div>
-     );
+    );
   }
 }
- 
 export default Map;
