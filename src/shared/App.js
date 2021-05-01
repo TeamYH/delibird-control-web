@@ -9,7 +9,7 @@ class App extends Component {
                 <div>
                   <Switch>
                     <Route exact path="/" component={LoginPage}/>
-                    <Route exact path="/control"  component={Robot}/>
+                    <Route exact path="/robot"  component={Robot}/>
                     <Route exact path="/home"  component={Home}/>
                     <Route component={PageNotFound} />
                   </Switch>

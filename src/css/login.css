@@ -36,3 +36,36 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+.root {
+  height: 95vh;
+  margin-top: 1%;
+}
+
+.image {
+  background-image: url("https://source.unsplash.com/random");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.paper {
+  margin: spacing(8, 4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10%;
+}
+
+.avatar {
+  margin: spacing(1);
+}
+
+.form {
+  width: "100%";
+  margin-top: spacing(1);
+}
+
+.submit {
+  margin: spacing(3, 0, 2);
+}
