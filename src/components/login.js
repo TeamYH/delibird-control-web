@@ -70,17 +70,15 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // const account = e.target.account.value;
-    // const password = e.target.pw.value;
+    const account = e.target.account.value;
+    const password = e.target.pw.value;
 
-    // console.log(account, password);
-
-    // if(account === 'delibird' && password === '1234'){
+    if(account === 'delibird' && password === '1234'){
       this.props.history.push('/home');
-    //}
-    // else{
-    //   alert("아이디 혹은 패스워드 오류");
-    // }
+    }
+    else{
+      alert("아이디 혹은 패스워드 오류");
+    }
   }
 
   render() { 
@@ -96,7 +94,7 @@ class Login extends Component {
           <Typography component="h1" variant="h5">
             Delibird
           </Typography>
-          <form className="form" noValidate>
+          <form className="form" onSubmit={this.handleSubmit} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -129,7 +127,6 @@ class Login extends Component {
               variant="contained"
               color="primary"
               className="submit"
-              onClick={this.handleSubmit}
             >
               로그인
             </Button>
