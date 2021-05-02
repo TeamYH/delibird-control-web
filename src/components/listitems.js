@@ -4,38 +4,42 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import RingVolumeIcon from '@material-ui/icons/RingVolume';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
+import BuildIcon from '@material-ui/icons/Build';
+import MemoryIcon from '@material-ui/icons/Memory';
 import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
+import LinkIcon from '@material-ui/icons/Link';
+import DeleteIcon from '@material-ui/icons/Delete';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+
+
+
 
 export const mainListItems = (
   <div>
     <ListItem button>
       <ListItemIcon>
-        <DashboardIcon />
+        <AirportShuttleIcon />
       </ListItemIcon>
-      <ListItemText primary="로봇" />
+      <ListItemText primary="서빙" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <DeleteIcon />
       </ListItemIcon>
-      <ListItemText primary="Orders" />
+      <ListItemText primary="청소" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <BarChartIcon />
+        <MemoryIcon />
       </ListItemIcon>
-      <ListItemText primary="Reports" />
+      <ListItemText primary="딜리버드 관리" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <LayersIcon />
+        <BuildIcon />
       </ListItemIcon>
-      <ListItemText primary="Integrations" />
+      <ListItemText primary="설정" />
     </ListItem>
   </div>
 );
@@ -51,21 +55,15 @@ export const secondaryListItems = (
     </ListItem>
     <ListItem button>
       <ListItemIcon>
+        <LinkIcon />
+      </ListItemIcon>
+      <ListItemText primary="딜리버드 연동"/>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
         <RingVolumeIcon />
       </ListItemIcon>
       <ListItemText primary="상담 요청" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
     </ListItem>
   </div>
 );

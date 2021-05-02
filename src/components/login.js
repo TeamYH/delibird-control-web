@@ -7,6 +7,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
@@ -14,8 +16,13 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { SingleBedSharp } from '@material-ui/icons';
 
 
+function sleep(ms) {
+  const wakeUpTime = Date.now() + ms
+  while (Date.now() < wakeUpTime) {}
+}
 
 function Copyright() {
   return (
@@ -65,7 +72,9 @@ const useStyles = makeStyles((theme) => ({
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {  }
+    this.state = { 
+      isSuccess : true,
+    }
   }
 
   handleSubmit = (e) => {
@@ -74,14 +83,22 @@ class Login extends Component {
     const password = e.target.pw.value;
 
     if(account === 'delibird' && password === '1234'){
-      this.props.history.push('/home');
+      sleep(1500);
+      this.props.history.push('/home')
     }
     else{
-      alert("아이디 혹은 패스워드 오류");
+      this.setState({isSuccess: false});
+      console.log(this.state.isSuccess);
     }
   }
 
-  render() { 
+  render() {
+    
+    let alert = <Alert severity="error">
+                  <AlertTitle><strong>로그인 에러</strong></AlertTitle>
+                  <strong>아이디 혹은 비밀번호 오류 </strong>
+                </Alert>;
+    
     return ( 
       <Grid container component="main" className="root">
       <CssBaseline />
@@ -130,10 +147,13 @@ class Login extends Component {
             >
               로그인
             </Button>
+            <br/><br/>
+            {this.state.isSuccess == false && alert}
             <Box mt={5}>
               <Copyright />
             </Box>
           </form>
+          
         </div>
       </Grid>
     </Grid>

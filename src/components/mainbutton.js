@@ -1,23 +1,33 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import {Link} from 'react-router-dom';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 
 const images = [
   {
     url: '/static/images/grid-list/breakfast.jpg',
-    title: 'Breakfast',
-    width: '40%',
+    title: '서 빙',
+    width: '45%',
+    path: '/robot',
   },
   {
     url: '/static/images/grid-list/burgers.jpg',
-    title: 'Burgers',
-    width: '30%',
+    title: '청 소',
+    width: '45%',
+    path: '/home',
   },
   {
     url: '/static/images/grid-list/camera.jpg',
-    title: 'Camera',
-    width: '30%',
+    title: '딜리버드 관리',
+    width: '45%',
+    path: '/home',
+  },
+  {
+    url: '/static/images/grid-list/camera.jpg',
+    title: '설 정',
+    width: '45%',
+    path: '/home',
   },
 ];
 
@@ -29,8 +39,11 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   image: {
+    margin: 10,
+    border: '1px solid white',
+    backgroundColor: '#3f51b56b',
     position: 'relative',
-    height: 200,
+    height: 300,
     [theme.breakpoints.down('xs')]: {
       width: '100% !important', // Overrides inline-style
       height: 100,
@@ -80,6 +93,8 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create('opacity'),
   },
   imageTitle: {
+    fontWeight: 600,
+    fontSize: '35px',
     position: 'relative',
     padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) + 6}px`,
   },
@@ -100,34 +115,35 @@ export default function MainButton() {
   return (
     <div className={classes.root}>
       {images.map((image) => (
-        <ButtonBase
-          focusRipple
-          key={image.title}
-          className={classes.image}
-          focusVisibleClassName={classes.focusVisible}
-          style={{
-            width: image.width,
-          }}
-        >
-          <span
-            className={classes.imageSrc}
+          <ButtonBase
+            focusRipple
+            key={image.title}
+            className={classes.image}
+            focusVisibleClassName={classes.focusVisible}
             style={{
-              backgroundImage: `url(${image.url})`,
+              width: image.width,
             }}
-          />
-          <span className={classes.imageBackdrop} />
-          <span className={classes.imageButton}>
-            <Typography
-              component="span"
-              variant="subtitle1"
-              color="inherit"
-              className={classes.imageTitle}
-            >
-              {image.title}
-              <span className={classes.imageMarked} />
-            </Typography>
-          </span>
-        </ButtonBase>
+          >
+            <Link to={image.path}>
+              <span
+                className={classes.imageSrc}
+                style={{
+                  backgroundImage: `url(${image.url})`,
+                }}
+              />
+              <span className={classes.imageBackdrop} />
+              <span className={classes.imageButton}>
+                <Typography
+                  component="span"
+                  color="inherit"
+                  className={classes.imageTitle}
+                >
+                  {image.title}
+                  <span className={classes.imageMarked} />
+                </Typography>
+              </span>
+            </Link>
+          </ButtonBase>
       ))}
     </div>
   );
