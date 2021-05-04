@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
-import {Home, Robot, LoginPage, PageNotFound} from '../routes';
+import {Home, Robot, LoginPage, PageNotFound, Key} from '../routes';
 
 class App extends Component {
     render(){ 
@@ -11,6 +11,7 @@ class App extends Component {
                     <Route exact path="/" component={LoginPage}/>
                     <Route exact path="/robot"  component={Robot}/>
                     <Route exact path="/home"  component={Home}/>
+                    <Route exact path="/key" component={Key}/>
                     <Route component={PageNotFound} />
                   </Switch>
                 </div>
