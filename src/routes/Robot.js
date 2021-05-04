@@ -139,7 +139,7 @@ export default function Robot() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Delibird
+            서 빙
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">

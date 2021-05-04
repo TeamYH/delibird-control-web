@@ -16,23 +16,29 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
+function sleep(ms) {
+  const wakeUpTime = Date.now() + ms
+  while (Date.now() < wakeUpTime) {}
+}
+
 class Orders extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       rows:[
       ],
     }
   }
   
-  Rosdata = async() =>{
+
+  Rosdata = () => {
     
     let status = {
       id: 0,
       name: '로봇',
       memo: '로봇1',
       battery: 0,
-      status: '대기중',
+      stat: '대기중',
     }
 
     var ros = new ROSLIB.Ros({
@@ -56,25 +62,28 @@ class Orders extends Component {
       name: '/battery_state',
       messageType: 'sensor_msgs/BatteryState'
     });
-
+    var temp = this
     batteryClient.subscribe(function(msg) {
-      status.battery = ((12.3-(msg.volatge)/1.3)*10.0);
+      status.battery = parseInt((1-((12.3-msg.voltage)/1.3))*100);
       console.log(status);
-      console.log('%s : battery=%f' ,batteryClient.name ,((12.3-(msg.volatge)/1.3)*10.0));
       batteryClient.unsubscribe();
-      return status;
+      // this.setState({rows: this.state.rows.concat({id: status.id, name:status.name, memo:status.memo, battery:status.battery, status: status.stat})});
+      temp.setState(() => {
+        return {rows: [status]};
+      })
     });
   }
 
-  componentDidMount() {
-    var status = this.Rosdata().then(console.log(status));
+
+  componentDidMount = async() => {
+    this.Rosdata();
   }
   
   createData = (data) => {
     this.setState({rows: this.state.rows.concat({id: data.id, name:data.name, memo:data.memo, battery:data.battery, status: data.status})});
   }
   
-  render() { 
+  render() {
     var row = this.state.rows;
     return ( 
       <React.Fragment>
@@ -96,7 +105,7 @@ class Orders extends Component {
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.memo}</TableCell>
               <TableCell>{row.battery}%</TableCell>
-              <TableCell align="right">{row.status}</TableCell>
+              <TableCell align="right">{row.stat}</TableCell>
             </TableRow>
           ))}
         </TableBody>

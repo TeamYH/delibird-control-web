@@ -6,25 +6,25 @@ import Typography from '@material-ui/core/Typography';
 
 const images = [
   {
-    url: '/static/images/grid-list/breakfast.jpg',
+    url: '',
     title: '서 빙',
     width: '45%',
     path: '/robot',
   },
   {
-    url: '/static/images/grid-list/burgers.jpg',
+    url: '',
     title: '청 소',
     width: '45%',
     path: '/home',
   },
   {
-    url: '/static/images/grid-list/camera.jpg',
+    url: '',
     title: '딜리버드 관리',
     width: '45%',
     path: '/home',
   },
   {
-    url: '/static/images/grid-list/camera.jpg',
+    url: '',
     title: '설 정',
     width: '45%',
     path: '/home',
