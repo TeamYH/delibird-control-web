@@ -18,14 +18,14 @@ class Keypress extends Component{
         this.state = { 
             rows:[
             ],
-            msg:"",
+            msg :'5',
     }}
     // data = "";
     
     Rosdata = () => {
 
         var ros = new ROSLIB.Ros({
-            url : 'ws://localhost:9090'
+            url : 'ws://15.165.50.106:9090'
         });
         ros.on('connection', function() {
             console.log('Connected to websocket server.');
@@ -44,7 +44,7 @@ class Keypress extends Component{
           var rostopic = new ROSLIB.Topic({
             ros : ros,
             name : '/key_press',
-            messageType : 'key_press/msg'
+            messageType : 'std_msgs/String'
           });
           var _this = this
           console.log(_this.state.msg)
@@ -61,29 +61,37 @@ class Keypress extends Component{
         if(event.key == 'ArrowDown'){
             console.log('ArrowDown')
             _this.setState(() => {
-                return {msg: "[[B"};
+                return {msg: '2'};
               });
             this.Rosdata();
         }else if(event.key == 'ArrowLeft'){
             console.log('ArrowLeft')
             _this.setState(() => {
-                return {msg: "[[C"};
+                return {msg: '3'};
               });
             this.Rosdata();
         }else if(event.key == 'ArrowRight'){
             console.log('ArrowRight')
             _this.setState(() => {
-                return {msg: "[[D"};
+                return {msg: '4'};
               });
             this.Rosdata();
         }else if(event.key == 'ArrowUp'){
             console.log('ArrowUp')
             _this.setState(() => {
-                return {msg: "[[A"};
+                return {msg:'1'};
               });
             this.Rosdata();
 
         }
+        else if(event.key == 'Shift'){
+          console.log('Shift')
+          _this.setState(() => {
+              return {msg: '5'};
+            });
+          this.Rosdata();
+
+      }
         
     };
     
