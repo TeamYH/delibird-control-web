@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Nav from '../components/nav';
 import MainButton  from '../components/mainbutton';
 import clsx from 'clsx';
 import {withRouter, Link} from 'react-router-dom';

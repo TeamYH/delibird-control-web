@@ -6,8 +6,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import 'roslib';
 import Title from './title';
+import Paper from '@material-ui/core/Paper';
 import '../css/orders.css';
 import ROSLIB from 'roslib';
 import { ThumbDownSharp } from '@material-ui/icons';
@@ -96,11 +96,20 @@ class Keypress extends Component{
     };
     
     render(){
-    return(
-        <div>
-            <input type="text" id="one" onKeyUp={this.handleKeyUp} />
-        </div>
+      console.log(this.props.isManual);
+      if(this.props.isManual == true)
+        return(
+            <div>
+              <Paper>
+                <input type="text" id="one" onKeyUp={this.handleKeyUp} />
+              </Paper>
+            </div>
+            );
+        else
+        return(
+          <div/>
         );
-    }
+        }
+      
 }
 export default Keypress;

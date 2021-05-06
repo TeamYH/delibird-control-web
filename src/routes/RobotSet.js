@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Nav from '../components/nav';
 import MakeMapButton  from '../components/makemapbutton';
 import clsx from 'clsx';
 import {withRouter,Link} from 'react-router-dom';
