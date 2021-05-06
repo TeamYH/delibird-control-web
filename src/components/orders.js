@@ -10,6 +10,7 @@ import 'roslib';
 import Title from './title';
 import '../css/orders.css';
 import ROSLIB from 'roslib';
+import { StarOutlineSharp } from '@material-ui/icons';
 
 
 function preventDefault(event) {
@@ -40,6 +41,7 @@ class Orders extends Component {
       battery: 0,
       stat: '대기중',
     }
+    var temp = this
 
     var ros = new ROSLIB.Ros({
       url : 'ws://15.165.50.106:9090'
@@ -51,6 +53,11 @@ class Orders extends Component {
   
     ros.on('error', function(error) {
       console.log('Error connecting to websocket server: ', error);
+      status.battery = 0;
+      status.stat = '정보 없음';
+      temp.setState(() => {
+        return {rows: [status]};
+      })
     });
   
     ros.on('close', function() {
@@ -62,7 +69,7 @@ class Orders extends Component {
       name: '/battery_state',
       messageType: 'sensor_msgs/BatteryState'
     });
-    var temp = this
+
     batteryClient.subscribe(function(msg) {
       status.battery = parseInt((1-((12.3-msg.voltage)/1.3))*100);
       console.log(status);

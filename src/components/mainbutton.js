@@ -21,7 +21,7 @@ const images = [
     url: '',
     title: '딜리버드 관리',
     width: '45%',
-    path: '/home',
+    path: '/robot/settings',
   },
   {
     url: '',

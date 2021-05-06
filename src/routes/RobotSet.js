@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Nav from '../components/nav';
-import MainButton  from '../components/mainbutton';
+import MakeMapButton  from '../components/makemapbutton';
 import clsx from 'clsx';
-import {withRouter, Link} from 'react-router-dom';
+import {withRouter,Link} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import HomeIcon from '@material-ui/icons/Home';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Home() {
+export default function RobotSet() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -131,7 +131,7 @@ export default function Home() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Delibird
+            딜리버드 관리
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -161,7 +161,7 @@ export default function Home() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Box pt={4}>
-            <MainButton/>
+            <MakeMapButton/>
           </Box>
         </Container>
       </main>

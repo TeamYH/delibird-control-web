@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Nav from '../components/nav';
 import MainButton  from '../components/mainbutton';
 import clsx from 'clsx';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
+import HomeIcon from '@material-ui/icons/Home';
 import { makeStyles } from '@material-ui/core/styles';
 import Map from '../components/map';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -129,6 +130,9 @@ export default function Key() {
           <CssBaseline />
           <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
             <Toolbar className={classes.toolbar}>
+              <Link to="/home">
+                <HomeIcon/>
+              </Link>
               <IconButton
                 edge="start"
                 color="inherit"
@@ -139,7 +143,7 @@ export default function Key() {
                 <MenuIcon />
               </IconButton>
               <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                Delibird
+                지도 생성
               </Typography>
               <IconButton color="inherit">
                 <Badge badgeContent={4} color="secondary">

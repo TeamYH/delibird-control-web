@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import Nav from '../components/nav';
 import MainButton  from '../components/mainbutton';
 import clsx from 'clsx';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Map from '../components/map';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
+import HomeIcon from '@material-ui/icons/Home';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
@@ -129,6 +130,9 @@ export default function Robot() {
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
+          <Link to="/home">
+            <HomeIcon/>
+          </Link>
           <IconButton
             edge="start"
             color="inherit"
@@ -171,7 +175,7 @@ export default function Robot() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing = {3} direction="row" justify="center" alignItems="stretch">
             <Grid>
-              <Map className={classes.containermap}></Map>
+              <Map className={classes.containermap} src="../data/map.png" x={300}></Map>
             </Grid>
              {/* Recent Orders */}
             <Grid item >
