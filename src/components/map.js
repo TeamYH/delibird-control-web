@@ -1,9 +1,6 @@
 import React, { Component, createRef } from 'react';
-import Mapfile from '../data/map.png';
-import {Stage, Layer, Image} from 'react-konva';
-import useImage from 'use-image';
-
-
+import ROSLIB from 'roslib';
+import ROS2D from './ros/ros2d.js';
 
 
 class Map extends Component {
@@ -17,33 +14,38 @@ class Map extends Component {
     }
   }
 
-  componentDidMount() {
-    this.onLoadImage();
+  componentDidMount = () =>{
+    this.rosMapData();
   }
 
-  componentWillMount(){
-    // this.image.removeEventListener('load', this.handleLoad);
-  }
+  rosMapData = () =>{
 
-  onLoadImage = () => {
-    this.image = new window.Image();
-    this.image.src = this.props.src;
-    this.image.addEventListener('load', this.handleLoad);
-  }
+    var ros = new ROSLIB.Ros({
+      url : 'ws://15.165.50.106:9090'
+    });
 
-  handleLoad = () => {
-    this.setState({image: this.image});
+    // Create the main viewer.
+    var viewer = new ROS2D.Viewer({
+      divID : 'map',
+      width : 600,
+      height : 500,
+    });
+
+    // Setup the map client.
+    var gridClient = new ROS2D.OccupancyGridClient({
+      ros : ros,
+      rootObject : viewer.scene
+    });
+    // Scale the canvas to fit to the map
+    gridClient.on('change', function(){
+      viewer.scaleToDimensions(gridClient.currentGrid.width, gridClient.currentGrid.height);
+    });
   }
 
   render() { 
     return ( 
-      <div>
-        <Image
-          x={this.props.x}
-          y={this.props.y}
-          image={this.state.image}
-          ref={node=> {this.imageNode = node;}}
-        />
+      <div id="map">
+        
       </div>
     );
   }

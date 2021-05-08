@@ -7454,11 +7454,6 @@ klona@^2.0.4:
   resolved "https://registry.npmjs.org/klona/-/klona-2.0.4.tgz"
   integrity sha512-ZRbnvdg/NxqzC7L9Uyqzf4psi1OM4Cuc+sJAkQPjO6XkQIJTNbfK2Rsmbw8fx1p2mkZdp2FZYo2+LwXYY/uwIA==
 
-konva@^7.2.5:
-  version "7.2.5"
-  resolved "https://registry.npmjs.org/konva/-/konva-7.2.5.tgz"
-  integrity sha512-yk/li8rUF+09QNlOdkwbEId+QvfATMe/aMGVouWW1oFoUVTYWHsQuIAE6lWy11DK8mLJEJijkNAXC5K+NVlMew==
-
 language-subtag-registry@~0.3.2:
   version "0.3.21"
   resolved "https://registry.npmjs.org/language-subtag-registry/-/language-subtag-registry-0.3.21.tgz"
@@ -7478,6 +7473,11 @@ last-call-webpack-plugin@^3.0.0:
   dependencies:
     lodash "^4.17.5"
     webpack-sources "^1.1.0"
+
+latest-createjs@1.0.24:
+  version "1.0.24"
+  resolved "https://registry.yarnpkg.com/latest-createjs/-/latest-createjs-1.0.24.tgz#c4c837f5f4688978e89c2b17ad0e2b5dc5111b34"
+  integrity sha1-xMg39fRoiXjonCsXrQ4rXcURGzQ=
 
 lazy.js@^0.4.2:
   version "0.4.3"
@@ -8685,13 +8685,6 @@ performance-now@^2.1.0:
   resolved "https://registry.npmjs.org/performance-now/-/performance-now-2.1.0.tgz"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-pgmjs@1.1.3:
-  version "1.1.3"
-  resolved "https://registry.npmjs.org/pgmjs/-/pgmjs-1.1.3.tgz"
-  integrity sha512-yaTQf2ehSmAMYCH6vDZxRrBiE77TOSjoRQJpdQTZDEgCLgKnmKjnRGMunJyt3KPpG/B97YPOnMkRM/lN2n5VyA==
-  dependencies:
-    pngjs "^3.4.0"
-
 picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.1, picomatch@^2.2.2:
   version "2.2.2"
   resolved "https://registry.npmjs.org/picomatch/-/picomatch-2.2.2.tgz"
@@ -8770,11 +8763,6 @@ pngjs@2.3.1:
   version "2.3.1"
   resolved "https://registry.npmjs.org/pngjs/-/pngjs-2.3.1.tgz"
   integrity sha1-EdHhK5y2TWPjDBQ6Mw9MH1Z9qF8=
-
-pngjs@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.npmjs.org/pngjs/-/pngjs-3.4.0.tgz"
-  integrity sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==
 
 pngparse@^2.0.1:
   version "2.0.1"
@@ -9801,14 +9789,6 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.1.tgz"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
-react-konva@*:
-  version "16.8.6"
-  resolved "https://registry.yarnpkg.com/react-konva/-/react-konva-16.8.6.tgz#0fe7ef2b6c75eeeec71ba9ca9db1829b5889293c"
-  integrity sha512-6KRIqHyJuTTMuAehDIXvw+ZrtEj2aMc2fwolhmFlg1HBzH4PJimsMByTcEx292Afh9d38TcHdjXP1C58qqDOlg==
-  dependencies:
-    react-reconciler "^0.20.4"
-    scheduler "^0.13.6"
-
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
@@ -9835,16 +9815,6 @@ react-popper@^1.3.6:
     prop-types "^15.6.1"
     typed-styles "^0.0.7"
     warning "^4.0.2"
-
-react-reconciler@^0.20.4:
-  version "0.20.4"
-  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.20.4.tgz#3da6a95841592f849cb4edd3d38676c86fd920b2"
-  integrity sha512-kxERc4H32zV2lXMg/iMiwQHOtyqf15qojvkcZ5Ja2CPkjVohHw9k70pdDBwrnQhLVetUJBSYyqU3yqrlVTOajA==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    scheduler "^0.13.6"
 
 react-refresh@^0.8.3:
   version "0.8.3"
@@ -10583,14 +10553,6 @@ saxes@^5.0.0:
   integrity sha512-5LBh1Tls8c9xgGjw3QrMwETmTMVk0oFgvrFSvWx62llR2hcEInrKNZ2GZCCuuy2lvWrdl5jhbpeqc5hRYKFOcw==
   dependencies:
     xmlchars "^2.2.0"
-
-scheduler@^0.13.6:
-  version "0.13.6"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.13.6.tgz#466a4ec332467b31a91b9bf74e5347072e4cd889"
-  integrity sha512-IWnObHt413ucAYKsD9J1QShUKkbKLQQHdxRyw73sw4FN26iWr3DY/H34xGPe4nmL1DwXyWmSWmMrA9TfQbE/XQ==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
 
 scheduler@^0.20.2:
   version "0.20.2"
@@ -11889,11 +11851,6 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
-
-use-image@1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/use-image/-/use-image-1.0.7.tgz#b2c42b78d32868762a37631673eb169a244d5ad1"
-  integrity sha512-Z8hB8+lAGe25iqO3YaHO7bSvBSGErEakYQ6RGyRrPZoMDLKBIuZ67ikzn8f5ydjWorqFzeX+U3vVwnXoE1Q56Q==
 
 use@^3.1.0:
   version "3.1.1"
