@@ -1,7 +1,13 @@
-.button-container{
-    margin: 30px;
+.button-container {
+  margin: 30px;
 }
 
-.button-pos{
-    margin: 10px;
+.button-pos {
+  margin: 10px;
+  width: 180px;
+}
+
+.box {
+  width: 800px;
+  height: 750px;
 }

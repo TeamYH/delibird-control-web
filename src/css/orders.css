@@ -1,3 +1,11 @@
 .seeMore {
   margin-top: 12px;
 }
+
+.input-pos {
+  width: 180px;
+}
+
+.input-box {
+  text-align: center;
+}

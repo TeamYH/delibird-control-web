@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Paper from '@material-ui/core/Paper';
 import '../css/orders.css';
 import ROSLIB from 'roslib';
 
@@ -49,25 +48,25 @@ class Keypress extends Component{
     handleKeyUp= (event) =>{
         // console.log(event.key);
         var _this = this
-        if(event.key == 'ArrowDown'){
+        if(event.key === 'ArrowDown'){
             console.log('ArrowDown')
             _this.setState(() => {
                 return {msg: '2'};
               });
             this.Rosdata();
-        }else if(event.key == 'ArrowLeft'){
+        }else if(event.key === 'ArrowLeft'){
             console.log('ArrowLeft')
             _this.setState(() => {
                 return {msg: '3'};
               });
             this.Rosdata();
-        }else if(event.key == 'ArrowRight'){
+        }else if(event.key === 'ArrowRight'){
             console.log('ArrowRight')
             _this.setState(() => {
                 return {msg: '4'};
               });
             this.Rosdata();
-        }else if(event.key == 'ArrowUp'){
+        }else if(event.key === 'ArrowUp'){
             console.log('ArrowUp')
             _this.setState(() => {
                 return {msg:'1'};
@@ -75,7 +74,7 @@ class Keypress extends Component{
             this.Rosdata();
 
         }
-        else if(event.key == 'Shift'){
+        else if(event.key === 'Shift'){
           console.log('Shift')
           _this.setState(() => {
               return {msg: '5'};
@@ -88,12 +87,10 @@ class Keypress extends Component{
     
     render(){
       console.log(this.props.isManual);
-      if(this.props.isManual == true)
+      if(this.props.isManual === true)
         return(
-            <div>
-              <Paper>
-                <input type="text" id="one" onKeyUp={this.handleKeyUp} />
-              </Paper>
+            <div className="input-box">
+                <input className="input-pos" type="text" id="one" onKeyUp={this.handleKeyUp} />
             </div>
             );
         else

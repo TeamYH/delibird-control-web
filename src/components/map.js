@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import ROSLIB from 'roslib';
 import ROS2D from './ros/ros2d.js';
 
@@ -27,8 +27,8 @@ class Map extends Component {
     // Create the main viewer.
     var viewer = new ROS2D.Viewer({
       divID : 'map',
-      width : 600,
-      height : 500,
+      width : 700,
+      height : 600,
     });
 
     // Setup the map client.

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,16 +9,10 @@ import 'roslib';
 import Title from './title';
 import '../css/orders.css';
 import ROSLIB from 'roslib';
-import { StarOutlineSharp } from '@material-ui/icons';
 
 
 function preventDefault(event) {
   event.preventDefault();
-}
-
-function sleep(ms) {
-  const wakeUpTime = Date.now() + ms
-  while (Date.now() < wakeUpTime) {}
 }
 
 class Orders extends Component {
@@ -49,6 +42,11 @@ class Orders extends Component {
 
     ros.on('connection', function() {
       console.log('Connected to websocket server.');
+      status.battery = 0;
+      status.stat = '정보 없음';
+      temp.setState(() => {
+        return {rows: [status]};
+      })
     });
   
     ros.on('error', function(error) {
@@ -72,6 +70,7 @@ class Orders extends Component {
 
     batteryClient.subscribe(function(msg) {
       status.battery = parseInt((1-((12.3-msg.voltage)/1.3))*100);
+      status.stat = '대기중';
       console.log(status);
       batteryClient.unsubscribe();
       // this.setState({rows: this.state.rows.concat({id: status.id, name:status.name, memo:status.memo, battery:status.battery, status: status.stat})});
@@ -119,7 +118,7 @@ class Orders extends Component {
       </Table>
       <div className="seeMore">
         <Link color="primary" href="#" onClick={preventDefault}>
-          See more orders
+          
         </Link>
       </div>
     </React.Fragment>
