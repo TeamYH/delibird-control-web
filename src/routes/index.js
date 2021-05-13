@@ -4,3 +4,8 @@ export {default as Key} from './Key';
 export {default as LoginPage} from './Login';
 export {default as PageNotFound} from './404';
 export {default as RobotSet} from './RobotSet'; 
+export {default as Setting} from './Setting';
+export {default as Clean} from './clean';
+export {default as AdminRobot} from './admin/AdminRobot';
+export {default as Member} from './admin/Member';
+export {default as Support} from './admin/Support';

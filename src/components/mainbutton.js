@@ -15,7 +15,7 @@ const images = [
     url: '',
     title: '청 소',
     width: '45%',
-    path: '/home',
+    path: '/clean',
   },
   {
     url: '',
@@ -27,7 +27,7 @@ const images = [
     url: '',
     title: '설 정',
     width: '45%',
-    path: '/home',
+    path: '/setting',
   },
 ];
 

@@ -15,6 +15,14 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
+const columns = [
+  {field: 'id', headerName: 'No', width: 70},
+  {field: 'name', headerName: '이름', width: 90},
+  {field: 'memo', headerName: '메모', width: 130},
+  {field: 'battery', headerName: '배터리', type: 'number', width: 90},
+  {field: 'status', headerName: '상태', width: 110},
+]
+
 class Orders extends Component {
   constructor(props) {
     super(props);

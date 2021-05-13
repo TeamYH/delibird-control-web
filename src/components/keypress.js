@@ -86,7 +86,6 @@ class Keypress extends Component{
     };
     
     render(){
-      console.log(this.props.isManual);
       if(this.props.isManual === true)
         return(
             <div className="input-box">

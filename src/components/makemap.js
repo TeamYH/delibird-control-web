@@ -11,28 +11,30 @@ class MakeMap extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-        msg: '',
         isStart: false,
         isManual: false,
     }
   }
   
   onStart = () =>{
-    this.setState({isStart: true, msg: 'makemap'});
-    this.Rosdata();
+    var msg = 'makemap';
+    this.setState({isStart: true});
+    this.Rosdata(msg);
   }
 
   onStartManual = () =>{
-    this.setState({isStart: true, isManual: true, msg: 'makemap'})
-    this.Rosdata();
+    var msg = 'makemap';
+    this.setState({isStart: true, isManual: true});
+    this.Rosdata(msg);
   }
 
   onStop = () =>{
-    this.setState({isStart: false, isManual: false, msg: 'mapsave'});
-    this.Rosdata();
+    var msg = 'mapsave';
+    this.setState({isStart: false, isManual: false});
+    this.Rosdata(msg);
   }
 
-  Rosdata = () => {
+  Rosdata = (msg) => {
 
     var ros = new ROSLIB.Ros({
       url : 'ws://15.165.50.106:9090'
@@ -57,9 +59,9 @@ class MakeMap extends Component {
       messageType : 'std_msgs/String'
     });
     var _this = this;
-    console.log(_this.state.msg);
+    console.log(msg);
     var map_msg = new ROSLIB.Message({
-      data : this.state.msg  
+      data : msg 
     });
     rostopic.publish(map_msg);
   }

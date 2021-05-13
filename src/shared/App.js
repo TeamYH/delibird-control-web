@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
-import {Home, Robot, LoginPage, PageNotFound, Key, RobotSet} from '../routes';
+import {Home, Robot, LoginPage, PageNotFound, Key, RobotSet, Setting, Clean, Member, Support, AdminRobot} from '../routes';
 
 class App extends Component {
     render(){ 
@@ -13,6 +13,11 @@ class App extends Component {
                     <Route exact path="/home"  component={Home}/>
                     <Route exact path="/robot/settings" component={RobotSet}/>
                     <Route exact path="/robot/settings/makemap" component={Key}/>
+                    <Route exact path="/setting" component={Setting}/>
+                    <Route exact path="/clean" component={Clean}/>
+                    <Route exact path="/admin/support" component={Support}/>
+                    <Route exact path="/admin/members" component={Member}/>
+                    <Route exact path="/admin/robot/setting" component={AdminRobot}/>
                     <Route component={PageNotFound} />
                   </Switch>
                 </div>
