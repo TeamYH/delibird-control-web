@@ -5,6 +5,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TableModal from './tablemodal';
 import 'roslib';
 import Title from './title';
 import '../css/orders.css';
@@ -29,6 +30,7 @@ class Orders extends Component {
     this.state = {
       rows:[
       ],
+      modalOpen: false,
     }
   }
   
@@ -96,11 +98,23 @@ class Orders extends Component {
   createData = (data) => {
     this.setState({rows: this.state.rows.concat({id: data.id, name:data.name, memo:data.memo, battery:data.battery, status: data.status})});
   }
+
+  cellClick = (data) => {
+    console.log(data);
+    this.setState({modalOpen: true});
+  }
+
+  closeModal = () =>{
+    this.setState({modalOpen: false});
+  }
   
   render() {
     var row = this.state.rows;
     return ( 
       <React.Fragment>
+        <TableModal open={ this.state.modalOpen } close={ this.closeModal } title="Create a chat room">
+            
+        </TableModal>
       <Title>딜리버드 목록</Title>
       <Table size="small">
         <TableHead>
@@ -114,7 +128,7 @@ class Orders extends Component {
         </TableHead>
         <TableBody>
           {row.map((row) => (
-            <TableRow key={row.id}>
+            <TableRow hover key={row.id} onClick={() => this.cellClick(row.id)}>
               <TableCell>{row.id+1}</TableCell>
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.memo}</TableCell>
@@ -125,9 +139,7 @@ class Orders extends Component {
         </TableBody>
       </Table>
       <div className="seeMore">
-        <Link color="primary" href="#" onClick={preventDefault}>
-          
-        </Link>
+        
       </div>
     </React.Fragment>
     );

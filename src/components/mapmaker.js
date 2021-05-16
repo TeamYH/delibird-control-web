@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import 'latest-createjs';
 import ROSLIB from 'roslib';
 import ROS2D from './ros/ros2d.js';
-/* eslint-disable */
+/* global createjs */
+/* global THREE */
 
 
 

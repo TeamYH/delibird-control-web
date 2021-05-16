@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Orders from '../components/orders';
+import CleanOrders from '../components/cleanOrders';
 import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +50,7 @@ export default function Clean() {
              {/* Recent Orders */}
             <Grid item>
               <Paper className={classes.paper}>
-                <Orders />
+                <CleanOrders mode="clean"/>
               </Paper>
             </Grid>
           </Grid>
