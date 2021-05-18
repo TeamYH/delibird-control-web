@@ -47,7 +47,7 @@ class Orders extends Component {
     var temp = this
 
     var ros = new ROSLIB.Ros({
-      url : 'ws://15.165.50.106:9090'
+      url : 'ws://15.165.36.17:9090'
     });
 
     ros.on('connection', function() {

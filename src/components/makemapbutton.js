@@ -15,7 +15,7 @@ const images = [
     url: '',
     title: '테이블 지정',
     width: '45%',
-    path: '/home',
+    path: '/robot/tables',
   },
 ];
 

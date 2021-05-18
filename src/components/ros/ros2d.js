@@ -1,7 +1,7 @@
 import ROSLIB from 'roslib';
 import 'latest-createjs'
 import EventEmitter2 from 'eventemitter2';
-/* global createjs */
+/* eslint-disable */
 
 /**
  * @author Russell Toris - rctoris@wpi.edu

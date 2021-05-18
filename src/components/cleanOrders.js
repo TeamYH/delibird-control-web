@@ -1,29 +1,15 @@
 import React, { Component } from 'react';
-import Link from '@material-ui/core/Link';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TableModal from './tablemodal';
 import CleanModal from './cleanmodal';
 import 'roslib';
 import Title from './title';
 import '../css/orders.css';
 import ROSLIB from 'roslib';
 
-
-function preventDefault(event) {
-  event.preventDefault();
-}
-
-const columns = [
-  {field: 'id', headerName: 'No', width: 70},
-  {field: 'name', headerName: '이름', width: 90},
-  {field: 'memo', headerName: '메모', width: 130},
-  {field: 'battery', headerName: '배터리', type: 'number', width: 90},
-  {field: 'status', headerName: '상태', width: 110},
-]
 
 class CleanOrders extends Component {
   constructor(props) {
@@ -48,7 +34,7 @@ class CleanOrders extends Component {
     var temp = this
 
     var ros = new ROSLIB.Ros({
-      url : 'ws://15.165.50.106:9090'
+      url : 'ws://15.165.36.17:9090'
     });
 
     ros.on('connection', function() {
@@ -72,7 +58,7 @@ class CleanOrders extends Component {
     ros.on('close', function() {
       console.log('Connection to websocket server closed.');
     });
-    
+
     switch(func_num){
       case 1: 
         var batteryClient = new ROSLIB.Topic({
@@ -103,6 +89,7 @@ class CleanOrders extends Component {
         var map_msg = new ROSLIB.Message({
           data : 'cleanstart' 
         });
+        console.log(map_msg);
         rostopic.publish(map_msg);
       break;
       
@@ -115,6 +102,7 @@ class CleanOrders extends Component {
         var map_msg = new ROSLIB.Message({
           data : 'cleanstop' 
         });
+        console.log(map_msg);
         rostopic.publish(map_msg);
       break;
     }
@@ -129,8 +117,7 @@ class CleanOrders extends Component {
   //   this.setState({rows: this.state.rows.concat({id: data.id, name:data.name, memo:data.memo, battery:data.battery, status: data.status})});
   // }
 
-  cellClick = (data) => {
-    console.log(data);
+  cellClick = () => {
     this.setState({modalOpen: true});
   }
 
@@ -142,7 +129,7 @@ class CleanOrders extends Component {
     var row = this.state.rows;
     return ( 
       <React.Fragment>
-        <CleanModal  cleanStart={this.Rosdata} cleanStop={this.Rosdata} open={ this.state.modalOpen } close={ this.closeModal } title="Create a chat room">
+        <CleanModal  cleanStart={() => this.Rosdata(3)} cleanStop={() => this.Rosdata(4)} open={ this.state.modalOpen } close={ this.closeModal } title="Create a chat room">
             
         </CleanModal>
       <Title>딜리버드 목록</Title>
