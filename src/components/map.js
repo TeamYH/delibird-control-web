@@ -21,16 +21,15 @@ class Map extends Component {
 
   rosMapData = () => {
     var ros = new ROSLIB.Ros({
-      url : 'ws://15.165.36.17:9090'
+      url : 'ws://15.165.50.106:9090'
     });
-    
-    // });
+
     var viewer = new ROS2D.Viewer({
       divID : 'map',
       width : 800,
       height : 750,
     });
-    
+
     // Setup the map client.
     var gridClient = new ROS2D.OccupancyGridClient({
       ros : ros,
@@ -40,40 +39,42 @@ class Map extends Component {
     });
     // Scale the canvas to fit to the map
     gridClient.on(function() {
+      console.log(gridClient.currentGrid.width, gridClient.currentGrid.height)
       viewer.scaleToDimensions(gridClient.currentGrid.width, gridClient.currentGrid.height);
+      console.log(gridClient.currentGrid.pose.position.x, gridClient.currentGrid.pose.position.y)
       viewer.shift(gridClient.currentGrid.pose.position.x, gridClient.currentGrid.pose.position.y);
     });
     
     var robotMarker = new ROS2D.NavigationArrow({
-        size : 0.15,
-        strokeSize : 0.1,
-        pulse: true,
-        fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65)
+      // size : 0.25,
+      size : 100,
+      strokeSize : 0.05,
+      pulse: true,
+      fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65)
     });
-    
-    gridClient.rootObject.addChild(robotMarker);
-    
-    var tfClient = new ROSLIB.TFClient({
-      ros : ros,
-      fixedFrame : 'map',
-      angularThres : 0.01,
-      transThres : 0.01
-    });
-    
-    function tf_sub_func(tf) {
-      console.log(tf);
-      robotMarker.x = tf.translation.x;
-      robotMarker.y = -tf.translation.y;
-      robotMarker.rotation = new THREE.Euler().setFromQuaternion(new THREE.Quaternion(
-            tf.rotation.x,
-            tf.rotation.y,
-            tf.rotation.z,
-            tf.rotation.w
-            )
-        ).z * -180 / 3.14159;
+    var robotCreateFunc = function (handlerToCall, discriminator, robotMarker) {
+      return discriminator.subscribe(function(pose){
+        robotMarker.x = pose.pose.pose.position.x;
+        robotMarker.y = -pose.pose.pose.position.y;
+        var quaZ = pose.pose.pose.orientation.z;
+        var degreeZ = 0;
+        if( quaZ >= 0 ) {
+          degreeZ = quaZ / 1 * 180
+        }
+        else {
+          degreeZ = (-quaZ) / 1 * 180 + 180
+        };
+        robotMarker.rotation = -degreeZ + 35;
+        gridClient.rootObject.addChildAt(robotMarker);
+      })
     }
-    
-    tfClient.subscribe('base_footprint', tf_sub_func);
+    var robotLocationListener = new ROSLIB.Topic({
+      ros: ros,
+      name: '/odom',
+      messageType: 'nav_msgs/Odometry'
+    });
+    gridClient.rootObject.addChild(robotMarker);
+    robotCreateFunc('subscribe', robotLocationListener, robotMarker);
   }
 
   render() { 
