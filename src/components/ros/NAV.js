@@ -42,7 +42,7 @@ NAV.Navigator = function (a) {
             goalMessage: {
                 target_pose: {
                     header: {
-                        frame_id: "/map"
+                        frame_id: "map"
                     },
                     pose: a
                 }
@@ -82,12 +82,12 @@ NAV.Navigator = function (a) {
     var k = !1,
         l = new ROSLIB.Topic({
             ros: d,
-            name: "/robot_pose",
-            messageType: "geometry_msgs/Pose",
+            name: "/odom",
+            messageType: "nav_msgs/Odometry",
             throttle_rate: 100
         });
     if (l.subscribe(function (a) {
-            j.x = a.position.x, j.y = -a.position.y, k || (j.scaleX = 1 / h.scaleX, j.scaleY = 1 / h.scaleY, k = !0), j.rotation = h.rosQuaternionToGlobalTheta(a.orientation), j.visible = !0
+            j.x = a.pose.pose.position.x, j.y = -a.pose.pose.position.y, k || (j.scaleX = 1 / h.scaleX, j.scaleY = 1 / h.scaleY, k = !0), j.rotation = h.rosQuaternionToGlobalTheta(a.pose.pose.orientation.z), j.visible = !0
         }), g === !1)
         this.rootObject.addEventListener("dblclick", function (a) {
             var c = h.globalToRos(a.stageX, a.stageY),

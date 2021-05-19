@@ -1,13 +1,7 @@
 import React from 'react';
 import Frame from '../components/frame';
 import { makeStyles } from '@material-ui/core/styles';
-import Map from '../components/map';
-import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Orders from '../components/orders';
-import Paper from '@material-ui/core/Paper';
-import TableSetButtons from '../components/tablesetbuttons';
+import MakeTableMap from '../components/table_setting/maketablemap';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 export default function TableSetting() {
   const classes = useStyles();
 
@@ -42,20 +38,7 @@ export default function TableSetting() {
       <Frame pagetitle="테이블 지정" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing = {3} direction="row" justify="center" alignItems="stretch">
-            <Grid>
-              <Map />
-            </Grid>
-            <Grid item>
-              <Paper className={classes.paper}>
-                <TableSetButtons />
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-          </Box>
-        </Container>
+        <MakeTableMap/>
       </main>
     </div>
   );

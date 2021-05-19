@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Keypress from './keypress';
-import MapMaker from '../components/mapmaker';
-import '../css/makemap.css';
+import MapMaker from './mapmaker';
+import '../../css/makemap.css';
 import ROSLIB from 'roslib';
 import Grid from '@material-ui/core/Grid';
+import SaveIcon from '@material-ui/icons/Save';
 
 class MakeMap extends Component {
   constructor(props) {
@@ -17,21 +19,29 @@ class MakeMap extends Component {
   }
   
   onStart = () =>{
-    var msg = 'makemap';
+    var msg = 'mapstart';
+    this.setState({isStart: true});
+    this.Rosdata(msg);
+  }
+
+  onSave = () =>{
+    var msg = 'mapsave';
     this.setState({isStart: true});
     this.Rosdata(msg);
   }
 
   onStartManual = () =>{
-    var msg = 'makemap';
+    var msg = 'mapmanual';
     this.setState({isStart: true, isManual: true});
     this.Rosdata(msg);
   }
 
   onStop = () =>{
-    var msg = 'mapsave';
+    var msg = 'mapstop';
     this.setState({isStart: false, isManual: false});
     this.Rosdata(msg);
+    
+
   }
 
   Rosdata = (msg) => {
@@ -80,7 +90,12 @@ class MakeMap extends Component {
             <Grid item >
                 <Container className="button-container" maxWidth="sm">
                   <div className="button-pos">
-                    <Button onClick={this.onStop} className="button-pos" variant="contained" color="secondary">지도 생성 종료</Button>
+                    <Link to="/robot/settings">
+                      <Button onClick={this.onStop} className="button-pos" variant="contained" color="secondary">지도 생성 종료</Button>
+                    </Link>
+                  </div>
+                  <div className="button-pos">
+                    <Button onClick={this.onSave} className="button-pos" variant="contained" color="primary" startIcon={<SaveIcon/>}>지도 저장</Button>
                   </div>
                 <Keypress isManual={this.state.isManual}/>
               </Container>
@@ -102,9 +117,6 @@ class MakeMap extends Component {
               <Container className="button-container" maxWidth="sm">
                 <div className="button-pos">
                   <Button onClick={this.onStart} className="button-pos" variant="contained" color="primary">지도 생성 시작</Button>
-                </div>
-                <div className="button-pos">
-                  <Button onClick={this.onStartManual} className="button-pos" variant="contained" color="primary">지도 생성 시작 (수동)</Button>
                 </div>
               </Container>
             </Grid>

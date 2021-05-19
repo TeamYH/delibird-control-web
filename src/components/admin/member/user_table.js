@@ -305,17 +305,17 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.storeName);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row.storeName)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.storeName}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -329,8 +329,8 @@ export default function EnhancedTable() {
                       </TableCell>
                       <TableCell align="right">{row.userName}</TableCell>
                       <TableCell align="right">{row.phoneNumber}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.id}</TableCell>
+                      <TableCell align="right">{row.password}</TableCell>
                     </TableRow>
                   );
                 })}

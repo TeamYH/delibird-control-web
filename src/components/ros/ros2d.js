@@ -480,8 +480,9 @@ ROS2D.NavigationArrow = function(options) {
   // draw the arrow
   var graphics = new createjs.Graphics();
   var polygon = new createjs.Graphics();
+  graphics.beginStroke("black").beginFill("red");
   polygon.beginStroke("black").beginFill("red");
-  polygon.moveTo(0, 0).lineTo(8, 8).lineTo(4, 12).lineTo(0, 0);
+  polygon.moveTo(0, 0).lineTo(1, 1).lineTo(0.5, 1.5).lineTo(0, 0);
   // line width
   graphics.setStrokeStyle(strokeSize);
   graphics.moveTo(-size / 2.0, -size / 2.0);
@@ -515,8 +516,58 @@ ROS2D.NavigationArrow = function(options) {
     });
   }
 };
+
 ROS2D.NavigationArrow.prototype.__proto__ = createjs.Shape.prototype;
 
+ROS2D.NavigationArrowMakeMap = function(options) {
+  var that = this;
+  options = options || {};
+  var size = options.size || 10;
+  var strokeSize = options.strokeSize || 3;
+  var strokeColor = options.strokeColor || createjs.Graphics.getRGB(0, 0, 0);
+  var fillColor = options.fillColor || createjs.Graphics.getRGB(255, 0, 0);
+  var pulse = options.pulse;
+
+  // draw the arrow
+  var graphics = new createjs.Graphics();
+  var polygon = new createjs.Graphics();
+  graphics.beginStroke("black").beginFill("red");
+  polygon.beginStroke("black").beginFill("red");
+  polygon.moveTo(0, 0).lineTo(1, 1).lineTo(0.5, 1.5).lineTo(0, 0);
+  // line width
+  graphics.setStrokeStyle(strokeSize);
+  graphics.moveTo(-size / 2.0, -size / 2.0);
+  graphics.beginStroke("red");
+  graphics.beginFill(fillColor);
+  graphics.lineTo(size, 0);
+  graphics.lineTo(-size / 2.0, size / 2.0);
+  graphics.closePath();
+  graphics.endFill();
+  graphics.endStroke();
+
+  // create the shape
+  // createjs.Shape.call(this, graphics);
+  createjs.Shape.call(this, graphics);
+  
+  // check if we are pulsing
+  if (pulse) {
+    // have the model "pulse"
+    var growCount = 0;
+    var growing = true;
+    createjs.Ticker.addEventListener('tick', function() {
+      if (growing) {
+        that.scaleX *= 1.035;
+        that.scaleY *= 1.035;
+        growing = (++growCount < 10);
+      } else {
+        that.scaleX /= 1.035;
+        that.scaleY /= 1.035;
+        growing = (--growCount < 0);
+      }
+    });
+  }
+};
+ROS2D.NavigationArrowMakeMap.prototype.__proto__ = createjs.Shape.prototype;
 /**
  * @author Inigo Gonzalez - ingonza85@gmail.com
  */
@@ -1104,7 +1155,7 @@ ROS2D.Viewer = function(options) {
 ROS2D.Viewer.prototype.addObject = function(object) {
   console.log("add object inside")
   this.scene.addChild(object);
-  this.scene.update();
+  // this.scene.update();
 };
 
 /**

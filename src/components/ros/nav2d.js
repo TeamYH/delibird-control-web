@@ -168,6 +168,8 @@ NAV2D.Navigator = function(options) {
   });
   poseListener.subscribe(function(pose) {
     // update the robots position on the map
+    // console.log(pose)
+    // console.log('robotMarker.x : ' + robotMarker.x + 'robotMarker.y : '+ robotMarker.y)
     robotMarker.x = pose.pose.pose.position.x;;
     robotMarker.y = -pose.pose.pose.position.y;
     if (!initScaleSet) {
@@ -359,7 +361,7 @@ NAV2D.OccupancyGridClientNav = function(options) {
   var that = this;
   options = options || {};
   this.ros = options.ros;
-  var topic = options.topic || '/map';
+  var topic = options.topic || 'map';
   var continuous = options.continuous;
   this.serverName = options.serverName || '/move_base';
   this.actionName = options.actionName || 'move_base_msgs/MoveBaseAction';

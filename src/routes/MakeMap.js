@@ -2,7 +2,7 @@ import React from 'react';
 import Frame from '../components/frame';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import MakeMap from '../components/makemap';
+import MakeMap from '../components/make_map/makemap';
 import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Key() {
+export default function MakeMapPage() {
       const classes = useStyles();
       return (
         <div className={classes.root}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import MakeMapButton  from '../components/makemapbutton';
+import MakeMapButton  from '../components/make_map/makemapbutton';
 import Frame from '../components/frame';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';

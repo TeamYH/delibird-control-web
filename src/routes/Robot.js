@@ -1,11 +1,11 @@
 import React from 'react';
 import Frame from '../components/frame';
 import { makeStyles } from '@material-ui/core/styles';
-import Map from '../components/map';
+import Map from '../components/serve_mode/map';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Orders from '../components/orders';
+import Orders from '../components/serve_mode/orders';
 import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({

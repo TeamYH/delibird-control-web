@@ -6,8 +6,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import CleanModal from './cleanmodal';
 import 'roslib';
-import Title from './title';
-import '../css/orders.css';
+import Title from '../title';
+import '../../css/orders.css';
 import ROSLIB from 'roslib';
 
 
