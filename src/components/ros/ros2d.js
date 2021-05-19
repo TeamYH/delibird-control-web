@@ -479,10 +479,13 @@ ROS2D.NavigationArrow = function(options) {
 
   // draw the arrow
   var graphics = new createjs.Graphics();
+  var polygon = new createjs.Graphics();
+  polygon.beginStroke("black").beginFill("red");
+  polygon.moveTo(0, 0).lineTo(8, 8).lineTo(4, 12).lineTo(0, 0);
   // line width
   graphics.setStrokeStyle(strokeSize);
   graphics.moveTo(-size / 2.0, -size / 2.0);
-  graphics.beginStroke(strokeColor);
+  graphics.beginStroke("red");
   graphics.beginFill(fillColor);
   graphics.lineTo(size, 0);
   graphics.lineTo(-size / 2.0, size / 2.0);
@@ -491,7 +494,8 @@ ROS2D.NavigationArrow = function(options) {
   graphics.endStroke();
 
   // create the shape
-  createjs.Shape.call(this, graphics);
+  // createjs.Shape.call(this, graphics);
+  createjs.Shape.call(this, polygon);
   
   // check if we are pulsing
   if (pulse) {
@@ -1098,7 +1102,9 @@ ROS2D.Viewer = function(options) {
  * @param object - the object to add
  */
 ROS2D.Viewer.prototype.addObject = function(object) {
+  console.log("add object inside")
   this.scene.addChild(object);
+  this.scene.update();
 };
 
 /**
@@ -1113,6 +1119,10 @@ ROS2D.Viewer.prototype.scaleToDimensions = function(width, height) {
   this.scene.y = typeof this.scene.y_prev_shift !== 'undefined' ? this.scene.y_prev_shift : this.scene.y;
   
   // save scene scaling
+  console.log('this.scene.x : ' + this.scene.x)
+  console.log(typeof this.scene.x_prev_shift)
+  console.log('this.scene.y : ' + this.scene.y)
+  console.log(this.scene.x_prev_shift)
   this.scene.scaleX = this.width / width;
   this.scene.scaleY = this.height / height;
 };
