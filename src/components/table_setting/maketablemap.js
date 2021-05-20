@@ -8,6 +8,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import TableSetButtons from './tablesetbuttons';
+import TableSetModal from './table_set_modal';
 
 /* global createjs */
 /* global THREE */
@@ -42,6 +43,7 @@ class MakeTableMap extends Component {
     super(props);
     this.state = { 
       msgtype: 0,
+      modalOpen: false,
     }
   }
 
@@ -156,10 +158,23 @@ class MakeTableMap extends Component {
     this.rosMapData(2);
   }
 
+  openmodal = () =>{
+    this.setState({openModal: true});
+  }
+
+  openModal = () => {
+    this.setState({modalOpen: true});
+  }
+
+  closeModal = () =>{
+    this.setState({modalOpen: false});
+  }
+
   render() { 
     const {classes} = this.props;
     return ( 
       <div>
+        <TableSetModal open={ this.state.modalOpen } close={ this.closeModal }></TableSetModal>
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing = {3} direction="row" justify="center" alignItems="stretch">
             <Grid>
@@ -168,7 +183,7 @@ class MakeTableMap extends Component {
             </Grid>
             <Grid item>
               <Paper className={classes.paper}>
-                <TableSetButtons opentable={this.opentable} closetable={this.closetable}/>
+                <TableSetButtons opentable={this.opentable} closetable={this.closetable} openmodal={this.openModal}/>
               </Paper>
             </Grid>
           </Grid>

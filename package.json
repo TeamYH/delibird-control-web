@@ -14,6 +14,7 @@
     "bootstrap": "4.6.0",
     "clsx": "1.1.1",
     "latest-createjs": "1.0.24",
+    "qs": "6.10.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-loading-overlay": "1.0.1",

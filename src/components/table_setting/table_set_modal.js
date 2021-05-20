@@ -4,6 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
+import '../../css/makemap.css';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import {request} from '../../utils/axios';
+import qs from 'qs';
 
 const useStyles = theme => ({
   modal: {
@@ -50,13 +55,47 @@ Fade.propTypes = {
   onExited: PropTypes.func,
 };
 
-
-class TableModal extends Component {
+class TableSetModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {  }
+    this.state = { 
+        pos_x: 0,
+        pos_y: 0,
+        angle: 0,
+    }
   }
+
+  saveData = async(data) =>{
+    var data = {
+      pos_x: parseInt(this.state.pos_x),
+      pos_y: parseInt(this.state.pos_y), 
+      angle: parseInt(this.state.angle), 
+    };
+    console.log(qs.stringify(data));
+
+    var res = await request('POST', '/delibird_db/table_list?'+ qs.stringify(data));
+    console.log(res);
+  }
+
+  setXpos = (e) =>{
+    this.setState({pos_x: e.target.value});
+    console.log(this.state);
+  }
+
+  setYpos = (e) =>{
+    this.setState({pos_y: e.target.value});
+    console.log(this.state);
+  }
+
+  setAngle = (e) =>{
+    this.setState({angle: e.target.value});
+    console.log(this.state);
+  }
+
+
+
   render() { 
+    const {classes} = this.props;
   return (
       <div>
         <Modal
@@ -71,10 +110,16 @@ class TableModal extends Component {
             timeout: 500,
           }}
         >
-          <Fade in={props.open}>
+          <Fade in={this.props.open}>
             <div className={classes.paper}>
-              <h2 id="spring-modal-title">서빙 테이블 선택</h2>
-              <p id="spring-modal-description">테이블정보가 없습니다.</p>
+              <form className={classes.root} noValidate autoComplete="off">
+                <TextField id="outlined-basic" name="pos_x" value={this.state.pos_x} onChange={this.setXpos} label="x-pos" variant="outlined"/>
+                <TextField id="outlined-basic" name="pos_y" value={this.state.pos_y} onChange={this.setYpos} label="y-pos" variant="outlined" />
+                <TextField id="outlined-basic" name="angle" value={this.state.angle} onChange={this.setAngle} label="angle" variant="outlined" />
+              </form>
+              <div className="btn-pose" >
+                <Button className="btn-pose" variant="contained" color="primary" onClick={this.saveData}>저장</Button>
+              </div>
             </div>
           </Fade>
         </Modal>
@@ -82,4 +127,4 @@ class TableModal extends Component {
     );
   }
 }
-export default withStyles(useStyles)(TableModal);
+export default withStyles(useStyles)(TableSetModal);
