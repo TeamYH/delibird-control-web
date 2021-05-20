@@ -90,6 +90,10 @@ class CleanOrders extends Component {
           data : 'cleanstart' 
         });
         console.log(map_msg);
+        status.stat = '청소중';
+        temp.setState(() => {
+          return {ros: ros, rows: [status]};
+        })
         rostopic.publish(map_msg);
       break;
       
@@ -112,10 +116,6 @@ class CleanOrders extends Component {
   componentDidMount = async() => {
     this.Rosdata(1);
   }
-  
-  // createData = (data) => {
-  //   this.setState({rows: this.state.rows.concat({id: data.id, name:data.name, memo:data.memo, battery:data.battery, status: data.status})});
-  // }
 
   cellClick = () => {
     this.setState({modalOpen: true});
@@ -129,8 +129,7 @@ class CleanOrders extends Component {
     var row = this.state.rows;
     return ( 
       <React.Fragment>
-        <CleanModal  cleanStart={() => this.Rosdata(3)} cleanStop={() => this.Rosdata(4)} open={ this.state.modalOpen } close={ this.closeModal } title="Create a chat room">
-            
+        <CleanModal  cleanStart={() => this.Rosdata(3)} cleanStop={() => this.Rosdata(4)} open={ this.state.modalOpen } close={ this.closeModal } title="clean modal">
         </CleanModal>
       <Title>딜리버드 목록</Title>
       <Table size="small">

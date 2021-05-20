@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
+import TableData from './table_data';
+import request from '../../utils/axios';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = theme => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
@@ -17,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
-}));
+});
 
 const Fade = React.forwardRef(function Fade(props, ref) {
   const { in: open, children, onEnter, onExited, ...other } = props;
@@ -50,30 +52,47 @@ Fade.propTypes = {
   onExited: PropTypes.func,
 };
 
-export default function TableModal(props) {
-  const classes = useStyles();
+class TableModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      data: null,
+    }
+  }
 
+  getTableData = async() => {
+    
+  }
+
+  componentDidMount = () =>{
+
+  }
+
+  render() { 
+    const {classes} = this.props;
   return (
-    <div>
-      <Modal
-        aria-labelledby="spring-modal-title"
-        aria-describedby="spring-modal-description"
-        className={classes.modal}
-        open={props.open}
-        onClose={props.close}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={props.open}>
-          <div className={classes.paper}>
-            <h2 id="spring-modal-title">서빙 테이블 선택</h2>
-            <p id="spring-modal-description">테이블정보가 없습니다.</p>
-          </div>
-        </Fade>
-      </Modal>
-    </div>
-  );
+      <div>
+        <Modal
+          aria-labelledby="spring-modal-title"
+          aria-describedby="spring-modal-description"
+          className={classes.modal}
+          open={this.props.open}
+          onClose={this.props.close}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={this.props.open}>
+            <div className={classes.paper}>
+              <h2 id="spring-modal-title">서빙 테이블 선택</h2>
+              <TableData data={this.state.data}/>
+            </div>
+          </Fade>
+        </Modal>
+      </div>
+    );
+  }
 }
+export default withStyles(useStyles)(TableModal);
