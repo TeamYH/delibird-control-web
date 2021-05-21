@@ -482,7 +482,7 @@ ROS2D.NavigationArrow = function(options) {
   var polygon = new createjs.Graphics();
   graphics.beginStroke("black").beginFill("red");
   polygon.beginStroke("black").beginFill("red");
-  polygon.moveTo(0, 0).lineTo(1, 1).lineTo(0.5, 1.5).lineTo(0, 0);
+  polygon.moveTo(0, 0).lineTo(2, 0.5).lineTo(0, 1).lineTo(0, 0);
   // line width
   graphics.setStrokeStyle(strokeSize);
   graphics.moveTo(-size / 2.0, -size / 2.0);

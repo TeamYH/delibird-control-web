@@ -74,6 +74,17 @@ class Orders extends Component {
         return {rows: [status]};
       })
     });
+    
+      var rostopic = new ROSLIB.Topic({
+        ros : ros,
+        name : '/web_signal',
+        messageType : 'std_msgs/String'
+      });
+      var servestart = new ROSLIB.Message({
+        data : 'servestart',
+      }, console.log('servestart'));
+      rostopic.publish(servestart);
+    
   }
 
 

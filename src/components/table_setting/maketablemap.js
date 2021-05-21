@@ -54,7 +54,7 @@ class MakeTableMap extends Component {
   rosMapData = (msgtype) => {
 
     var ros = new ROSLIB.Ros({
-        url : 'ws://15.165.36.17:9090'
+        url : 'ws://15.165.50.106:9090'
       });
   
       // Create the main viewer.
@@ -87,6 +87,7 @@ class MakeTableMap extends Component {
         serverName : '/move_base',
         withOrientation : true
       });
+
     
     // var robotMarker = new ROS2D.NavigationArrow({
     //   size : 0.25,
@@ -102,10 +103,9 @@ class MakeTableMap extends Component {
         name : '/web_signal',
         messageType : 'std_msgs/String'
       });
-      var _this = this.props;
       var opentable = new ROSLIB.Message({
         data : 'opentable',
-      }, console.log('opentable'));
+      }, console.log('opentable', nav));
       rostopic.publish(opentable);
     }
 
@@ -115,7 +115,6 @@ class MakeTableMap extends Component {
         name : '/web_signal',
         messageType : 'std_msgs/String'
       });
-      var _this = this.props;
       var closetable = new ROSLIB.Message({
         data : 'closetable',
       }, console.log('closetable'));
@@ -172,7 +171,7 @@ class MakeTableMap extends Component {
 
   render() { 
     const {classes} = this.props;
-    return ( 
+    return (
       <div>
         <TableSetModal open={ this.state.modalOpen } close={ this.closeModal }></TableSetModal>
         <Container maxWidth="lg" className={classes.container}>

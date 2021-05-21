@@ -59,9 +59,9 @@ class TableModal extends Component {
       data: null,
     }
   }
-
+  
   getTableData = async() => {
-    
+
   }
 
   componentDidMount = () =>{

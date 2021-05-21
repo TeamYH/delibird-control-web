@@ -212,6 +212,7 @@ NAV2D.Navigator = function(options) {
   } else { // withOrientation === true
     // setup a click-and-point listener (with orientation)
     console.log(true)
+    var pose_for_web = null;
     var position = null;
     var positionVec3 = null;
     var thetaRadians = 0;
@@ -227,8 +228,6 @@ NAV2D.Navigator = function(options) {
         // get position when mouse button is pressed down
         console.log('mouse_down')
         position = stage.globalToRos(event.stageX, event.stageY);
-        console.log(position)
-        console.log('position' + position)
         positionVec3 = new ROSLIB.Vector3(position);
         mouseDown = true;
       }
@@ -246,7 +245,7 @@ NAV2D.Navigator = function(options) {
 
           orientationMarker = new ROS2D.NavigationArrow({
             size : 25,
-            strokeSize : 1,
+            strokeSize : 3,
             fillColor : createjs.Graphics.getRGB(0, 255, 0, 0.66),
             pulse : false
           });
@@ -313,14 +312,16 @@ NAV2D.Navigator = function(options) {
           name : '/move_base_simple/goal',
           messageType : 'geometry_msgs/PoseStamped'
       });
-        console.log(pose)
+      
           var goal_msg = new ROSLIB.Message({
             header : {
               frame_id : "map"
            },
                   pose  
                 });
-        goal.publish(goal_msg);    
+        goal.publish(goal_msg);
+        console.log(pose_web);
+        return pose;    
       }
     };
 
@@ -332,9 +333,12 @@ NAV2D.Navigator = function(options) {
       mouseEventHandler(event,'move');
     });
 
-    this.rootObject.addEventListener('stagemouseup', function(event) {
-      mouseEventHandler(event,'up');
+    var pose_web = this.rootObject.addEventListener('stagemouseup', function(event) {
+      pose_for_web = mouseEventHandler(event,'up');
+      console.log(pose_for_web);
+      return pose_for_web;
     });
+    
   }
 };
 
@@ -391,6 +395,8 @@ NAV2D.OccupancyGridClientNav = function(options) {
     that.viewer.scaleToDimensions(client.currentGrid.width, client.currentGrid.height);
     that.viewer.shift(client.currentGrid.pose.position.x, client.currentGrid.pose.position.y);
   });
+  
 };
+
 
 export default NAV2D
