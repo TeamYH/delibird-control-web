@@ -45,7 +45,7 @@ class Map extends Component {
       viewer.shift(gridClient.currentGrid.pose.position.x, gridClient.currentGrid.pose.position.y);
     });
     
-    var robotMarker = new ROS2D.NavigationArrow({
+    var robotMarker = new ROS2D.NavigationArrowMakeMap({
       size : 0.25,
       // size : 100,
       strokeSize : 0.05,
@@ -68,13 +68,13 @@ class Map extends Component {
           degreeZ = (-quaZ) / 1 * 180 + 180
         };
         robotMarker.rotation = -degreeZ + 35;
-        gridClient.rootObject.addChildAt(robotMarker);
+        gridClient.rootObject.addChild(robotMarker);
       })
     }
     var robotLocationListener = new ROSLIB.Topic({
       ros: ros,
-      name: '/odom',
-      messageType: 'nav_msgs/Odometry'
+      name: '/amcl_pose',
+      messageType: 'geometry_msgs/PoseWithCovarianceStamped'
     });
     gridClient.rootObject.addChild(robotMarker);
     robotCreateFunc('subscribe', robotLocationListener, robotMarker);

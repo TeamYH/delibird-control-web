@@ -134,9 +134,9 @@ NAV2D.Navigator = function(options) {
     goalMarker.scaleY = 1.0 / stage.scaleY;
     that.rootObject.addChild(goalMarker);
 
-    goal.on('result', function() {
-      that.rootObject.removeChild(goalMarker);
-    });
+    // goal.on('result', function() {
+    //   that.rootObject.removeChild(goalMarker);
+    // });
   }
 
   // get a handle to the stage
@@ -162,8 +162,10 @@ NAV2D.Navigator = function(options) {
   // setup a listener for the robot pose
   var poseListener = new ROSLIB.Topic({
     ros : ros,
-    name : '/odom',
-    messageType : 'nav_msgs/Odometry',
+    // name : '/odom',
+    // messageType : 'nav_msgs/Odometry',
+    name : '/amcl_pose',
+    messageType : 'geometry_msgs/PoseWithCovarianceStamped',
     throttle_rate : 100
   });
   poseListener.subscribe(function(pose) {
@@ -206,6 +208,7 @@ NAV2D.Navigator = function(options) {
         },
                 pose  
               });
+
       goal.publish(goal_msg);   
       
     });
@@ -307,21 +310,30 @@ NAV2D.Navigator = function(options) {
         // sendGoal(pose);
         // console.log("sssssssssssssssssssssssssssssd")
         // var header = new ROSLIB.
-        var goal = new ROSLIB.Topic({
+        var save_goal = new ROSLIB.Topic({
           ros: ros,
-          name : '/move_base_simple/goal',
+          name : '/goal_signal',
           messageType : 'geometry_msgs/PoseStamped'
       });
+        var save_goal_msg = new ROSLIB.Message({
+          pose  
+        });
+
+      // var goal = new ROSLIB.Topic({
+      //   ros: ros,
+      //   name : '/move_base_simple/goal',
+      //   messageType : 'geometry_msgs/PoseStamped'
+      // });
       
-          var goal_msg = new ROSLIB.Message({
-            header : {
-              frame_id : "map"
-           },
-                  pose  
-                });
-        goal.publish(goal_msg);
-        console.log(pose_web);
-        return pose;    
+          // var goal_msg = new ROSLIB.Message({
+          //   header : {
+          //     frame_id : "map"
+          //  },
+          //         pose  
+          //       });
+          save_goal.publish(save_goal_msg);
+        // console.log(pose_web);
+        // return pose;    
       }
     };
 
@@ -335,8 +347,8 @@ NAV2D.Navigator = function(options) {
 
     var pose_web = this.rootObject.addEventListener('stagemouseup', function(event) {
       pose_for_web = mouseEventHandler(event,'up');
-      console.log(pose_for_web);
-      return pose_for_web;
+        console.log(pose_for_web);
+        return pose_for_web;
     });
     
   }

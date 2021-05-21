@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import TableSetButtons from './tablesetbuttons';
 import TableSetModal from './table_set_modal';
+import NAV from '../ros/NAV'
 
 /* global createjs */
 /* global THREE */
@@ -54,7 +55,8 @@ class MakeTableMap extends Component {
   rosMapData = (msgtype) => {
 
     var ros = new ROSLIB.Ros({
-        url : 'ws://15.165.50.106:9090'
+        url : 'ws://15.165.36.17:9090'
+        // url : 'ws://15.165.50.106:9090'
       });
   
       // Create the main viewer.
@@ -120,6 +122,23 @@ class MakeTableMap extends Component {
       }, console.log('closetable'));
       rostopic.publish(closetable);
     }
+    var save_goal = new ROSLIB.Topic({
+      ros: ros,
+      name : '/goal_signal',
+      messageType : 'geometry_msgs/PoseStamped'
+    });
+
+    var save_goal_to_back = function(handlerToCall, discriminator){
+      return  discriminator.subscribe(function(goal){
+        console.log(goal)
+        discriminator.unsubscribe();
+
+      })
+
+    }
+    save_goal_to_back('subscribe', save_goal);
+
+
     
 
 
