@@ -27,7 +27,6 @@ class TableSetButtons extends Component {
         <Link to="/robot/settings">
           <div className="btn-pose" ><Button className="btn-pose" variant="contained" color="primary" onClick={this.props.closetable}>종 료</Button></div>
         </Link>
-        <div className="btn-pose" ><Button className="btn-pose" variant="contained" color="primary" onClick={this.props.openmodal}>test</Button></div>
       </div>
     );
   }

@@ -7,6 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableModal from './tablemodal';
 import 'roslib';
 import Title from '../title';
+import {request} from '../../utils/axios';
 import '../../css/orders.css';
 import ROSLIB from 'roslib';
 
@@ -19,6 +20,13 @@ class Orders extends Component {
       modalOpen: false,
     }
   }
+
+  getTableData = async() => {
+    var res = await request('GET', '/delibird_db/table_list');
+    console.log(res);
+    this.setState({pose: res});
+  }
+  
   
 
   Rosdata = () => {
@@ -69,7 +77,7 @@ class Orders extends Component {
       status.stat = '대기중';
       console.log(status);
       batteryClient.unsubscribe();
-      // this.setState({rows: this.state.rows.concat({id: status.id, name:status.name, memo:status.memo, battery:status.battery, status: status.stat})});
+      //this.setState({rows: this.state.rows.concat({id: status.id, name:status.name, memo:status.memo, battery:status.battery, status: status.stat})});
       temp.setState(() => {
         return {rows: [status]};
       })
@@ -90,6 +98,7 @@ class Orders extends Component {
 
   componentDidMount = async() => {
     this.Rosdata();
+    this.getTableData();
   }
   
   createData = (data) => {
@@ -97,19 +106,49 @@ class Orders extends Component {
   }
 
   cellClick = (data) => {
-    console.log(data);
     this.setState({modalOpen: true});
   }
 
   closeModal = () =>{
     this.setState({modalOpen: false});
   }
+
+  stateSetting = () =>{
+    let status = {
+      id: 0,
+      name: '로봇',
+      memo: '로봇1',
+      battery: 0,
+      stat: '대기중',
+    }
+
+    status.battery = this.state.rows[0].battery;
+    status.stat = '서빙중';
+
+    this.setState({rows: [status]});
+  }
+
+  stateSetting2 = () =>{
+    let status = {
+      id: 0,
+      name: '로봇',
+      memo: '로봇1',
+      battery: 0,
+      stat: '대기중',
+    }
+
+    status.battery = this.state.rows[0].battery;
+    status.stat = '대기중';
+
+    this.setState({rows: [status]});
+  }
   
   render() {
+    var pose = this.state.pose;
     var row = this.state.rows;
     return ( 
       <React.Fragment>
-        <TableModal open={ this.state.modalOpen } close={ this.closeModal } title="Create a chat room">
+        <TableModal pose={pose} open={ this.state.modalOpen } close={ this.closeModal } stateserve = {this.stateSetting} statewait = {this.stateSetting2} title="Create a chat room">
             
         </TableModal>
       <Title>딜리버드 목록</Title>
@@ -125,7 +164,7 @@ class Orders extends Component {
         </TableHead>
         <TableBody>
           {row.map((row) => (
-            <TableRow hover key={row.id} onClick={() => this.cellClick(row.id)}>
+            <TableRow hover key={row.id} onClick={() => this.cellClick(row)}>
               <TableCell>{row.id+1}</TableCell>
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.memo}</TableCell>

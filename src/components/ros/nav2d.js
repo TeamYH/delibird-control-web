@@ -197,19 +197,29 @@ NAV2D.Navigator = function(options) {
       });
       // send the goal
       // sendGoal(pose);
-      var goal = new ROSLIB.Topic({
-        ros: ros,
-        name : '/move_base_simple/goal',
-        messageType : 'geometry_msgs/PoseStamped'
-    });
-        var goal_msg = new ROSLIB.Message({
-          header : {
-            frame_id : "map"
-        },
-                pose  
-              });
+    //   var goal = new ROSLIB.Topic({
+    //     ros: ros,
+    //     name : '/move_base_simple/goal',
+    //     messageType : 'geometry_msgs/PoseStamped'
+    // });
+    //     var goal_msg = new ROSLIB.Message({
+    //       header : {
+    //         frame_id : "map"
+    //     },
+    //             pose  
+    //           });
 
-      goal.publish(goal_msg);   
+    //   goal.publish(goal_msg);  
+              var save_goal = new ROSLIB.Topic({
+          ros: ros,
+          name : '/goal_signal',
+          messageType : 'geometry_msgs/PoseStamped'
+      });
+        var save_goal_msg = new ROSLIB.Message({
+          pose  
+        });
+        console.log(pose)
+        save_goal.publish(save_goal_msg); 
       
     });
   } else { // withOrientation === true
@@ -318,6 +328,7 @@ NAV2D.Navigator = function(options) {
         var save_goal_msg = new ROSLIB.Message({
           pose  
         });
+        save_goal.publish(save_goal_msg);
 
       // var goal = new ROSLIB.Topic({
       //   ros: ros,
@@ -331,7 +342,7 @@ NAV2D.Navigator = function(options) {
           //  },
           //         pose  
           //       });
-          save_goal.publish(save_goal_msg);
+          
         // console.log(pose_web);
         // return pose;    
       }

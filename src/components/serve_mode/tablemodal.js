@@ -5,7 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import TableData from './table_data';
-import request from '../../utils/axios';
+import { request } from '../../utils/axios';
 
 const useStyles = theme => ({
   modal: {
@@ -56,16 +56,11 @@ class TableModal extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      data: null,
     }
   }
   
-  getTableData = async() => {
-
-  }
 
   componentDidMount = () =>{
-
   }
 
   render() { 
@@ -87,7 +82,7 @@ class TableModal extends Component {
           <Fade in={this.props.open}>
             <div className={classes.paper}>
               <h2 id="spring-modal-title">서빙 테이블 선택</h2>
-              <TableData data={this.state.data}/>
+              <TableData stateserve = {this.props.stateserve} statewait = {this.props.statewait} data={this.props.pose}/>
             </div>
           </Fade>
         </Modal>

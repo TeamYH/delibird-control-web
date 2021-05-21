@@ -39,11 +39,11 @@ class CleanOrders extends Component {
 
     ros.on('connection', function() {
       console.log('Connected to websocket server.');
-      status.battery = 0;
-      status.stat = '정보 없음';
-      temp.setState(() => {
-        return {ros: ros, rows: [status]};
-      })
+      // status.battery = 0;
+      // status.stat = '정보 없음';
+      // temp.setState(() => {
+      //   return {ros: ros, rows: [status]};
+      // })
     });
   
     ros.on('error', function(error) {
@@ -91,6 +91,7 @@ class CleanOrders extends Component {
         });
         console.log(map_msg);
         status.stat = '청소중';
+        status.battery = temp.state.rows[0].battery;
         temp.setState(() => {
           return {ros: ros, rows: [status]};
         })
@@ -106,7 +107,11 @@ class CleanOrders extends Component {
         var map_msg = new ROSLIB.Message({
           data : 'cleanstop' 
         });
-        console.log(map_msg);
+        status.stat = '대기중';
+        status.battery = temp.state.rows[0].battery;
+        temp.setState(() => {
+          return {ros: ros, rows: [status]};
+        })
         rostopic.publish(map_msg);
       break;
     }
@@ -162,6 +167,5 @@ class CleanOrders extends Component {
   }
 }
 export default CleanOrders;
-
 
 

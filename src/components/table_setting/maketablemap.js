@@ -45,6 +45,13 @@ class MakeTableMap extends Component {
     this.state = { 
       msgtype: 0,
       modalOpen: false,
+      pose: {
+        id: 0,
+        pos_x:0,
+        pos_y:0,
+        angle_W:0,
+        angle_z:0,
+      }
     }
   }
 
@@ -55,8 +62,8 @@ class MakeTableMap extends Component {
   rosMapData = (msgtype) => {
 
     var ros = new ROSLIB.Ros({
-        url : 'ws://15.165.36.17:9090'
-        // url : 'ws://15.165.50.106:9090'
+        // url : 'ws://15.165.36.17:9090'
+        url : 'ws://15.165.50.106:9090'
       });
   
       // Create the main viewer.
@@ -108,7 +115,7 @@ class MakeTableMap extends Component {
       var opentable = new ROSLIB.Message({
         data : 'opentable',
       }, console.log('opentable', nav));
-      rostopic.publish(opentable);
+      //rostopic.publish(opentable);
     }
 
     if(msgtype === 2){
@@ -128,20 +135,48 @@ class MakeTableMap extends Component {
       messageType : 'geometry_msgs/PoseStamped'
     });
 
-    var save_goal_to_back = function(handlerToCall, discriminator){
-      return  discriminator.subscribe(function(goal){
-        console.log(goal)
-        discriminator.unsubscribe();
-
-      })
-
+    var pose = this;
+    let tmp_pose = {
+      id: 0,
+      pos_x:0,
+      pos_y:0,
+      angle_w:0,
+      angle_z:0,
     }
-    save_goal_to_back('subscribe', save_goal);
 
+    // var save_goal_to_back = function(handlerToCall, discriminator){
+    //   return discriminator.subscribe(function(goal){
+    //     console.log(goal);
+    //     if(goal){
+    //       tmp_pose.pos_x = goal.pose.position.x;
+    //       tmp_pose.pos_y = goal.pose.position.y;
+    //       tmp_pose.angle_w = goal.pose.orientation.w;
+    //       tmp_pose.angle_z = goal.pose.orientation.z;
+          
+    //       pose.setState(() => {
+    //         return { pos: [tmp_pose] };
+    //         })
+    //     }
+    //     // discriminator.unsubscribe();
+    //   })
 
-    
+    // }
+    save_goal.subscribe(function(goal) {
+              console.log(goal);
+        if(goal){
+          tmp_pose.pos_x = goal.pose.position.x;
+          tmp_pose.pos_y = goal.pose.position.y;
+          tmp_pose.angle_w = goal.pose.orientation.w;
+          tmp_pose.angle_z = goal.pose.orientation.z;
+          
+          pose.setState(() => {
+            return { modalOpen:true, pose: tmp_pose }; 
+            });
+          console.log(pose.state);
+        }
 
-
+    })
+    // save_goal_to_back('subscribe', save_goal);
     
     // var robotCreateFunc = function (handlerToCall, discriminator, robotMarker) {
     //   return discriminator.subscribe(function(pose){
@@ -192,7 +227,7 @@ class MakeTableMap extends Component {
     const {classes} = this.props;
     return (
       <div>
-        <TableSetModal open={ this.state.modalOpen } close={ this.closeModal }></TableSetModal>
+        <TableSetModal open={ this.state.modalOpen } close={ this.closeModal } pose={this.state.pose}></TableSetModal>
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing = {3} direction="row" justify="center" alignItems="stretch">
             <Grid>
