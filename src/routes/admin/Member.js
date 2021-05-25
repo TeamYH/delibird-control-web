@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import Frame from '../../components/frame';
-import { makeStyles } from '@material-ui/core/styles';
+import {withStyles, makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -9,7 +9,7 @@ import NewAccountModal from '../../components/admin/member/new_account_modal';
 import Button from '@material-ui/core/Button';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = theme => ({
   root: {
     display: 'flex',
   },
@@ -42,34 +42,54 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 5,
   },
 
-}));
+});
 
-export default function Member(props) {
-  const classes = useStyles();
-  const [modal, setModal] = useState(false);
+class Member extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      modalOpen: false,
+      rows: [],
+    }
+  }
 
-  return (
-    <div className={classes.root}>
-      <NewAccountModal open={ modal }  title="Create a chat room">
-            
-      </NewAccountModal>
-      <Frame pagetitle="고객 관리" />
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="xl" className={classes.container}>
-          <Grid container spacing = {0} direction="row" justify="center" alignItems="stretch">
-            <Grid item xs={12}>
-              <div className={classes.buttongroup}>
-                <Button className={classes.button} variant="contained" color="default" onClick={() => {setModal(true)}}>생성</Button>
-              </div>
-              <UserTable />
+  openModal = () =>{
+    this.setState({modalOpen: true});
+  }
+
+  closeModal = () =>{
+    this.setState({modalOpen: false});
+  }
+
+  dataReceive = (data) =>{
+    this.setState({rows: this.state.rows.concat(data)});
+  }
+
+  render() { 
+    const {classes} = this.props;
+    return ( 
+      <div className={classes.root}>
+        <NewAccountModal open={ this.state.modalOpen } close={this.closeModal} dataReceive={this.dataReceive}  title="Create a new Account" />
+        <Frame isAdmin={this.props.location.state.isAdmin} pagetitle="고객 관리" />
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth="xl" className={classes.container}>
+            <Grid container spacing = {0} direction="row" justify="center" alignItems="stretch">
+              <Grid item xs={9}>
+                <div className={classes.buttongroup}>
+                  <Button className={classes.button} variant="contained" color="default"  onClick={this.openModal}>생성</Button>
+                </div>
+                <UserTable rows={this.state.rows}/>
+              </Grid>
             </Grid>
-          </Grid>
-          <Box pt={4}>
-          </Box>
-        </Container>
-      </main>
-    </div>
-  );
+            <Box pt={4}>
+            </Box>
+          </Container>
+        </main>
+      </div>
+    );
+  }
 }
+export default withStyles(useStyles)(Member);
+
 

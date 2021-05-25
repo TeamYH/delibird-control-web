@@ -38,7 +38,7 @@ export default function Clean() {
 
   return (
     <div className={classes.root}>
-      <Frame pagetitle="청 소" />
+      <Frame isAdmin={this.props.isAdmin} pagetitle="청 소" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

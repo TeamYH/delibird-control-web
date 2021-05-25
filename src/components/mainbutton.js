@@ -109,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MainButton() {
+export default function MainButton(props) {
   const classes = useStyles();
 
   return (
@@ -124,7 +124,7 @@ export default function MainButton() {
               width: image.width,
             }}
           >
-            <Link to={image.path}>
+            <Link to={{pathname: image.path, state: {isAdmin: props.isAdmin}}}>
               <span
                 className={classes.imageSrc}
                 style={{

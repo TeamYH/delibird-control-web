@@ -4,7 +4,10 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
-import RegisterForm from './register_form';
+import RegisterForm from './delibird_connection_form';
+import RobotConnectTable from './robot_connection_modal_table';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -13,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   paper: {
+    width: 1000,
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
@@ -51,7 +55,7 @@ Fade.propTypes = {
   onExited: PropTypes.func,
 };
 
-export default function NewAccountModal(props) {
+export default function RobotConnectionModal(props) {
   const classes = useStyles();
 
   return (
@@ -70,7 +74,16 @@ export default function NewAccountModal(props) {
       >
         <Fade in={props.open}>
           <div className={classes.paper}>
-            <RegisterForm dataReceive={props.dataReceive}/>
+            <Container maxWidth="lg" className={classes.container}>
+              <Grid container spacing = {3} direction="row" justify="center" alignItems="stretch">
+                <Grid item xs={5}>
+                  <RegisterForm getData={props.getData}/>
+                </Grid>
+                <Grid item xs={7}>
+                  <RobotConnectTable rows={props.tables}/>
+                </Grid>
+              </Grid>
+            </Container>
           </div>
         </Fade>
       </Modal>

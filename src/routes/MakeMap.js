@@ -30,11 +30,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MakeMapPage() {
+export default function MakeMapPage(props) {
       const classes = useStyles();
+      var isAdmin = props.location.state.isAdmin;
       return (
         <div className={classes.root}>
-          <Frame pagetitle="지도 생성" />
+          <Frame isAdmin={isAdmin} pagetitle="지도 생성" />
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
             <Container maxWidth="lg" className={classes.container}>

@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {Component} from 'react';
 import MainButton  from '../components/mainbutton';
+import MainButtonAdmin from '../components/mainbutton_admin';
+import {withRouter} from 'react-router-dom';
 import Frame from '../components/frame';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles} from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = theme => ({
   root: {
     display: 'flex',
   },
@@ -20,21 +22,37 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
-}));
+});
 
-export default function Home() {
-  const classes = useStyles();
-  return (
-    <div className={classes.root}>
-      <Frame pagetitle="Delibird" />
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Box pt={4}>
-            <MainButton/>
-          </Box>
-        </Container>
-      </main>
-    </div>
-  );
+class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {  }
+  }
+
+  componentDidMount= () =>{
+    if(this.props.location.state.isAdmin === undefined){
+      this.props.history.push('/');
+    }
+  }
+
+  render() { 
+    var isAdmin = this.props.location.state.isAdmin;
+    
+    const {classes} = this.props;
+    return ( 
+      <div className={classes.root}>
+        <Frame isAdmin={isAdmin} pagetitle="Delibird" />
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth="lg" className={classes.container}>
+            <Box pt={4}>
+              {isAdmin ? <MainButtonAdmin isAdmin={isAdmin} />  : <MainButton isAdmin={isAdmin} />}
+            </Box>
+          </Container>
+        </main>
+      </div>
+    );
+  }
 }
+export default withStyles(useStyles)(withRouter(Home));

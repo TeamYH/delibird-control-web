@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {Component} from 'react';
 import clsx from 'clsx';
 import {Link} from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import HomeIcon from '@material-ui/icons/Home';
 import Drawer from '@material-ui/core/Drawer';
@@ -15,11 +15,11 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from '../components/listitems';
+import { mainListItems, secondaryListItems, Logout } from '../components/listitems';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = theme => ({
   root: {
     display: 'flex',
   },
@@ -57,6 +57,10 @@ const useStyles = makeStyles((theme) => ({
 
   title: {
     flexGrow: 1,
+  },
+
+  homebutton: {
+    margin: 10,
   },
 
   drawerPaper: {
@@ -99,40 +103,54 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
-}));
+});
 
-export default function Frame(props) {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
+
+class Frame extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      open: true,
+    }
+  }
+  
+  handleDrawerOpen = () => {
+    this.setState({open: true});
   };
 
-  return (
-    <div className={classes.root}>
+  handleDrawerClose = () => {
+    this.setState({open: false});
+  };
+
+  render() {
+    console.log(this.props.isAdmin);
+    
+    const {classes} = this.props; 
+    return ( 
+      <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar position="absolute" className={clsx(classes.appBar, this.state.open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
-          <Link to="/home">
-            <HomeIcon/>
+          <Link className={classes.homebutton} to={{
+            pathname: "/home",
+            state: {isAdmin: this.props.isAdmin}
+          }}>
+            <HomeIcon fontSize="large"/>
           </Link>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+            onClick={this.handleDrawerOpen}
+            className={clsx(classes.menuButton, this.state.open && classes.menuButtonHidden)}
           >
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            {props.pagetitle}
+            {this.props.pagetitle}
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+            <Badge color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -141,20 +159,22 @@ export default function Frame(props) {
       <Drawer
         variant="permanent"
         classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          paper: clsx(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
         }}
-        open={open}
+        open={this.state.open}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={this.handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        { this.props.isAdmin ? <List>{secondaryListItems}</List> : <List>{mainListItems}</List>}
         <Divider />
-        <List>{secondaryListItems}</List>
+        <List>{Logout}</List>
       </Drawer>
     </div>
-  );
+     );
+  }
 }
+export default withStyles(useStyles)(Frame);

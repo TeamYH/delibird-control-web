@@ -31,12 +31,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Support() {
+export default function Support(props) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Frame pagetitle="상담 요청" />
+      <Frame isAdmin={props.location.state.isAdmin} pagetitle="상담 요청" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

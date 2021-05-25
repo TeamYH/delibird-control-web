@@ -30,12 +30,12 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function TableSetting() {
+export default function TableSetting(props) {
   const classes = useStyles();
-
+  var isAdmin = props.location.state.isAdmin;
   return (
     <div className={classes.root}>
-      <Frame pagetitle="테이블 지정" />
+      <Frame isAdmin={isAdmin} pagetitle="테이블 지정" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <MakeTableMap/>

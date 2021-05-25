@@ -19,6 +19,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
 // function createData(storeName, userName, phoneNumber, id, password) {
@@ -150,8 +151,8 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
-
+  const { numSelected, openModal } = props;
+  
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -167,12 +168,11 @@ const EnhancedTableToolbar = (props) => {
           사용자 정보
         </Typography>
       )}
-
       {numSelected > 0 ? (
-        <div style={{width: "190px"}}>
-          <Tooltip title="Delete">
-            <IconButton aria-label="delete">
-              <DeleteIcon />
+        <div style={{width: "120px"}}>
+          <Tooltip title="Connect-robot">
+            <IconButton onClick={props.openModal} aria-label="delete">
+              <AddIcon />
             </IconButton>
           </Tooltip>
           <Tooltip title="Delete">
@@ -194,6 +194,7 @@ const EnhancedTableToolbar = (props) => {
 
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -220,7 +221,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable(props) {
+export default function UserTable(props) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -228,7 +229,6 @@ export default function EnhancedTable(props) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  console.log(props);
 
 
   const handleRequestSort = (event, property) => {
@@ -286,7 +286,7 @@ export default function EnhancedTable(props) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar openModal={props.openModal} numSelected={selected.length} />
         <TableContainer>
           <Table
             className={classes.table}

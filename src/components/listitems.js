@@ -55,7 +55,7 @@ export const mainListItems = (
 export const secondaryListItems = (
   <div>
     <ListSubheader inset>관리자 메뉴</ListSubheader>
-    <Link to="admin/members">
+    <Link to={{pathname: "admin/members", state: {isAdmin: true}}}>
       <ListItem button>
         <ListItemIcon>
           <PeopleIcon />
@@ -63,7 +63,7 @@ export const secondaryListItems = (
         <ListItemText primary="고객 관리" />
       </ListItem>
     </Link>
-    <Link to="admin/robot/setting">
+    <Link to={{pathname:"admin/robot/setting", state:{isAdmin: true}}}>
     <ListItem button>
       <ListItemIcon>
         <LinkIcon />
@@ -71,12 +71,26 @@ export const secondaryListItems = (
       <ListItemText primary="딜리버드 연동"/>
     </ListItem>
     </Link>
-    <Link to="admin/support">
+    <Link to={{pathname:"admin/support", state:{isAdmin: true}}}>
       <ListItem button>
         <ListItemIcon>
           <RingVolumeIcon />
         </ListItemIcon>
         <ListItemText primary="상담 요청" />
+      </ListItem>
+    </Link>
+  </div>
+
+);
+
+export const Logout = (
+  <div>
+    <Link to={{pathname: "/", }}>
+      <ListItem button>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="로그아웃" />
       </ListItem>
     </Link>
   </div>

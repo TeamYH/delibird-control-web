@@ -21,12 +21,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RobotSet() {
+export default function RobotSet(props) {
   const classes = useStyles();
-
+  var isAdmin = props.location.state.isAdmin;
   return (
     <div className={classes.root}>
-      <Frame pagetitle="딜리버드 관리" />
+      <Frame isAdmin={isAdmin} pagetitle="딜리버드 관리" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

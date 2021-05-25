@@ -31,12 +31,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Setting() {
+export default function Setting(props) {
   const classes = useStyles();
-
+  var isAdmin = props.location.state.isAdmin;
   return (
     <div className={classes.root}>
-      <Frame pagetitle="설 정" />
+      <Frame isAdmin={isAdmin} pagetitle="설 정" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

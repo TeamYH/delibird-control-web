@@ -50,11 +50,20 @@ class Login extends Component {
 
     if(account === 'delibird' && password === '1234'){
       sleep(1500);
-      this.props.history.push('/home')
+      this.props.history.push({
+        pathname: '/home',
+        state: {isAdmin: true},
+      });
+    }
+    else if(account === 'user1' && password === '1234'){
+      sleep(1500);
+      this.props.history.push({
+        pathname: '/home',
+        state: {isAdmin: false},
+      });
     }
     else{
       this.setState({isSuccess: false});
-      console.log(this.state.isSuccess);
     }
   }
 
