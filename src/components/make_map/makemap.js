@@ -76,7 +76,7 @@ class MakeMap extends Component {
     rostopic.publish(map_msg);
   }
 
-  render() { 
+  render() {
     let isStart = this.state.isStart;
 
     if(isStart === true){
@@ -90,7 +90,7 @@ class MakeMap extends Component {
             <Grid item >
                 <Container className="button-container" maxWidth="sm">
                   <div className="button-pos">
-                    <Link to="/robot/settings">
+                    <Link to={{pathname: "/robot/settings", state: {isAdmin: this.props.isAdmin}}}>
                       <Button onClick={this.onStop} className="button-pos" variant="contained" color="secondary">지도 생성 종료</Button>
                     </Link>
                   </div>

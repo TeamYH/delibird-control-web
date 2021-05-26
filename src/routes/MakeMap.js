@@ -39,7 +39,7 @@ export default function MakeMapPage(props) {
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
             <Container maxWidth="lg" className={classes.container}>
-              <MakeMap />
+              <MakeMap isAdmin={isAdmin}/>
               <Box pt={10}>
               </Box>
             </Container>

@@ -31,7 +31,8 @@ class Home extends Component {
   }
 
   componentDidMount= () =>{
-    if(this.props.location.state.isAdmin === undefined){
+    console.log(this.props);
+    if(this.props.location.state.isAdmin === undefined && this.props.isAdmin === undefined){
       this.props.history.push('/');
     }
   }

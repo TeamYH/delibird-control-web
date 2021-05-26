@@ -24,7 +24,7 @@ class TableSetButtons extends Component {
     return ( 
       <div>
         <div className="btn-pose" ><Button className="btn-pose" variant="contained" color="primary" onClick={this.props.opentable}>시 작</Button></div>
-        <Link to="/robot/settings">
+        <Link to={{pathname: "/robot/settings", state: {isAdmin: false}}}>
           <div className="btn-pose" ><Button className="btn-pose" variant="contained" color="primary" onClick={this.props.closetable}>종 료</Button></div>
         </Link>
       </div>

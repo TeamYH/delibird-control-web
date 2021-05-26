@@ -17,7 +17,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 export const mainListItems = (
   <div>
-    <Link to="/robot">
+    <Link to={{pathname: "/robot", state: {isAdmin: false}}}>
       <ListItem button>
         <ListItemIcon>
           <AirportShuttleIcon />
@@ -25,7 +25,7 @@ export const mainListItems = (
         <ListItemText primary="서빙" />
       </ListItem>
     </Link>
-    <Link to="/clean">
+    <Link to={{pathname: "/clean", state: {isAdmin: false}}}>
       <ListItem button>
         <ListItemIcon>
           <DeleteIcon />
@@ -33,7 +33,7 @@ export const mainListItems = (
         <ListItemText primary="청소" />
       </ListItem>
     </Link>
-    <Link to="/robot/settings">
+    <Link to={{pathname: "/robot/settings", state: {isAdmin: false}}}>
     <ListItem button>
       <ListItemIcon>
         <MemoryIcon />
@@ -41,7 +41,7 @@ export const mainListItems = (
       <ListItemText primary="딜리버드 관리" />
     </ListItem>
     </Link>
-    <Link to="/setting">
+    <Link to={{pathname: "/setting", state: {isAdmin: false}}}>
       <ListItem button>
         <ListItemIcon>
           <BuildIcon />

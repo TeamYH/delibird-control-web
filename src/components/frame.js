@@ -123,8 +123,6 @@ class Frame extends Component {
   };
 
   render() {
-    console.log(this.props.isAdmin);
-    
     const {classes} = this.props; 
     return ( 
       <div className={classes.root}>

@@ -33,12 +33,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Clean() {
+export default function Clean(props) {
   const classes = useStyles();
+  console.log(props.location.state.isAdmin);
 
   return (
     <div className={classes.root}>
-      <Frame isAdmin={this.props.isAdmin} pagetitle="청 소" />
+      <Frame isAdmin={props.location.state.isAdmin} pagetitle="청 소" />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

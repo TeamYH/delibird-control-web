@@ -23,7 +23,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RobotSet(props) {
   const classes = useStyles();
-  var isAdmin = props.location.state.isAdmin;
+  var isAdmin;
+  if(props.location.state.isAdmin === undefined){
+    isAdmin = props.isAdmin;
+  }
+  else{
+    isAdmin = props.location.state.isAdmin;
+  }
+  
   return (
     <div className={classes.root}>
       <Frame isAdmin={isAdmin} pagetitle="딜리버드 관리" />
@@ -31,7 +38,7 @@ export default function RobotSet(props) {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Box pt={4}>
-            <MakeMapButton/>
+            <MakeMapButton isAdmin={isAdmin}/>
           </Box>
         </Container>
       </main>
