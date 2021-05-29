@@ -495,8 +495,8 @@ ROS2D.NavigationArrow = function(options) {
   graphics.endStroke();
 
   // create the shape
-  // createjs.Shape.call(this, graphics);
-  createjs.Shape.call(this, polygon);
+  createjs.Shape.call(this, graphics);
+  // createjs.Shape.call(this, polygon);
   
   // check if we are pulsing
   if (pulse) {
@@ -524,29 +524,26 @@ ROS2D.NavigationArrowMakeMap = function(options) {
   options = options || {};
   var size = options.size || 10;
   var strokeSize = options.strokeSize || 3;
-  var strokeColor = options.strokeColor || createjs.Graphics.getRGB(0, 0, 0);
+  var strokeColor = options.strokeColor || createjs.Graphics.getRGB(51, 51, 204);
   var fillColor = options.fillColor || createjs.Graphics.getRGB(255, 0, 0);
   var pulse = options.pulse;
 
   // draw the arrow
   var graphics = new createjs.Graphics();
-  var polygon = new createjs.Graphics();
-  graphics.beginStroke("black").beginFill("red");
-  polygon.beginStroke("black").beginFill("red");
-  polygon.moveTo(0, 0).lineTo(1, 1).lineTo(0.5, 1.5).lineTo(0, 0);
-  // line width
+  var headLen = size / 5.0;
+  var headWidth = headLen * 2.0 / 2.0;
   graphics.setStrokeStyle(strokeSize);
-  graphics.moveTo(-size / 2.0, -size / 2.0);
-  graphics.beginStroke("red");
-  graphics.beginFill(fillColor);
-  graphics.lineTo(size, 0);
-  graphics.lineTo(-size / 2.0, size / 2.0);
+  graphics.beginStroke(strokeColor);
+  graphics.moveTo(0, 0);
+  graphics.drawCircle(0,0,size/1.5);
+  graphics.beginFill(strokeColor);
+  graphics.moveTo(size, 0);
+  graphics.lineTo(headLen, headWidth);
+  graphics.lineTo(headLen, -headWidth);
   graphics.closePath();
   graphics.endFill();
   graphics.endStroke();
 
-  // create the shape
-  // createjs.Shape.call(this, graphics);
   createjs.Shape.call(this, graphics);
   
   // check if we are pulsing
@@ -566,6 +563,7 @@ ROS2D.NavigationArrowMakeMap = function(options) {
       }
     });
   }
+
 };
 ROS2D.NavigationArrowMakeMap.prototype.__proto__ = createjs.Shape.prototype;
 /**

@@ -46,11 +46,11 @@ class MapMaker extends Component {
       viewer.shift(gridClient.currentGrid.pose.position.x, gridClient.currentGrid.pose.position.y);
     });
     
-    var robotMarker = new ROS2D.NavigationArrowMakeMap({
-        size : 0.25,
-        strokeSize : 0.05,
-        pulse: true,
-        fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65)
+    var robotMarker = new ROS2D.NaviagtionArrowMakeMap({
+        //size : 0.25,
+        //strokeSize : 0.05,
+        //pulse: true,
+        //fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65)
     });
     
     // gridClient.rootObject.addChild(robotMarker);

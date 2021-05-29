@@ -47,9 +47,9 @@ class Map extends Component {
     
     var robotMarker = new ROS2D.NavigationArrowMakeMap({
       size : 0.25,
-      // size : 100,
-      strokeSize : 0.05,
-      pulse: true,
+      //size : 100,
+      strokeSize : 0.1,
+      pulse: false,
       fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65)
     });
     var robotCreateFunc = function (handlerToCall, discriminator, robotMarker) {
@@ -65,12 +65,13 @@ class Map extends Component {
           degreeZ = quaZ / 1 * 180
         }
         else {
-          degreeZ = (-quaZ) / 1 * 180 + 180
+          degreeZ = (quaZ) / 1 * 180
         };
-        robotMarker.rotation = -degreeZ + 35;
+        robotMarker.rotation = -degreeZ;
         gridClient.rootObject.addChild(robotMarker);
       })
     }
+  
     var robotLocationListener = new ROSLIB.Topic({
       ros: ros,
       name: '/amcl_pose',
@@ -83,7 +84,7 @@ class Map extends Component {
   render() { 
     return ( 
       <div id="map">
-        
+
       </div>
     );
   }
