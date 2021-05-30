@@ -10,68 +10,81 @@ class Map extends Component {
     this.canvasRef = React.createRef();
     this.ctx = null;
 
-    this.state = { 
+    this.state = {
       image: null,
     }
   }
 
-  componentDidMount = () =>{
+  componentDidMount = () => {
+    const script = document.createElement("script");
+
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js";
+    script.async = true;
+
+    document.body.appendChild(script);
     this.rosMapData();
   }
 
   rosMapData = () => {
     var ros = new ROSLIB.Ros({
-      url : 'ws://15.165.36.17:9090'
+      url: 'ws://15.165.36.17:9090'
     });
 
     var viewer = new ROS2D.Viewer({
-      divID : 'map',
-      width : 800,
-      height : 750,
+      divID: 'map',
+      width: 800,
+      height: 750,
     });
 
     // Setup the map client.
     var gridClient = new ROS2D.OccupancyGridClient({
-      ros : ros,
-      rootObject : viewer.scene,
+      ros: ros,
+      rootObject: viewer.scene,
       // Use this property in case of continuous updates
       continuous: true
     });
     // Scale the canvas to fit to the map
-    gridClient.on(function() {
+    gridClient.on(function () {
       console.log(gridClient.currentGrid.width, gridClient.currentGrid.height)
       viewer.scaleToDimensions(gridClient.currentGrid.width, gridClient.currentGrid.height);
       console.log(gridClient.currentGrid.pose.position.x, gridClient.currentGrid.pose.position.y)
       viewer.shift(gridClient.currentGrid.pose.position.x, gridClient.currentGrid.pose.position.y);
     });
-    
-    var robotMarker = new ROS2D.NavigationArrowMakeMap({
-      size : 0.25,
-      //size : 100,
-      strokeSize : 0.1,
+
+    var costmapClient = new ROS2D.OccupancyGridClientCostmap({
+      ros: ros,
+      rootObject: viewer.scene,
+      continuous: true
+    });
+
+    costmapClient.on(function(){
+      console.log(costmapClient.currentGrid.width, costmapClient.currentGrid.height)
+      viewer.scaleToDimensions(costmapClient.currentGrid.width, costmapClient.currentGrid.height);
+      console.log(costmapClient.currentGrid.pose.position.x, costmapClient.currentGrid.pose.position.y)
+      viewer.shift(costmapClient.currentGrid.pose.position.x, costmapClient.currentGrid.pose.position.y);
+    })
+
+    var robotMarker = new ROS2D.RobotPosition({
+      size: 0.25,
+      strokeSize: 0.1,
       pulse: false,
       fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65)
     });
     var robotCreateFunc = function (handlerToCall, discriminator, robotMarker) {
-      return discriminator.subscribe(function(pose){
+      return discriminator.subscribe(function (pose) {
 
         robotMarker.x = pose.pose.pose.position.x;
         robotMarker.y = -pose.pose.pose.position.y;
-        // console.log(robotMarker.x)
-        // console.log(robotMarker.y)
-        var quaZ = pose.pose.pose.orientation.z;
-        var degreeZ = 0;
-        if( quaZ >= 0 ) {
-          degreeZ = quaZ / 1 * 180
-        }
-        else {
-          degreeZ = (quaZ) / 1 * 180
-        };
-        robotMarker.rotation = -degreeZ;
+        robotMarker.rotation = new THREE.Euler().setFromQuaternion(new THREE.Quaternion(
+          pose.pose.pose.orientation.x,
+          pose.pose.pose.orientation.y,
+          pose.pose.pose.orientation.z,
+          pose.pose.pose.orientation.w
+        )
+        ).z * -180 / 3.14159;
         gridClient.rootObject.addChild(robotMarker);
       })
     }
-  
     var robotLocationListener = new ROSLIB.Topic({
       ros: ros,
       name: '/amcl_pose',
@@ -81,8 +94,8 @@ class Map extends Component {
     robotCreateFunc('subscribe', robotLocationListener, robotMarker);
   }
 
-  render() { 
-    return ( 
+  render() {
+    return (
       <div id="map">
 
       </div>

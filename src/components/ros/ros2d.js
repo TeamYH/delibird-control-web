@@ -286,6 +286,57 @@ ROS2D.OccupancyGridClient = function(options) {
 };
 ROS2D.OccupancyGridClient.prototype.__proto__ = EventEmitter2.prototype;
 
+ROS2D.OccupancyGridClientCostmap = function(options) {
+  var that = this;
+  options = options || {};
+  var ros = options.ros;
+  var topic = options.topic || '/move_base/global_costmap/costmap';
+  this.continuous = options.continuous;
+  this.rootObject = options.rootObject || new createjs.Container();
+
+  // current grid that is displayed
+  // create an empty shape to start with, so that the order remains correct.
+  this.currentGrid = new createjs.Shape();
+  this.rootObject.addChild(this.currentGrid);
+  // work-around for a bug in easeljs -- needs a second object to render correctly
+  this.rootObject.addChild(new ROS2D.Grid({size:1}));
+
+  // subscribe to the topic
+  var rosTopic = new ROSLIB.Topic({
+    ros : ros,
+    name : topic,
+    messageType : 'nav_msgs/OccupancyGrid',
+    compression : 'png'
+  });
+
+  rosTopic.subscribe(function(message) {
+    // check for an old map
+    var index = null;
+    if (that.currentGrid) {
+      index = that.rootObject.getChildIndex(that.currentGrid);
+      that.rootObject.removeChild(that.currentGrid);
+    }
+
+    that.currentGrid = new ROS2D.OccupancyGrid({
+      message : message
+    });
+    if (index !== null) {
+      that.rootObject.addChildAt(that.currentGrid, index);
+    }
+    else {
+      that.rootObject.addChild(that.currentGrid);
+    }
+
+    that.emit('change');
+
+    // check if we should unsubscribe
+    if (!that.continuous) {
+      rosTopic.unsubscribe();
+    }
+  });
+};
+ROS2D.OccupancyGridClientCostmap.prototype.__proto__ = EventEmitter2.prototype;
+
 /**
  * @author Jihoon Lee- jihoonlee.in@gmail.com
  * @author Russell Toris - rctoris@wpi.edu
@@ -519,7 +570,7 @@ ROS2D.NavigationArrow = function(options) {
 
 ROS2D.NavigationArrow.prototype.__proto__ = createjs.Shape.prototype;
 
-ROS2D.NavigationArrowMakeMap = function(options) {
+ROS2D.RobotPosition = function(options) {
   var that = this;
   options = options || {};
   var size = options.size || 10;
@@ -530,8 +581,8 @@ ROS2D.NavigationArrowMakeMap = function(options) {
 
   // draw the arrow
   var graphics = new createjs.Graphics();
-  var headLen = size / 5.0;
-  var headWidth = headLen * 2.0 / 2.0;
+  var headLen = size / 2.0;
+  var headWidth = headLen * 2.0 / 3.0;
   graphics.setStrokeStyle(strokeSize);
   graphics.beginStroke(strokeColor);
   graphics.moveTo(0, 0);
@@ -565,7 +616,7 @@ ROS2D.NavigationArrowMakeMap = function(options) {
   }
 
 };
-ROS2D.NavigationArrowMakeMap.prototype.__proto__ = createjs.Shape.prototype;
+ROS2D.RobotPosition.prototype.__proto__ = createjs.Shape.prototype;
 /**
  * @author Inigo Gonzalez - ingonza85@gmail.com
  */
