@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ROSLIB from 'roslib';
 import ROS2D from '../ros/ros2d.js';
+import {request} from '../../utils/axios';
 /* global createjs */
 /* global THREE */
 
@@ -11,18 +12,19 @@ class Map extends Component {
     this.ctx = null;
 
     this.state = {
-      image: null,
+      //image: null,
+      pose: [{}],
     }
   }
 
-  componentDidMount = () => {
-    const script = document.createElement("script");
-
-    script.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js";
-    script.async = true;
-
-    document.body.appendChild(script);
-    this.rosMapData();
+  getTableData = async() => {
+    var res = await request('GET', '/delibird_db/table_list');
+    console.log('res ' + res);
+    this.setState({
+      pose: res
+    });
+    // console.log(this.props.pose)
+    console.log(this.state.pose)
   }
 
   rosMapData = () => {
@@ -41,33 +43,51 @@ class Map extends Component {
       ros: ros,
       rootObject: viewer.scene,
       // Use this property in case of continuous updates
-      continuous: true
+      continuous: false
     });
     // Scale the canvas to fit to the map
     gridClient.on(function () {
-      console.log(gridClient.currentGrid.width, gridClient.currentGrid.height)
       viewer.scaleToDimensions(gridClient.currentGrid.width, gridClient.currentGrid.height);
-      console.log(gridClient.currentGrid.pose.position.x, gridClient.currentGrid.pose.position.y)
       viewer.shift(gridClient.currentGrid.pose.position.x, gridClient.currentGrid.pose.position.y);
     });
 
     var costmapClient = new ROS2D.OccupancyGridClientCostmap({
       ros: ros,
       rootObject: viewer.scene,
-      continuous: true
+      continuous: false
     });
 
     costmapClient.on(function(){
-      console.log(costmapClient.currentGrid.width, costmapClient.currentGrid.height)
       viewer.scaleToDimensions(costmapClient.currentGrid.width, costmapClient.currentGrid.height);
-      console.log(costmapClient.currentGrid.pose.position.x, costmapClient.currentGrid.pose.position.y)
       viewer.shift(costmapClient.currentGrid.pose.position.x, costmapClient.currentGrid.pose.position.y);
     })
+
+    const aLoop = this.state.pose.map((unit, idx) => {
+      var tableMarker = new ROS2D.TablePosition({
+        size : 0.25,
+        strokeSize : 0.1,
+        pulse: false,
+        fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65)
+      });
+      tableMarker.x = unit.pos_x;
+      tableMarker.y = -unit.pos_y;
+      tableMarker.rotation = new THREE.Euler().setFromQuaternion(new THREE.Quaternion(
+        unit.angle_x,
+        unit.angle_y,
+        unit.angle_z,
+        unit.angle_w
+      )).z * -180 / 3.14159;
+
+      console.log(tableMarker.rotation);
+      gridClient.rootObject.addChild(tableMarker);
+      //return tableMarker
+    });
+
 
     var robotMarker = new ROS2D.RobotPosition({
       size: 0.25,
       strokeSize: 0.1,
-      pulse: false,
+      pulse: true,
       fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65)
     });
     var robotCreateFunc = function (handlerToCall, discriminator, robotMarker) {
@@ -80,8 +100,7 @@ class Map extends Component {
           pose.pose.pose.orientation.y,
           pose.pose.pose.orientation.z,
           pose.pose.pose.orientation.w
-        )
-        ).z * -180 / 3.14159;
+        )).z * -180 / 3.14159;
         gridClient.rootObject.addChild(robotMarker);
       })
     }
@@ -92,6 +111,20 @@ class Map extends Component {
     });
     gridClient.rootObject.addChild(robotMarker);
     robotCreateFunc('subscribe', robotLocationListener, robotMarker);
+  }
+
+  componentDidMount = async() => {
+    const script = document.createElement("script");
+
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js";
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    await this.getTableData();
+    
+    this.rosMapData();
+    
   }
 
   render() {

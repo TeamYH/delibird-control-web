@@ -112,7 +112,7 @@ navigation = (pos) =>{
          orientation : orientation
 
       });   
-      console.log(pose)
+      //console.log(pose)
     var goal_msg = new ROSLIB.Message({
           header : {
             frame_id : "map"
@@ -135,7 +135,7 @@ navigation = (pos) =>{
 
   render() {
     const {classes} = this.props;
-    console.log(this.props.data);
+    //console.log(this.props.data);
     const pose = this.props.data;
       return(
         <div>

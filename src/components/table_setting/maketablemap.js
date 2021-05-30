@@ -62,8 +62,8 @@ class MakeTableMap extends Component {
   rosMapData = (msgtype) => {
 
     var ros = new ROSLIB.Ros({
-        // url : 'ws://15.165.36.17:9090'
-        url : 'ws://15.165.50.106:9090'
+        url : 'ws://15.165.36.17:9090'
+        //url : 'ws://15.165.50.106:9090'
       });
   
       // Create the main viewer.
@@ -71,22 +71,7 @@ class MakeTableMap extends Component {
         divID : 'map',
         width : 700,
         height : 600,
-        // draw_opt : this.draw_opt,
       });
-      // var viewer2 = new ROS2D.Viewer({
-      //   divID : 'nav',
-      //   width : 700,
-      //   height : 600,
-      //   // draw_opt : this.draw_opt,
-      // });
-      // var nav2 = NAV.OccupancyGridClientNav({
-      //   ros : ros,
-      //   rootObject : viewer2.scene,
-      //   viewer : viewer2,
-      //   continuous: true,
-      //   serverName : '/move_base',
-      //   withOrientation : true
-      // });
   
       var nav = NAV2D.OccupancyGridClientNav({
         ros : ros,
@@ -96,15 +81,6 @@ class MakeTableMap extends Component {
         serverName : '/move_base',
         withOrientation : true
       });
-
-    
-    // var robotMarker = new ROS2D.NavigationArrow({
-    //   size : 0.25,
-    //   // size : 100,
-    //   strokeSize : 0.05,
-    //   pulse: true,
-    //   fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65)
-    // });
     
     if(msgtype === 1){
       var rostopic = new ROSLIB.Topic({
@@ -115,7 +91,7 @@ class MakeTableMap extends Component {
       var opentable = new ROSLIB.Message({
         data : 'opentable',
       }, console.log('opentable', nav));
-      //rostopic.publish(opentable);
+      rostopic.publish(opentable);
     }
 
     if(msgtype === 2){
@@ -140,6 +116,8 @@ class MakeTableMap extends Component {
       id: 0,
       pos_x:0,
       pos_y:0,
+      angle_x:0,
+      angle_y:0,
       angle_w:0,
       angle_z:0,
     }
@@ -166,6 +144,8 @@ class MakeTableMap extends Component {
         if(goal){
           tmp_pose.pos_x = goal.pose.position.x;
           tmp_pose.pos_y = goal.pose.position.y;
+          tmp_pose.angle_x = goal.pose.orientation.x;
+          tmp_pose.angle_y = goal.pose.orientation.y;
           tmp_pose.angle_w = goal.pose.orientation.w;
           tmp_pose.angle_z = goal.pose.orientation.z;
           
@@ -176,31 +156,6 @@ class MakeTableMap extends Component {
         }
 
     })
-    // save_goal_to_back('subscribe', save_goal);
-    
-    // var robotCreateFunc = function (handlerToCall, discriminator, robotMarker) {
-    //   return discriminator.subscribe(function(pose){
-    //     robotMarker.x = pose.pose.pose.position.x;
-    //     robotMarker.y = -pose.pose.pose.position.y;
-    //     var quaZ = pose.pose.pose.orientation.z;
-    //     var degreeZ = 0;
-    //     if( quaZ >= 0 ) {
-    //       degreeZ = quaZ / 1 * 180
-    //     }
-    //     else {
-    //       degreeZ = (-quaZ) / 1 * 180 + 180
-    //     };
-    //     robotMarker.rotation = -degreeZ + 35;
-    //     gridClient.rootObject.addChildAt(robotMarker);
-    //   })
-    // }
-    // var robotLocationListener = new ROSLIB.Topic({
-    //   ros: ros,
-    //   name: '/odom',
-    //   messageType: 'nav_msgs/Odometry'
-    // });
-    // gridClient.rootObject.addChild(robotMarker);
-    // robotCreateFunc('subscribe', robotLocationListener, robotMarker);
   }
 
   opentable = () =>{

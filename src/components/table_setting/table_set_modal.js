@@ -64,6 +64,8 @@ class TableSetModal extends Component {
         tableid:0,
         pos_x: 0,
         pos_y: 0,
+        angle_x : 0,
+        angle_y : 0,
         angle_z: 0,
         angle_w: 0,
     }
@@ -74,6 +76,8 @@ class TableSetModal extends Component {
       id : this.state.tableid,
       pos_x : this.props.pose.pos_x,
       pos_y : this.props.pose.pos_y,
+      angle_x : this.props.pose.angle_x,
+      angle_y : this.props.pose.angle_y,
       angle_w : this.props.pose.angle_w,
       angle_z : this.props.pose.angle_z,
     };
@@ -91,6 +95,16 @@ class TableSetModal extends Component {
 
   setYpos = (e) =>{
     this.setState({pos_y: e.target.value});
+    // console.log(this.state);
+  }
+
+  setXAngle = (e) =>{
+    this.setState({angle_x: e.target.value});
+    // console.log(this.state);
+  }
+
+  setYAngle = (e) =>{
+    this.setState({angle_y: e.target.value});
     // console.log(this.state);
   }
 
@@ -138,6 +152,8 @@ class TableSetModal extends Component {
               <form className={classes.root} noValidate autoComplete="off">
                 <TextField id="outlined-basic" name="pos_x" value={this.props.pose.pos_x} onChange={this.setXpos} label="pos_x" variant="outlined"/>
                 <TextField id="outlined-basic" name="pos_y" value={this.props.pose.pos_y} onChange={this.setYpos} label="pos_y" variant="outlined" />
+                <TextField id="outlined-basic" name="angle_x" value={this.props.pose.angle_x} onChange={this.setWangle} label="angle_x" variant="outlined" />
+                <TextField id="outlined-basic" name="angle_y" value={this.props.pose.angle_y} onChange={this.setWangle} label="angle_y" variant="outlined" />
                 <TextField id="outlined-basic" name="angle_z" value={this.props.pose.angle_z} onChange={this.setWangle} label="angle_z" variant="outlined" />
                 <TextField id="outlined-basic" name="angle_w" value={this.props.pose.angle_w} onChange={this.setZangle} label="angle_w" variant="outlined"/>
                 <TextField id="outlined-basic" name="TableNum" value={this.state.tableid} onChange={this.setID} label="테이블 번호" variant="outlined"/>

@@ -617,6 +617,55 @@ ROS2D.RobotPosition = function(options) {
 
 };
 ROS2D.RobotPosition.prototype.__proto__ = createjs.Shape.prototype;
+
+ROS2D.TablePosition = function(options) {
+  var that = this;
+  options = options || {};
+  var size = options.size || 10;
+  var strokeSize = options.strokeSize || 3;
+  var strokeColor = options.strokeColor || createjs.Graphics.getRGB(51, 51, 204);
+  var fillColor = options.fillColor || createjs.Graphics.getRGB(255, 0, 0);
+  var pulse = options.pulse;
+
+  // draw the arrow
+  var graphics = new createjs.Graphics();
+  var headLen = size / 2.0;
+  var headWidth = headLen * 2.0 / 3.0;
+  graphics.setStrokeStyle(strokeSize);
+  graphics.beginStroke(strokeColor);
+  graphics.moveTo(0, 0);
+  graphics.drawCircle(0,0,size/1.5);
+  graphics.beginFill(strokeColor);
+  graphics.moveTo(size, 0);
+  graphics.lineTo(headLen, headWidth);
+  graphics.lineTo(headLen, -headWidth);
+  graphics.closePath();
+  graphics.endFill();
+  graphics.endStroke();
+
+  createjs.Shape.call(this, graphics);
+  
+  // check if we are pulsing
+  if (pulse) {
+    // have the model "pulse"
+    var growCount = 0;
+    var growing = true;
+    createjs.Ticker.addEventListener('tick', function() {
+      if (growing) {
+        that.scaleX *= 1.035;
+        that.scaleY *= 1.035;
+        growing = (++growCount < 10);
+      } else {
+        that.scaleX /= 1.035;
+        that.scaleY /= 1.035;
+        growing = (--growCount < 0);
+      }
+    });
+  }
+
+};
+ROS2D.TablePosition.prototype.__proto__ = createjs.Shape.prototype;
+
 /**
  * @author Inigo Gonzalez - ingonza85@gmail.com
  */
@@ -701,7 +750,7 @@ ROS2D.PathShape = function(options) {
 	options = options || {};
 	var path = options.path;
 	this.strokeSize = options.strokeSize || 3;
-	this.strokeColor = options.strokeColor || createjs.Graphics.getRGB(0, 0, 0);
+	this.strokeColor = options.strokeColor || createjs.Graphics.getRGB(0, 255, 0);
 	
 	// draw the line
 	this.graphics = new createjs.Graphics();
@@ -1219,10 +1268,10 @@ ROS2D.Viewer.prototype.scaleToDimensions = function(width, height) {
   this.scene.y = typeof this.scene.y_prev_shift !== 'undefined' ? this.scene.y_prev_shift : this.scene.y;
   
   // save scene scaling
-  console.log('this.scene.x : ' + this.scene.x)
-  console.log(typeof this.scene.x_prev_shift)
-  console.log('this.scene.y : ' + this.scene.y)
-  console.log(this.scene.x_prev_shift)
+  //console.log('this.scene.x : ' + this.scene.x)
+  //console.log(typeof this.scene.x_prev_shift)
+  //console.log('this.scene.y : ' + this.scene.y)
+  //console.log(this.scene.x_prev_shift)
   this.scene.scaleX = this.width / width;
   this.scene.scaleY = this.height / height;
 };

@@ -23,12 +23,10 @@ class Orders extends Component {
 
   getTableData = async() => {
     var res = await request('GET', '/delibird_db/table_list');
-    console.log(res);
+    //console.log(res);
     this.setState({pose: res});
   }
   
-  
-
   Rosdata = () => {
     
     let status = {
