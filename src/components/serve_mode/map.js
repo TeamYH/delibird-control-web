@@ -19,11 +19,9 @@ class Map extends Component {
 
   getTableData = async() => {
     var res = await request('GET', '/delibird_db/table_list');
-    console.log('res ' + res);
     this.setState({
       pose: res
     });
-    // console.log(this.props.pose)
     console.log(this.state.pose)
   }
 
@@ -67,8 +65,14 @@ class Map extends Component {
         size : 0.25,
         strokeSize : 0.1,
         pulse: false,
-        fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65)
+        fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65),
       });
+
+      var tableText = new createjs.Text("Table" + idx, "bold 0.3px Verdana");
+      tableText.x = unit.pos_x - 0.8;
+      tableText.y = -unit.pos_y - 0.6;
+      gridClient.rootObject.addChild(tableText);
+
       tableMarker.x = unit.pos_x;
       tableMarker.y = -unit.pos_y;
       tableMarker.rotation = new THREE.Euler().setFromQuaternion(new THREE.Quaternion(
@@ -78,9 +82,7 @@ class Map extends Component {
         unit.angle_w
       )).z * -180 / 3.14159;
 
-      console.log(tableMarker.rotation);
       gridClient.rootObject.addChild(tableMarker);
-      //return tableMarker
     });
 
 
