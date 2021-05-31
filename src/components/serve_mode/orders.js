@@ -7,28 +7,32 @@ import TableRow from '@material-ui/core/TableRow';
 import TableModal from './tablemodal';
 import 'roslib';
 import Title from '../title';
-import {request} from '../../utils/axios';
+import { request } from '../../utils/axios';
 import '../../css/orders.css';
 import ROSLIB from 'roslib';
+import Button from '@material-ui/core/Button';
+import {Link} from 'react-router-dom';
+
+var serveState = 0;
 
 class Orders extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows:[
+      rows: [
       ],
       modalOpen: false,
     }
   }
 
-  getTableData = async() => {
+  getTableData = async () => {
     var res = await request('GET', '/delibird_db/table_list');
     //console.log(res);
-    this.setState({pose: res});
+    this.setState({ pose: res });
   }
-  
+
   Rosdata = () => {
-    
+
     let status = {
       id: 0,
       name: '로봇',
@@ -39,79 +43,93 @@ class Orders extends Component {
     var temp = this
 
     var ros = new ROSLIB.Ros({
-      url : 'ws://15.165.36.17:9090'
+      url: 'ws://15.165.36.17:9090'
     });
 
-    ros.on('connection', function() {
+    ros.on('connection', function () {
       console.log('Connected to websocket server.');
       status.battery = 0;
       status.stat = '정보 없음';
       temp.setState(() => {
-        return {rows: [status]};
+        return { rows: [status] };
       })
     });
-  
-    ros.on('error', function(error) {
+
+    ros.on('error', function (error) {
       console.log('Error connecting to websocket server: ', error);
       status.battery = 0;
       status.stat = '정보 없음';
       temp.setState(() => {
-        return {rows: [status]};
+        return { rows: [status] };
       })
     });
-  
-    ros.on('close', function() {
+
+    ros.on('close', function () {
       console.log('Connection to websocket server closed.');
     });
-  
+
     var batteryClient = new ROSLIB.Topic({
       ros: ros,
       name: '/battery_state',
       messageType: 'sensor_msgs/BatteryState'
     });
 
-    batteryClient.subscribe(function(msg) {
-      status.battery = parseInt((1-((12.3-msg.voltage)/1.3))*100);
+    batteryClient.subscribe(function (msg) {
+      status.battery = parseInt((1 - ((12.3 - msg.voltage) / 1.3)) * 100);
       status.stat = '대기중';
       console.log(status);
       batteryClient.unsubscribe();
       //this.setState({rows: this.state.rows.concat({id: status.id, name:status.name, memo:status.memo, battery:status.battery, status: status.stat})});
       temp.setState(() => {
-        return {rows: [status]};
+        return { rows: [status] };
       })
     });
-    
-      var rostopic = new ROSLIB.Topic({
-        ros : ros,
-        name : '/web_signal',
-        messageType : 'std_msgs/String'
-      });
+
+    var rostopic = new ROSLIB.Topic({
+      ros: ros,
+      name: '/web_signal',
+      messageType: 'std_msgs/String'
+    });
+
+    if(serveState == 0){
       var servestart = new ROSLIB.Message({
-        data : 'servestart',
+        data: 'servestart',
       }, console.log('servestart'));
       rostopic.publish(servestart);
+
+      serveState = 1;
+    }
     
+    else{
+      var serveclose = new ROSLIB.Message({
+        data: 'serveclose',
+      }, console.log('serveclose'));
+      rostopic.publish(serveclose);
+
+      serveState = 0;
+    }
+    
+
   }
 
-
-  componentDidMount = async() => {
+  componentDidMount = async () => {
     this.Rosdata();
     this.getTableData();
   }
-  
+
   createData = (data) => {
-    this.setState({rows: this.state.rows.concat({id: data.id, name:data.name, memo:data.memo, battery:data.battery, status: data.status})});
+    this.setState({ rows: this.state.rows.concat({ id: data.id, name: data.name, memo: data.memo, battery: data.battery, status: data.status }) });
   }
 
   cellClick = (data) => {
-    this.setState({modalOpen: true});
+    this.setState({ modalOpen: true });
   }
 
-  closeModal = () =>{
-    this.setState({modalOpen: false});
+  closeModal = () => {
+    this.setState({ modalOpen: false });
   }
 
-  stateSetting = () =>{
+  stateSetting = () => {
     let status = {
       id: 0,
       name: '로봇',
@@ -123,10 +141,10 @@ class Orders extends Component {
     status.battery = this.state.rows[0].battery;
     status.stat = '서빙중';
 
-    this.setState({rows: [status]});
+    this.setState({ rows: [status] });
   }
 
-  stateSetting2 = () =>{
+  stateSetting2 = () => {
     let status = {
       id: 0,
       name: '로봇',
@@ -138,44 +156,46 @@ class Orders extends Component {
     status.battery = this.state.rows[0].battery;
     status.stat = '대기중';
 
-    this.setState({rows: [status]});
+    this.setState({ rows: [status] });
   }
-  
+
   render() {
     var pose = this.state.pose;
     var row = this.state.rows;
-    return ( 
+    return (
       <React.Fragment>
-        <TableModal pose={pose} open={ this.state.modalOpen } close={ this.closeModal } stateserve = {this.stateSetting} statewait = {this.stateSetting2} title="Create a chat room">
-            
+        <TableModal pose={pose} open={this.state.modalOpen} close={this.closeModal} stateserve={this.stateSetting} statewait={this.stateSetting2} title="Create a chat room">
+
         </TableModal>
-      <Title>딜리버드 목록</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>No</TableCell>
-            <TableCell>이름</TableCell>
-            <TableCell>메모</TableCell>
-            <TableCell>배터리</TableCell>
-            <TableCell align="right">상태</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {row.map((row) => (
-            <TableRow hover key={row.id} onClick={() => this.cellClick(row)}>
-              <TableCell>{row.id+1}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.memo}</TableCell>
-              <TableCell>{row.battery}%</TableCell>
-              <TableCell align="right">{row.stat}</TableCell>
+        <Title>딜리버드 목록</Title>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>No</TableCell>
+              <TableCell>이름</TableCell>
+              <TableCell>메모</TableCell>
+              <TableCell>배터리</TableCell>
+              <TableCell align="right">상태</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <div className="seeMore">
-        
-      </div>
-    </React.Fragment>
+          </TableHead>
+          <TableBody>
+            {row.map((row) => (
+              <TableRow hover key={row.id} onClick={() => this.cellClick(row)}>
+                <TableCell>{row.id + 1}</TableCell>
+                <TableCell>{row.name}</TableCell>
+                <TableCell>{row.memo}</TableCell>
+                <TableCell>{row.battery}%</TableCell>
+                <TableCell align="right">{row.stat}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <div className="seeMore"></div>
+        <Link to={{pathname: "/home", state: {isAdmin: false}}}>
+          <div className="btn-pose" ><Button className="btn-pose" variant="contained" color="primary" onClick={() => this.Rosdata()}>종 료</Button></div>
+        </Link>
+
+      </React.Fragment>
     );
   }
 }
