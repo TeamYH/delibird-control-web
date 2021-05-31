@@ -254,11 +254,12 @@ NAV2D.Navigator = function (options) {
           var currentPos = stage.globalToRos(event.stageX, event.stageY);
           var currentPosVec3 = new ROSLIB.Vector3(currentPos);
 
-          orientationMarker = new ROS2D.NavigationArrow({
-            size: 25,
-            strokeSize: 3,
-            fillColor: createjs.Graphics.getRGB(0, 255, 0, 0.66),
-            pulse: false
+          orientationMarker = new ROS2D.TablePosition({
+            size : 25,
+            strokeSize : 3,
+            fillColor : createjs.Graphics.getRGB(0, 255, 0, 0.66),
+            pulse : false
+
           });
 
           xDelta = currentPosVec3.x - positionVec3.x;
@@ -288,8 +289,9 @@ NAV2D.Navigator = function (options) {
         // - calulate direction between stored <position> and goal position
         // - set pose with orientation
         // - send goal
+        console.log('up')
         mouseDown = false;
-
+        that.rootObject.addChild(orientationMarker);
         var goalPos = stage.globalToRos(event.stageX, event.stageY);
 
         var goalPosVec3 = new ROSLIB.Vector3(goalPos);
@@ -314,10 +316,6 @@ NAV2D.Navigator = function (options) {
           position: positionVec3,
           orientation: orientation
         });
-        // send the goal
-        // sendGoal(pose);
-        // console.log("sssssssssssssssssssssssssssssd")
-        // var header = new ROSLIB.
         var save_goal = new ROSLIB.Topic({
           ros: ros,
           name: '/goal_signal',
@@ -328,21 +326,6 @@ NAV2D.Navigator = function (options) {
         });
         save_goal.publish(save_goal_msg);
 
-        // var goal = new ROSLIB.Topic({
-        //   ros: ros,
-        //   name : '/move_base_simple/goal',
-        //   messageType : 'geometry_msgs/PoseStamped'
-        // });
-
-        // var goal_msg = new ROSLIB.Message({
-        //   header : {
-        //     frame_id : "map"
-        //  },
-        //         pose  
-        //       });
-
-        // console.log(pose_web);
-        // return pose;    
       }
     };
 
@@ -418,6 +401,4 @@ NAV2D.OccupancyGridClientNav = function (options) {
   });
 
 };
-
-
 export default NAV2D

@@ -13,6 +13,18 @@
 }
 
 .btn-pose {
+  font-weight: 500;
   width: 180px;
   margin: 10px;
+}
+
+.remove-button {
+  margin-left: 15px;
+}
+
+.data-pose {
+  margin: 10px;
+}
+.confirm-btn-pose {
+  margin-top: 15px;
 }
