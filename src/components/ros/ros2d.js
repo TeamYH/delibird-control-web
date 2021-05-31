@@ -163,6 +163,8 @@ ROS2D.OccupancyGrid = function(options) {
   this.pose = new ROSLIB.Pose({
     position : message.info.origin.position,
     orientation : message.info.origin.orientation
+    // position: message.poses.pose.position,
+    // orientation: message.poses.pose.orientation
   });
 
   // set the size
@@ -644,6 +646,8 @@ ROS2D.TablePosition = function(options) {
   graphics.endStroke();
 
   createjs.Shape.call(this, graphics);
+
+  console.log(graphics);
   
   // check if we are pulsing
   if (pulse) {
@@ -756,13 +760,16 @@ ROS2D.PathShape = function(options) {
 	this.graphics = new createjs.Graphics();
 	
 	if (path !== null && typeof path !== 'undefined') {
+    
 		this.graphics.setStrokeStyle(this.strokeSize);
 		this.graphics.beginStroke(this.strokeColor);
-		this.graphics.moveTo(path.poses[0].pose.position.x / this.scaleX, path.poses[0].pose.position.y / -this.scaleY);
+		this.graphics.moveTo(path.poses[0].pose.position.x, -path.poses[0].pose.position.y);
 		for (var i=1; i<path.poses.length; ++i) {
-			this.graphics.lineTo(path.poses[i].pose.position.x / this.scaleX, path.poses[i].pose.position.y / -this.scaleY);
+			this.graphics.lineTo(path.poses[i].pose.position.x, -path.poses[i].pose.position.y);
+      // console.log(this.scaleX);
 		}
 		this.graphics.endStroke();
+    console.log(this.graphics);
 	}
 	
 	// create the shape
@@ -779,9 +786,11 @@ ROS2D.PathShape.prototype.setPath = function(path) {
 	if (path !== null && typeof path !== 'undefined') {
 		this.graphics.setStrokeStyle(this.strokeSize);
 		this.graphics.beginStroke(this.strokeColor);
-		this.graphics.moveTo(path.poses[0].pose.position.x / this.scaleX, path.poses[0].pose.position.y / -this.scaleY);
+		// this.graphics.moveTo(path.poses[0].pose.position.x / this.scaleX, path.poses[0].pose.position.y / -this.scaleY);
+    this.graphics.moveTo(path.poses[0].pose.position.x, -path.poses[0].pose.position.y);
 		for (var i=1; i<path.poses.length; ++i) {
-			this.graphics.lineTo(path.poses[i].pose.position.x / this.scaleX, path.poses[i].pose.position.y / -this.scaleY);
+			// this.graphics.lineTo(path.poses[i].pose.position.x / this.scaleX, path.poses[i].pose.position.y / -this.scaleY);
+      this.graphics.lineTo(path.poses[i].pose.position.x, -path.poses[i].pose.position.y);
 		}
 		this.graphics.endStroke();
 	}

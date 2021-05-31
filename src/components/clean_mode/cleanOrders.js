@@ -39,11 +39,11 @@ class CleanOrders extends Component {
 
     ros.on('connection', function() {
       console.log('Connected to websocket server.');
-      // status.battery = 0;
-      // status.stat = '정보 없음';
-      // temp.setState(() => {
-      //   return {ros: ros, rows: [status]};
-      // })
+      status.battery = 0;
+      status.stat = '정보 없음';
+      temp.setState(() => {
+        return {ros: ros, rows: [status]};
+      })
     });
   
     ros.on('error', function(error) {
@@ -77,7 +77,8 @@ class CleanOrders extends Component {
             return {ros: ros, rows: [status]};
           })
         });
-      break;
+        
+        break;
       case 2: break;
       
       case 3: 
@@ -116,7 +117,6 @@ class CleanOrders extends Component {
       break;
     }
   }
-
 
   componentDidMount = async() => {
     this.Rosdata(1);
