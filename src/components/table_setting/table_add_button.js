@@ -17,8 +17,9 @@ class TableAddButton extends Component {
     this.setState({modalOpen: false});
   }
 
-  onRemove = item =>{
+  onRemove = (item, idx) =>{
     this.props.tableDelete(item.id);
+    this.props.deleteTableMarker(idx);
   }
 
   render() {
@@ -33,7 +34,7 @@ class TableAddButton extends Component {
           return(
             <div className="data-pose">
               <span className="btn-pose" >테이블 번호 : {item.id}</span>
-              <span className="remove-button" ><Button  variant="contained" color="primary" onClick={() => this.onRemove(item)}>삭제</Button></span>
+              <span className="remove-button" ><Button  variant="contained" color="primary" onClick={() => this.onRemove(item,idx)}>삭제</Button></span>
             </div>
           );
         })}
