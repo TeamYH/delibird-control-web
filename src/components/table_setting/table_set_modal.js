@@ -68,6 +68,7 @@ class TableSetModal extends Component {
         angle_y : 0,
         angle_z: 0,
         angle_w: 0,
+        // table_list : [],
     }
   }
 
@@ -81,11 +82,13 @@ class TableSetModal extends Component {
       angle_w : this.props.pose.angle_w,
       angle_z : this.props.pose.angle_z,
     };
+    this.props.dataUpdate(data)
     console.log(qs.stringify(data));
 
-    var res = await request('POST', '/delibird_db/table_list?'+ qs.stringify(data));
-    console.log(res);
+    // var res = await request('POST', '/delibird_db/table_list?'+ qs.stringify(data));
+    // console.log(res);
     this.setState({modalOpen: true});
+    
   }
 
   setXpos = (e) =>{
@@ -159,7 +162,7 @@ class TableSetModal extends Component {
                 <TextField id="outlined-basic" name="TableNum" value={this.state.tableid} onChange={this.setID} label="테이블 번호" variant="outlined"/>
               </form>
               <div className="btn-pose" >
-                <Button className="btn-pose" variant="contained" color="primary" onClick={this.saveData}>저장</Button>
+                <Button className="btn-pose" variant="contained" color="primary" onClick={this.saveData}>확인</Button>
               </div>
             </div>
           </Fade>
