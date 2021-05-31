@@ -1,7 +1,7 @@
 import React from 'react';
 import Frame from '../components/frame';
 import { makeStyles } from '@material-ui/core/styles';
-import Map from '../components/serve_mode/map';
+import Clean_Map from '../components/clean_mode/clean_map';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -45,7 +45,7 @@ export default function Clean(props) {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing = {3} direction="row" justify="center" alignItems="stretch">
             <Grid>
-              <Map />
+              <Clean_Map />
             </Grid>
              {/* Recent Orders */}
             <Grid item>

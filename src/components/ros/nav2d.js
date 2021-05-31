@@ -9,7 +9,7 @@ import ROSLIB from 'roslib'
  */
 
 var NAV2D = NAV2D || {
-  REVISION : '0.3.0'
+  REVISION: '0.3.0'
 };
 
 /**
@@ -30,7 +30,7 @@ var NAV2D = NAV2D || {
  *   * withOrientation (optional) - if the Navigator should consider the robot orientation (default: false)
  *   * viewer - the main viewer to render to
  */
-NAV2D.ImageMapClientNav = function(options) {
+NAV2D.ImageMapClientNav = function (options) {
   var that = this;
   options = options || {};
   this.ros = options.ros;
@@ -45,18 +45,18 @@ NAV2D.ImageMapClientNav = function(options) {
 
   // setup a client to get the map
   var client = new ROS2D.ImageMapClient({
-    ros : this.ros,
-    rootObject : this.rootObject,
-    topic : topic,
-    image : image
+    ros: this.ros,
+    rootObject: this.rootObject,
+    topic: topic,
+    image: image
   });
-  client.on('change', function() {
+  client.on('change', function () {
     that.navigator = new NAV2D.Navigator({
-      ros : that.ros,
-      serverName : that.serverName,
-      actionName : that.actionName,
-      rootObject : that.rootObject,
-      withOrientation : that.withOrientation
+      ros: that.ros,
+      serverName: that.serverName,
+      actionName: that.actionName,
+      rootObject: that.rootObject,
+      withOrientation: that.withOrientation
     });
 
     // scale the viewer to fit the map
@@ -84,7 +84,7 @@ NAV2D.ImageMapClientNav = function(options) {
  *   * rootObject (optional) - the root object to add the click listeners to and render robot markers to
  *   * withOrientation (optional) - if the Navigator should consider the robot orientation (default: false)
  */
-NAV2D.Navigator = function(options) {
+NAV2D.Navigator = function (options) {
   var that = this;
   options = options || {};
   var ros = options.ros;
@@ -95,9 +95,9 @@ NAV2D.Navigator = function(options) {
 
   // setup the actionlib client
   var actionClient = new ROSLIB.ActionClient({
-    ros : ros,
-    actionName : actionName,
-    serverName : serverName
+    ros: ros,
+    actionName: actionName,
+    serverName: serverName
   });
 
   /**
@@ -108,13 +108,13 @@ NAV2D.Navigator = function(options) {
   function sendGoal(pose) {
     // create a goal
     var goal = new ROSLIB.Goal({
-      actionClient : actionClient,
-      goalMessage : {
-        target_pose : {
-          header : {
-            frame_id : '/map'
+      actionClient: actionClient,
+      goalMessage: {
+        target_pose: {
+          header: {
+            frame_id: '/map'
           },
-          pose : pose
+          pose: pose
         }
       }
     });
@@ -122,10 +122,10 @@ NAV2D.Navigator = function(options) {
 
     // create a marker for the goal
     var goalMarker = new ROS2D.NavigationArrow({
-      size : 0.15,
-      strokeSize : 0.1,
-      fillColor : createjs.Graphics.getRGB(255, 64, 128, 0.66),
-      pulse : true
+      size: 0.15,
+      strokeSize: 0.1,
+      fillColor: createjs.Graphics.getRGB(255, 64, 128, 0.66),
+      pulse: true
     });
     goalMarker.x = pose.position.x;
     goalMarker.y = -pose.position.y;
@@ -149,10 +149,10 @@ NAV2D.Navigator = function(options) {
 
   // marker for the robot
   var robotMarker = new ROS2D.NavigationArrow({
-    size : 25,
-    strokeSize : 1,
-    fillColor : createjs.Graphics.getRGB(255, 128, 0, 0.66),
-    pulse : true
+    size: 25,
+    strokeSize: 1,
+    fillColor: createjs.Graphics.getRGB(255, 128, 0, 0.66),
+    pulse: true
   });
   // wait for a pose to come in first
   robotMarker.visible = false;
@@ -161,14 +161,12 @@ NAV2D.Navigator = function(options) {
 
   // setup a listener for the robot pose
   var poseListener = new ROSLIB.Topic({
-    ros : ros,
-    // name : '/odom',
-    // messageType : 'nav_msgs/Odometry',
-    name : '/amcl_pose',
-    messageType : 'geometry_msgs/PoseWithCovarianceStamped',
-    throttle_rate : 100
+    ros: ros,
+    name: '/amcl_pose',
+    messageType: 'geometry_msgs/PoseWithCovarianceStamped',
+    throttle_rate: 100
   });
-  poseListener.subscribe(function(pose) {
+  poseListener.subscribe(function (pose) {
     // update the robots position on the map
     // console.log(pose)
     // console.log('robotMarker.x : ' + robotMarker.x + 'robotMarker.y : '+ robotMarker.y)
@@ -186,41 +184,41 @@ NAV2D.Navigator = function(options) {
     robotMarker.visible = true;
   });
 
-  if (withOrientation === false){
+  if (withOrientation === false) {
     console.log(false)
     // setup a double click listener (no orientation)
-    this.rootObject.addEventListener('dblclick', function(event) {
+    this.rootObject.addEventListener('dblclick', function (event) {
       // convert to ROS coordinates
       var coords = stage.globalToRos(event.stageX, event.stageY);
       var pose = new ROSLIB.Pose({
-        position : new ROSLIB.Vector3(coords)
+        position: new ROSLIB.Vector3(coords)
       });
       // send the goal
       // sendGoal(pose);
-    //   var goal = new ROSLIB.Topic({
-    //     ros: ros,
-    //     name : '/move_base_simple/goal',
-    //     messageType : 'geometry_msgs/PoseStamped'
-    // });
-    //     var goal_msg = new ROSLIB.Message({
-    //       header : {
-    //         frame_id : "map"
-    //     },
-    //             pose  
-    //           });
+      //   var goal = new ROSLIB.Topic({
+      //     ros: ros,
+      //     name : '/move_base_simple/goal',
+      //     messageType : 'geometry_msgs/PoseStamped'
+      // });
+      //     var goal_msg = new ROSLIB.Message({
+      //       header : {
+      //         frame_id : "map"
+      //     },
+      //             pose  
+      //           });
 
-    //   goal.publish(goal_msg);  
-              var save_goal = new ROSLIB.Topic({
-          ros: ros,
-          name : '/goal_signal',
-          messageType : 'geometry_msgs/PoseStamped'
+      //   goal.publish(goal_msg);  
+      var save_goal = new ROSLIB.Topic({
+        ros: ros,
+        name: '/goal_signal',
+        messageType: 'geometry_msgs/PoseStamped'
       });
-        var save_goal_msg = new ROSLIB.Message({
-          pose  
-        });
-        console.log(pose)
-        save_goal.publish(save_goal_msg); 
-      
+      var save_goal_msg = new ROSLIB.Message({
+        pose
+      });
+      console.log(pose)
+      save_goal.publish(save_goal_msg);
+
     });
   } else { // withOrientation === true
     // setup a click-and-point listener (with orientation)
@@ -235,20 +233,20 @@ NAV2D.Navigator = function(options) {
     var xDelta = 0;
     var yDelta = 0;
 
-    var mouseEventHandler = function(event, mouseState) {
+    var mouseEventHandler = function (event, mouseState) {
 
-      if (mouseState === 'down'){
+      if (mouseState === 'down') {
         // get position when mouse button is pressed down
         console.log('mouse_down')
         position = stage.globalToRos(event.stageX, event.stageY);
         positionVec3 = new ROSLIB.Vector3(position);
         mouseDown = true;
       }
-      else if (mouseState === 'move'){
+      else if (mouseState === 'move') {
         // remove obsolete orientation marker
         that.rootObject.removeChild(orientationMarker);
-        
-        if ( mouseDown === true) {
+
+        if (mouseDown === true) {
           // if mouse button is held down:
           // - get current mouse position
           // - calulate direction between stored <position> and current position
@@ -261,27 +259,28 @@ NAV2D.Navigator = function(options) {
             strokeSize : 3,
             fillColor : createjs.Graphics.getRGB(0, 255, 0, 0.66),
             pulse : false
+
           });
 
-          xDelta =  currentPosVec3.x - positionVec3.x;
-          yDelta =  currentPosVec3.y - positionVec3.y;
-          
-          thetaRadians  = Math.atan2(xDelta,yDelta);
+          xDelta = currentPosVec3.x - positionVec3.x;
+          yDelta = currentPosVec3.y - positionVec3.y;
+
+          thetaRadians = Math.atan2(xDelta, yDelta);
 
           thetaDegrees = thetaRadians * (180.0 / Math.PI);
-          
+
           if (thetaDegrees >= 0 && thetaDegrees <= 180) {
             thetaDegrees += 270;
           } else {
             thetaDegrees -= 90;
           }
 
-          orientationMarker.x =  positionVec3.x;
+          orientationMarker.x = positionVec3.x;
           orientationMarker.y = -positionVec3.y;
           orientationMarker.rotation = thetaDegrees;
           orientationMarker.scaleX = 1.0 / stage.scaleX;
           orientationMarker.scaleY = 1.0 / stage.scaleY;
-          
+
           that.rootObject.addChild(orientationMarker);
         }
       } else if (mouseDown) { // mouseState === 'up'
@@ -296,53 +295,54 @@ NAV2D.Navigator = function(options) {
         var goalPos = stage.globalToRos(event.stageX, event.stageY);
 
         var goalPosVec3 = new ROSLIB.Vector3(goalPos);
-        
-        xDelta =  goalPosVec3.x - positionVec3.x;
-        yDelta =  goalPosVec3.y - positionVec3.y;
-        
-        thetaRadians  = Math.atan2(xDelta,yDelta);
-        
+
+        xDelta = goalPosVec3.x - positionVec3.x;
+        yDelta = goalPosVec3.y - positionVec3.y;
+
+        thetaRadians = Math.atan2(xDelta, yDelta);
+
         if (thetaRadians >= 0 && thetaRadians <= Math.PI) {
           thetaRadians += (3 * Math.PI / 2);
         } else {
-          thetaRadians -= (Math.PI/2);
+          thetaRadians -= (Math.PI / 2);
         }
-        
-        var qz =  Math.sin(-thetaRadians/2.0);
-        var qw =  Math.cos(-thetaRadians/2.0);
-        
-        var orientation = new ROSLIB.Quaternion({x:0, y:0, z:qz, w:qw});
-        
+
+        var qz = Math.sin(-thetaRadians / 2.0);
+        var qw = Math.cos(-thetaRadians / 2.0);
+
+        var orientation = new ROSLIB.Quaternion({ x: 0, y: 0, z: qz, w: qw });
+
         var pose = new ROSLIB.Pose({
-          position :    positionVec3,
-          orientation : orientation
+          position: positionVec3,
+          orientation: orientation
         });
         var save_goal = new ROSLIB.Topic({
           ros: ros,
-          name : '/goal_signal',
-          messageType : 'geometry_msgs/PoseStamped'
-      });
+          name: '/goal_signal',
+          messageType: 'geometry_msgs/PoseStamped'
+        });
         var save_goal_msg = new ROSLIB.Message({
-          pose  
+          pose
         });
         save_goal.publish(save_goal_msg);
+
       }
     };
 
-    this.rootObject.addEventListener('stagemousedown', function(event) {
-      mouseEventHandler(event,'down');
+    this.rootObject.addEventListener('stagemousedown', function (event) {
+      mouseEventHandler(event, 'down');
     });
 
-    this.rootObject.addEventListener('stagemousemove', function(event) {
-      mouseEventHandler(event,'move');
+    this.rootObject.addEventListener('stagemousemove', function (event) {
+      mouseEventHandler(event, 'move');
     });
 
-    var pose_web = this.rootObject.addEventListener('stagemouseup', function(event) {
-      pose_for_web = mouseEventHandler(event,'up');
-        console.log(pose_for_web);
-        return pose_for_web;
+    var pose_web = this.rootObject.addEventListener('stagemouseup', function (event) {
+      pose_for_web = mouseEventHandler(event, 'up');
+      console.log(pose_for_web);
+      return pose_for_web;
     });
-    
+
   }
 };
 
@@ -365,7 +365,7 @@ NAV2D.Navigator = function(options) {
  *   * withOrientation (optional) - if the Navigator should consider the robot orientation (default: false)
  *   * viewer - the main viewer to render to
  */
-NAV2D.OccupancyGridClientNav = function(options) {
+NAV2D.OccupancyGridClientNav = function (options) {
   var that = this;
   options = options || {};
   this.ros = options.ros;
@@ -381,25 +381,25 @@ NAV2D.OccupancyGridClientNav = function(options) {
 
   // setup a client to get the map
   var client = new ROS2D.OccupancyGridClient({
-    ros : this.ros,
-    rootObject : this.rootObject,
-    continuous : continuous,
-    topic : topic
+    ros: this.ros,
+    rootObject: this.rootObject,
+    continuous: continuous,
+    topic: topic
   });
-  client.on('change', function() {
+  client.on('change', function () {
     that.navigator = new NAV2D.Navigator({
-      ros : that.ros,
-      serverName : that.serverName,
-      actionName : that.actionName,
-      rootObject : that.rootObject,
-      withOrientation : that.withOrientation
+      ros: that.ros,
+      serverName: that.serverName,
+      actionName: that.actionName,
+      rootObject: that.rootObject,
+      withOrientation: that.withOrientation
     });
-    
+
     // scale the viewer to fit the map
     that.viewer.scaleToDimensions(client.currentGrid.width, client.currentGrid.height);
     that.viewer.shift(client.currentGrid.pose.position.x, client.currentGrid.pose.position.y);
   });
-  
+
 };
 
 
