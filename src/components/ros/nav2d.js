@@ -401,6 +401,4 @@ NAV2D.OccupancyGridClientNav = function (options) {
   });
 
 };
-
-
 export default NAV2D

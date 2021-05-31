@@ -13,20 +13,31 @@ class TableAddButton extends Component {
     }
   }
 
-  
-
   closeModal = () =>{
     this.setState({modalOpen: false});
   }
 
+  onRemove = item =>{
+    this.props.tableDelete(item.id);
+  }
+
   render() {
-    
+    var list = this.props.table_list;
+    console.log(list);
+    if(list === undefined){
+      return(<div></div>)
+    }
     return ( 
       <div>
-        <div className="btn-pose" ><Button className="btn-pose" variant="contained" color="primary" onClick={this.props.opentable}>시 작</Button></div>
-        <Link to={{pathname: "/robot/settings", state: {isAdmin: false}}}>
-          <div className="btn-pose" ><Button className="btn-pose" variant="contained" color="primary" onClick={this.props.closetable}>종 료</Button></div>
-        </Link>
+        {list.map((item, idx) => {
+          return(
+            <div className="data-pose">
+              <span className="btn-pose" >테이블 번호 : {item.id}</span>
+              <span className="remove-button" ><Button  variant="contained" color="primary" onClick={() => this.onRemove(item)}>삭제</Button></span>
+            </div>
+          );
+        })}
+        <div className="btn-pose" ><Button className="btn-pose" variant="contained" color="primary" onClick={this.props.opentable}>저장</Button></div>
       </div>
     );
   }

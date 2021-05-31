@@ -647,7 +647,7 @@ ROS2D.TablePosition = function(options) {
 
   createjs.Shape.call(this, graphics);
 
-  console.log(graphics);
+  // console.log(graphics);
   
   // check if we are pulsing
   if (pulse) {

@@ -34,6 +34,7 @@ const useStyles = theme => ({
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
+    marginTop: 20,
     overflow: 'auto',
     flexDirection: 'column',
   },
@@ -43,6 +44,7 @@ class MakeTableMap extends Component {
   constructor(props) {
     super(props);
     this.state = { 
+      isStart: false,
       msgtype: 0,
       modalOpen: false,
       pose: {
@@ -62,7 +64,7 @@ class MakeTableMap extends Component {
   }
 
   tableObject = () =>{
-    console.log('tableObject')
+    console.log(this.state.table_list)
     
     const aLoop = this.state.table_list.map((unit, idx) => {
       console.log('aLoop')
@@ -73,7 +75,7 @@ class MakeTableMap extends Component {
         fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65),
       });
 
-      var tableText = new createjs.Text("Table" + idx, "bold 0.3px Verdana");
+      var tableText = new createjs.Text("Table" + unit.id, "bold 0.25px Verdana");
       tableText.x = unit.pos_x - 0.8;
       tableText.y = -unit.pos_y - 0.6;
       this.state.rootObject.addChild(tableText);
@@ -104,9 +106,8 @@ class MakeTableMap extends Component {
   }
   componentDidUpdate = () =>{
     this.tableObject();
-  
   }
- 
+
   rosMapData = (msgtype) => {
 
     var ros = new ROSLIB.Ros({
@@ -188,7 +189,6 @@ class MakeTableMap extends Component {
       angle_z:0,
     }
     save_goal.subscribe(function(goal) {
-              console.log(goal);
         if(goal){
           tmp_pose.pos_x = goal.pose.position.x;
           tmp_pose.pos_y = goal.pose.position.y;
@@ -200,24 +200,24 @@ class MakeTableMap extends Component {
           pose.setState(() => {
             return { modalOpen:true, pose: tmp_pose }; 
             });
-          console.log(pose.state);
         }
-
     })
   }
+
   dataUpdate = (data) =>{
     console.log(data)
     this.setState({table_list : this.state.table_list.concat(data)});
     // console.log(this.state.table_list)
-
   }
 
   opentable = () =>{
     this.rosMapData(1);
+    this.setState({isStart: true});
   }
 
   closetable = () =>{
     this.rosMapData(2);
+    this.setState({isStart: false});
   }
 
   openmodal = () =>{
@@ -232,6 +232,11 @@ class MakeTableMap extends Component {
     this.setState({modalOpen: false});
   }
 
+  tableDelete = id =>{
+    console.log('실행됨');
+    this.setState({table_list: this.state.table_list.filter(item => item.id !== id)});
+  }
+
   render() { 
     const {classes} = this.props;
     return (
@@ -241,14 +246,13 @@ class MakeTableMap extends Component {
           <Grid container spacing = {3} direction="row" justify="center" alignItems="stretch">
             <Grid>
               <div id="map" />
-              {/* <div id="nav" /> */}
             </Grid>
             <Grid item>
               <Paper className={classes.paper}>
-                <TableSetButtons opentable={this.opentable} closetable={this.closetable} openmodal={this.openModal}/>
+                <TableSetButtons isStart={this.state.isStart} opentable={this.opentable} closetable={this.closetable} openmodal={this.openModal}/>
               </Paper>
               <Paper className={classes.paper}>
-              <TableAddButton table_list = {this.table_list}/>
+                <TableAddButton tableDelete={this.tableDelete} table_list = {this.state.table_list}/>
               </Paper>
             </Grid>
           </Grid>
