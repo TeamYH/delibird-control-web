@@ -12,6 +12,7 @@ class Clean_Map extends Component {
 
     this.state = {
       image: null,
+      timerId: null
     }
   }
 
@@ -41,7 +42,7 @@ class Clean_Map extends Component {
       ros: ros,
       rootObject: viewer.scene,
       // Use this property in case of continuous updates
-      continuous: false
+      continuous: true
     });
     // Scale the canvas to fit to the map
     gridClient.on(function () {
@@ -50,40 +51,41 @@ class Clean_Map extends Component {
       console.log(gridClient.currentGrid.pose.position.x, gridClient.currentGrid.pose.position.y)
       viewer.shift(gridClient.currentGrid.pose.position.x, gridClient.currentGrid.pose.position.y);
     });
-    
+
     var cleanforPath = new ROSLIB.Topic({
-        ros: ros,
-        name: '/path_planning_node/cleaning_plan_nodehandle/cleaning_path',
-        messageType: 'nav_msgs/Path'
-    });
-
-    cleanforPath.subscribe(function(message) {
-        var path = new ROS2D.PathShape({
-          ros: ros,
-          strokeSize : 0.01,
-          path: message
-        });
-        console.log(message.poses);
-        gridClient.rootObject.addChild(path);
-        cleanforPath.unsubscribe();
-    });
-
-    var cleanPastPath = new ROSLIB.Topic({
       ros: ros,
-      name: '/clean_robot/passed_path',
-      mesageType: 'nave_msgs/Path'
+      name: '/path_planning_node/cleaning_plan_nodehandle/cleaning_path',
+      messageType: 'nav_msgs/Path'
     });
 
-    cleanPastPath.subscribe(function(message) {
+    cleanforPath.subscribe(function (message) {
       var path = new ROS2D.PathShape({
         ros: ros,
-        strokeSize : 0.3,
-        path: message,
-        strokeColor: createjs.Graphics.getRGB(0, 0, 255, 0.65)
+        strokeSize: 0.01,
+        path: message
       });
       console.log(message.poses);
       gridClient.rootObject.addChild(path);
-      cleanPastPath.unsubscribe();
+      cleanforPath.unsubscribe();
+    });
+    
+    var cleanPastPath = new ROSLIB.Topic({
+      ros: ros,
+      name: '/clean_robot/passed_path',
+      mesageType: 'nav_msgs/Path',
+      throttle_rate: 2000
+    });
+
+    var path = new ROS2D.PathShape({
+      ros: ros,
+      strokeSize: 0.3,
+      strokeColor: createjs.Graphics.getRGB(0, 0, 255, 0.65)
+    });
+    cleanPastPath.subscribe(function (message) {
+      console.log(message.poses);
+      path.setPath(message);
+      gridClient.rootObject.addChild(path);
+      // cleanPastPath.unsubscribe();
     });
 
     var costmapClient = new ROS2D.OccupancyGridClientCostmap({
@@ -92,7 +94,7 @@ class Clean_Map extends Component {
       continuous: false
     });
 
-    costmapClient.on(function(){
+    costmapClient.on(function () {
       console.log(costmapClient.currentGrid.width, costmapClient.currentGrid.height)
       viewer.scaleToDimensions(costmapClient.currentGrid.width, costmapClient.currentGrid.height);
       console.log(costmapClient.currentGrid.pose.position.x, costmapClient.currentGrid.pose.position.y)

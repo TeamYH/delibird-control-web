@@ -5,7 +5,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import CleanModal from './cleanmodal';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import 'roslib';
 import Title from '../title';
@@ -181,7 +181,7 @@ class CleanOrders extends Component {
           </TableBody>
         </Table>
         <div className="seeMore"></div>
-        <Link to={{pathname: "/home", state: {isAdmin: false}}}>
+        <Link to={{ pathname: "/home", state: { isAdmin: false } }}>
           <div className="btn-pose" ><Button className="btn-pose" variant="contained" color="primary" onClick={() => this.Rosdata(3)}>종 료</Button></div>
         </Link>
       </React.Fragment>

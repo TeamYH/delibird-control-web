@@ -11,7 +11,7 @@ import { request } from '../../utils/axios';
 import '../../css/orders.css';
 import ROSLIB from 'roslib';
 import Button from '@material-ui/core/Button';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 var serveState = 0;
 
@@ -91,7 +91,7 @@ class Orders extends Component {
       messageType: 'std_msgs/String'
     });
 
-    if(serveState == 0){
+    if (serveState == 0) {
       var servestart = new ROSLIB.Message({
         data: 'servestart',
       }, console.log('servestart'));
@@ -99,8 +99,8 @@ class Orders extends Component {
 
       serveState = 1;
     }
-    
-    else{
+
+    else {
       var servestop = new ROSLIB.Message({
         data: 'servestop',
       }, console.log('servestop'));
@@ -108,7 +108,7 @@ class Orders extends Component {
 
       serveState = 0;
     }
-    
+
 
   }
 
@@ -191,7 +191,7 @@ class Orders extends Component {
           </TableBody>
         </Table>
         <div className="seeMore"></div>
-        <Link to={{pathname: "/home", state: {isAdmin: false}}}>
+        <Link to={{ pathname: "/home", state: { isAdmin: false } }}>
           <div className="btn-pose" ><Button className="btn-pose" variant="contained" color="primary" onClick={() => this.Rosdata()}>종 료</Button></div>
         </Link>
 
