@@ -86,8 +86,6 @@ class Clean_Map extends Component {
       cleanPastPath.unsubscribe();
     });
 
-    // gridClient.rootObject.addChild(path);
-
     var costmapClient = new ROS2D.OccupancyGridClientCostmap({
       ros: ros,
       rootObject: viewer.scene,

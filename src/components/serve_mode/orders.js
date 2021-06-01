@@ -101,10 +101,10 @@ class Orders extends Component {
     }
     
     else{
-      var serveclose = new ROSLIB.Message({
-        data: 'serveclose',
-      }, console.log('serveclose'));
-      rostopic.publish(serveclose);
+      var servestop = new ROSLIB.Message({
+        data: 'servestop',
+      }, console.log('servestop'));
+      rostopic.publish(servestop);
 
       serveState = 0;
     }
