@@ -63,37 +63,6 @@ class MakeTableMap extends Component {
     }
   }
 
-  tableObject = () =>{
-    console.log(this.state.table_list)
-    
-    const aLoop = this.state.table_list.map((unit, idx) => {
-      console.log('aLoop')
-      var tableMarker = new ROS2D.TablePosition({
-        size : 0.25,
-        strokeSize : 0.1,
-        pulse: false,
-        fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65),
-      });
-
-      var tableText = new createjs.Text("Table" + unit.id, "bold 0.25px Verdana");
-      tableText.x = unit.pos_x - 0.8;
-      tableText.y = -unit.pos_y - 0.6;
-      this.state.rootObject.addChild(tableText);
-      // this.setState({text_object_list:this.state.text_object_list.concat(tableText)})
-
-      tableMarker.x = unit.pos_x;
-      tableMarker.y = -unit.pos_y;
-      tableMarker.rotation = new THREE.Euler().setFromQuaternion(new THREE.Quaternion(
-        unit.angle_x,
-        unit.angle_y,
-        unit.angle_z,
-        unit.angle_w
-      )).z * -180 / 3.14159;
-
-      this.state.rootObject.addChild(tableMarker);
-      // this.setState({table_object_list:this.state.table_object_list.concat(tableText)})
-    });
-  }
 
   componentDidMount = () =>{
     // this.rosMapData();
@@ -103,9 +72,6 @@ class MakeTableMap extends Component {
     script.async = true;
 
     document.body.appendChild(script);
-  }
-  componentDidUpdate = () =>{
-    this.tableObject();
   }
 
   rosMapData = (msgtype) => {
@@ -138,16 +104,6 @@ class MakeTableMap extends Component {
         stage = rootObject.getStage();
       }
       this.setState({rootObject:rootObject})
-      // var robotMarker = new ROS2D.TablePosition({
-      //   size : 0.25,
-      //   strokeSize : 0.1,
-      //   pulse: false,
-      //   fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65),
-      // });
-      // robotMarker.x = 4.497216606827633;
-      // robotMarker.y =-2.061252108741224;
-      // // wait for a pose to come in first
-      // rootObject.addChild(robotMarker);
     
     if(msgtype === 1){
       var rostopic = new ROSLIB.Topic({
@@ -203,11 +159,50 @@ class MakeTableMap extends Component {
         }
     })
   }
+  deleteTableMarker = (data) =>{
+    console.log(data)
+    const aLoop = this.state.table_object_list.map((unit, idx) => {
+      if(idx == data){
+        this.state.rootObject.removeChild(unit);
+        this.setState({table_object_list: this.state.table_object_list.filter(item => item !== unit)});
+      }
+    });
+    const bLoop = this.state.text_object_list.map((unit, idx) => {
+      if(idx == data){
+        this.state.rootObject.removeChild(unit);
+        this.setState({text_object_list: this.state.text_object_list.filter(item => item !== unit)});
+      }
+    });
+  }
 
   dataUpdate = (data) =>{
     console.log(data)
     this.setState({table_list : this.state.table_list.concat(data)});
-    // console.log(this.state.table_list)
+    var tableMarker = new ROS2D.TablePosition({
+      size : 0.25,
+      strokeSize : 0.1,
+      pulse: false,
+      fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65),
+    });
+
+    var tableText = new createjs.Text("Table" + data.id, "bold 0.25px Verdana");
+    tableText.x = data.pos_x - 0.8;
+    tableText.y = -data.pos_y - 0.6;
+    this.state.rootObject.addChild(tableText);
+    this.setState({text_object_list:this.state.text_object_list.concat(tableText)})
+
+    tableMarker.x = data.pos_x;
+    tableMarker.y = -data.pos_y;
+    tableMarker.rotation = new THREE.Euler().setFromQuaternion(new THREE.Quaternion(
+      data.angle_x,
+      data.angle_y,
+      data.angle_z,
+      data.angle_w
+    )).z * -180 / 3.14159;
+
+    this.state.rootObject.addChild(tableMarker);
+    this.setState({table_object_list:this.state.table_object_list.concat(tableMarker)})
+    console.log(this.setState.table_object_list)
   }
 
   opentable = () =>{
@@ -252,7 +247,7 @@ class MakeTableMap extends Component {
                 <TableSetButtons isStart={this.state.isStart} opentable={this.opentable} closetable={this.closetable} openmodal={this.openModal}/>
               </Paper>
               <Paper className={classes.paper}>
-                <TableAddButton tableDelete={this.tableDelete} table_list = {this.state.table_list}/>
+                <TableAddButton deleteTableMarker={this.deleteTableMarker} tableDelete={this.tableDelete} table_list = {this.state.table_list}/>
               </Paper>
             </Grid>
           </Grid>
