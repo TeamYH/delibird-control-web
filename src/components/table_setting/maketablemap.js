@@ -10,6 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import TableSetButtons from './tablesetbuttons';
 import TableSetModal from './table_set_modal';
 import TableAddButton from './table_add_button'
+import {request} from '../../utils/axios';
+import qs from 'qs';
 import NAV from '../ros/NAV'
 /* global createjs */
 /* global THREE */
@@ -72,7 +74,15 @@ class MakeTableMap extends Component {
     script.async = true;
 
     document.body.appendChild(script);
+
+    // this.getTabledata();
   }
+
+  // getTabledata = async() =>{
+  //   var res = await request('GET', '/delibird_db/table_list');
+  //   this.setState({table_list: res});
+  //   console.log(res);
+  // }
 
   rosMapData = (msgtype) => {
 
@@ -157,8 +167,9 @@ class MakeTableMap extends Component {
             return { modalOpen:true, pose: tmp_pose }; 
             });
         }
-    })
+    });
   }
+
   deleteTableMarker = (data) =>{
     console.log(data)
     const aLoop = this.state.table_object_list.map((unit, idx) => {
@@ -227,16 +238,40 @@ class MakeTableMap extends Component {
     this.setState({modalOpen: false});
   }
 
-  tableDelete = id =>{
+  tableDelete = (id) =>{
     console.log('실행됨');
     this.setState({table_list: this.state.table_list.filter(item => item.id !== id)});
+  }
+
+  saveData = async(data) =>{
+    
+    // data.map( async(item) => {
+    //   var request_data ={
+    //     id : item.id,
+    //     pos_x : item.pos_x,
+    //     pos_y : item.pos_y,
+    //     angle_x : item.angle_x,
+    //     angle_y : item.angle_y,
+    //     angle_w : item.angle_w,
+    //     angle_z : item.angle_z,
+    //   }
+    //   var res = await request('POST', '/delibird_db/table_list?'+ qs.stringify(request_data));
+    //   console.log(res);
+    // });
+    var res = await request('POST', '/delibird_db/table_list', data);
+    console.log(res);
   }
 
   render() { 
     const {classes} = this.props;
     return (
       <div>
-        <TableSetModal open={ this.state.modalOpen } close={ this.closeModal } pose={this.state.pose} dataUpdate = {this.dataUpdate}></TableSetModal>
+        <TableSetModal 
+          open={ this.state.modalOpen } 
+          close={ this.closeModal } 
+          pose={this.state.pose} 
+          dataUpdate = {this.dataUpdate} 
+        />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing = {3} direction="row" justify="center" alignItems="stretch">
             <Grid>
@@ -244,11 +279,20 @@ class MakeTableMap extends Component {
             </Grid>
             <Grid item>
               <Paper className={classes.paper}>
-                <TableSetButtons isStart={this.state.isStart} opentable={this.opentable} closetable={this.closetable} openmodal={this.openModal}/>
+                <TableSetButtons 
+                  isStart={this.state.isStart} 
+                  opentable={this.opentable} 
+                  closetable={this.closetable} 
+                  openmodal={this.openModal}
+                />
               </Paper>
-              <Paper className={classes.paper}>
-                <TableAddButton deleteTableMarker={this.deleteTableMarker} tableDelete={this.tableDelete} table_list = {this.state.table_list}/>
-              </Paper>
+              <TableAddButton 
+                isStart={this.state.isStart} 
+                deleteTableMarker={this.deleteTableMarker} 
+                tableDelete={this.tableDelete} 
+                saveData={this.saveData} 
+                table_list = {this.state.table_list} 
+              />
             </Grid>
           </Grid>
           <Box pt={4}>

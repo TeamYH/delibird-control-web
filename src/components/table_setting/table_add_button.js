@@ -3,7 +3,19 @@ import Button from '@material-ui/core/Button';
 import {Link} from 'react-router-dom';
 import '../../css/makemap.css';
 import TableSetModal from './table_set_modal';
+import {withStyles} from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 
+
+const useStyles = theme => ({
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    marginTop: 20,
+    overflow: 'auto',
+    flexDirection: 'column',
+  },
+});
 
 class TableAddButton extends Component {
   constructor(props) {
@@ -23,6 +35,7 @@ class TableAddButton extends Component {
   }
 
   render() {
+    const {classes} = this.props;
     var list = this.props.table_list;
     console.log(list);
     if(list === undefined){
@@ -30,17 +43,24 @@ class TableAddButton extends Component {
     }
     return ( 
       <div>
-        {list.map((item, idx) => {
-          return(
-            <div className="data-pose">
-              <span className="btn-pose" >테이블 번호 : {item.id}</span>
-              <span className="remove-button" ><Button  variant="contained" color="primary" onClick={() => this.onRemove(item,idx)}>삭제</Button></span>
-            </div>
-          );
-        })}
-        <div className="btn-pose" ><Button className="btn-pose" variant="contained" color="primary" onClick={this.props.opentable}>저장</Button></div>
+        {this.props.isStart === true ? 
+          <div>
+            <Paper className={classes.paper}>
+              {list.map((item, idx) => {
+              return(
+                <div className="data-pose">
+                  <span className="btn-pose" >테이블 번호 : {item.id}</span>
+                  <span className="remove-button" ><Button  variant="contained" color="primary" onClick={() => this.onRemove(item,idx)}>삭제</Button></span>
+                </div>
+              );
+              })}
+              <div className="btn-pose" ><Button className="btn-pose" variant="contained" color="primary" onClick={() => this.props.saveData(list)}>저장</Button></div>
+            </Paper>
+          </div> : 
+          <div/>
+        }
       </div>
     );
   }
 }
-export default TableAddButton;
+export default withStyles(useStyles)(TableAddButton);

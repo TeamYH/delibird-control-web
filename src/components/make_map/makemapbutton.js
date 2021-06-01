@@ -3,16 +3,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Link} from 'react-router-dom';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
+import mapimage from '../../Image/map-image.png';
+import tableimage from '../../Image/tablesetting-image.png';
 
 const images = [
   {
-    url: '',
+    url: mapimage,
     title: '지도생성',
     width: '45%',
     path: '/robot/settings/makemap',
   },
   {
-    url: '',
+    url: tableimage,
     title: '테이블 지정',
     width: '45%',
     path: '/robot/tables',
@@ -21,6 +23,7 @@ const images = [
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginTop: 100,
     display: 'flex',
     flexWrap: 'wrap',
     minWidth: 300,
@@ -54,7 +57,8 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     left: 0,
     right: 0,
-    top: 0,
+    top: 350,
+    color: 'black',
     bottom: 0,
     display: 'flex',
     alignItems: 'center',
@@ -82,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
   },
   imageTitle: {
     fontWeight: 600,
+    color: 'black',
     fontSize: '35px',
     position: 'relative',
     padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) + 6}px`,
@@ -117,6 +122,8 @@ export default function MakeMapButton(props) {
                 className={classes.imageSrc}
                 style={{
                   backgroundImage: `url(${image.url})`,
+                  backgroundSize: "45%",
+                  backgroundRepeat: 'no-repeat',
                 }}
               />
               <span className={classes.imageBackdrop} />

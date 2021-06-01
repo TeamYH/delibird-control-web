@@ -13,7 +13,6 @@ import ROSLIB from 'roslib';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
-var serveState = 0;
 
 class Orders extends Component {
   constructor(props) {
@@ -31,7 +30,7 @@ class Orders extends Component {
     this.setState({ pose: res });
   }
 
-  Rosdata = () => {
+  Rosdata = (command) => {
 
     let status = {
       id: 0,
@@ -91,29 +90,25 @@ class Orders extends Component {
       messageType: 'std_msgs/String'
     });
 
-    if (serveState == 0) {
+    if (command === 0) {
       var servestart = new ROSLIB.Message({
         data: 'servestart',
       }, console.log('servestart'));
       rostopic.publish(servestart);
-
-      serveState = 1;
     }
 
-    else {
+    else if(command === 1){
       var servestop = new ROSLIB.Message({
         data: 'servestop',
       }, console.log('servestop'));
       rostopic.publish(servestop);
-
-      serveState = 0;
     }
 
 
   }
 
   componentDidMount = async () => {
-    this.Rosdata();
+    this.Rosdata(0);
     this.getTableData();
   }
 
@@ -192,7 +187,7 @@ class Orders extends Component {
         </Table>
         <div className="seeMore"></div>
         <Link to={{ pathname: "/home", state: { isAdmin: false } }}>
-          <div className="btn-pose" ><Button className="btn-pose" variant="contained" color="primary" onClick={() => this.Rosdata()}>종 료</Button></div>
+          <div className="btn-pose" ><Button className="btn-pose" variant="contained" color="primary" onClick={() => this.Rosdata(1)}>종 료</Button></div>
         </Link>
 
       </React.Fragment>

@@ -16,6 +16,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems, Logout } from '../components/listitems';
+import '../css/frame.css';
 
 const drawerWidth = 240;
 
@@ -145,13 +146,10 @@ class Frame extends Component {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            {this.props.pagetitle}
+            <div className="font-form">
+              {this.props.pagetitle}
+            </div>
           </Typography>
-          <IconButton color="inherit">
-            <Badge color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer

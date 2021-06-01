@@ -3,31 +3,28 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Link} from 'react-router-dom';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
+import servingimage from '../Image/serving-image.png';
+import cleanimage from '../Image/cleaning-image.png';
+import robotimage from '../Image/robot-image.png';
 
 const images = [
   {
-    url: '',
+    url: servingimage,
     title: '서 빙',
-    width: '45%',
+    width: '30%',
     path: '/robot',
   },
   {
-    url: '',
+    url: cleanimage,
     title: '청 소',
-    width: '45%',
+    width: '30%',
     path: '/clean',
   },
   {
-    url: '',
+    url: robotimage,
     title: '딜리버드 관리',
-    width: '45%',
+    width: '30%',
     path: '/robot/settings',
-  },
-  {
-    url: '',
-    title: '설 정',
-    width: '45%',
-    path: '/setting',
   },
 ];
 
@@ -37,13 +34,14 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     minWidth: 300,
     width: '100%',
+    marginTop: 100,
   },
   image: {
     margin: 10,
     border: '1px solid white',
-    backgroundColor: '#3f51b56b',
+    backgroundColor: 'white',
     position: 'relative',
-    height: 300,
+    height: 350,
     [theme.breakpoints.down('xs')]: {
       width: '100% !important', // Overrides inline-style
       height: 100,
@@ -66,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     left: 0,
     right: 0,
-    top: 0,
+    top: 400,
     bottom: 0,
     display: 'flex',
     alignItems: 'center',
@@ -93,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create('opacity'),
   },
   imageTitle: {
+    color: theme.palette.common.black,
     fontWeight: 600,
     fontSize: '35px',
     position: 'relative',
@@ -101,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
   imageMarked: {
     height: 3,
     width: 18,
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: theme.palette.common.black,
     position: 'absolute',
     bottom: -2,
     left: 'calc(50% - 9px)',
@@ -129,6 +128,8 @@ export default function MainButton(props) {
                 className={classes.imageSrc}
                 style={{
                   backgroundImage: `url(${image.url})`,
+                  backgroundSize: "90%",
+                  backgroundRepeat: 'no-repeat',
                 }}
               />
               <span className={classes.imageBackdrop} />

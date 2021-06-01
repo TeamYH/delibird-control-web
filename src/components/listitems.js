@@ -41,14 +41,6 @@ export const mainListItems = (
       <ListItemText primary="딜리버드 관리" />
     </ListItem>
     </Link>
-    <Link to={{pathname: "/setting", state: {isAdmin: false}}}>
-      <ListItem button>
-        <ListItemIcon>
-          <BuildIcon />
-        </ListItemIcon>
-        <ListItemText primary="설정" />
-      </ListItem>
-    </Link>
   </div>
 );
 
