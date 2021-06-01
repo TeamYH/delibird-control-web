@@ -114,7 +114,7 @@ class MakeTableMap extends Component {
       var opentable = new ROSLIB.Message({
         data : 'opentable',
       }, console.log('opentable', nav));
-      // rostopic.publish(opentable);
+      rostopic.publish(opentable);
     }
 
     if(msgtype === 2){
@@ -126,7 +126,7 @@ class MakeTableMap extends Component {
       var closetable = new ROSLIB.Message({
         data : 'closetable',
       }, console.log('closetable'));
-      // rostopic.publish(closetable);
+      rostopic.publish(closetable);
     }
     var save_goal = new ROSLIB.Topic({
       ros: ros,

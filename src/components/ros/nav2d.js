@@ -148,7 +148,7 @@ NAV2D.Navigator = function (options) {
   }
 
   // marker for the robot
-  var robotMarker = new ROS2D.NavigationArrow({
+  var robotMarker = new ROS2D.TablePosition({
     size: 25,
     strokeSize: 1,
     fillColor: createjs.Graphics.getRGB(255, 128, 0, 0.66),
@@ -181,7 +181,7 @@ NAV2D.Navigator = function (options) {
     // change the angle
     robotMarker.rotation = stage.rosQuaternionToGlobalTheta(pose.pose.pose.orientation.z);
 
-    robotMarker.visible = true;
+    // robotMarker.visible = true;
   });
 
   if (withOrientation === false) {
