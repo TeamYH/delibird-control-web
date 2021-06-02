@@ -19,7 +19,7 @@ const useStyles = theme => ({
     overflow: 'auto',
   },
   container: {
-    minWidth: 1400,
+    minWidth: '85%',
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
