@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import '../css/login.css';
 import {withRouter} from 'react-router-dom';
+import {withStyles} from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
+import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -10,12 +12,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-
 
 function sleep(ms) {
   const wakeUpTime = Date.now() + ms
@@ -26,8 +25,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="http://localhost:3000/">
-        Delibird
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -35,12 +34,30 @@ function Copyright() {
   );
 }
 
-class Login extends Component {
+const useStyles = theme => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+});
+
+class SignIn extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      isSuccess : true,
-    }
+    this.state = {  }
   }
 
   handleSubmit = (e) => {
@@ -68,25 +85,22 @@ class Login extends Component {
   }
 
   render() {
-    
     let alert = <Alert severity="error">
                   <AlertTitle><strong>로그인 에러</strong></AlertTitle>
                   <strong>아이디 혹은 비밀번호 오류 </strong>
                 </Alert>;
-    
+    const {classes} = this.props; 
     return ( 
-      <Grid container component="main" className="root">
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className="image" />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className="paper">
-          <Avatar className="avatar">
+        <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Delibird
+            Delibird 로그인
           </Typography>
-          <form className="form" onSubmit={this.handleSubmit} noValidate>
+          <form className={classes.form} onSubmit={this.handleSubmit} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -128,11 +142,9 @@ class Login extends Component {
               <Copyright />
             </Box>
           </form>
-          
         </div>
-      </Grid>
-    </Grid>
+      </Container>
     );
   }
 }
-export default withRouter(Login);
+export default withStyles(useStyles)(withRouter(SignIn));

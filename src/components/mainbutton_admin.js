@@ -3,22 +3,25 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Link} from 'react-router-dom';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
+import clientImage from '../Image/customer.png';
+import robotConnect from '../Image/robotconnect.png';
+import counselImage from '../Image/counsel.png';
 
 const images = [
   {
-    url: '',
+    url: clientImage,
     title: '고객 관리',
     width: '30%',
     path: '/admin/members',
   },
   {
-    url: '',
+    url: robotConnect,
     title: '딜리버드 연동',
     width: '30%',
     path: '/admin/robot/setting',
   },
   {
-    url: '',
+    url: counselImage,
     title: '상담 요청',
     width: '30%',
     path: '/admin/support',
@@ -31,13 +34,14 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     minWidth: 300,
     width: '100%',
+    marginTop: 100,
   },
   image: {
     margin: 10,
     border: '1px solid white',
-    backgroundColor: '#3f51b56b',
+    backgroundColor: 'white',
     position: 'relative',
-    height: 300,
+    height: 350,
     [theme.breakpoints.down('xs')]: {
       width: '100% !important', // Overrides inline-style
       height: 100,
@@ -60,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     left: 0,
     right: 0,
-    top: 0,
+    top: 400,
     bottom: 0,
     display: 'flex',
     alignItems: 'center',
@@ -87,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create('opacity'),
   },
   imageTitle: {
+    color: theme.palette.common.black,
     fontWeight: 600,
     fontSize: '35px',
     position: 'relative',
@@ -95,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
   imageMarked: {
     height: 3,
     width: 18,
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: theme.palette.common.black,
     position: 'absolute',
     bottom: -2,
     left: 'calc(50% - 9px)',
@@ -123,6 +128,8 @@ export default function MainButtonAdmin(props) {
                 className={classes.imageSrc}
                 style={{
                   backgroundImage: `url(${image.url})`,
+                  backgroundSize: "70%",
+                  backgroundRepeat: 'no-repeat',
                 }}
               />
               <span className={classes.imageBackdrop} />
