@@ -94,8 +94,8 @@ class MakeTableMap extends Component {
       // Create the main viewer.
       var viewer = new ROS2D.Viewer({
         divID : 'map',
-        width : 700,
-        height : 600,
+        width : 800,
+        height : 500,
       });
   
       var nav = NAV2D.OccupancyGridClientNav({
@@ -106,6 +106,16 @@ class MakeTableMap extends Component {
         serverName : '/move_base',
         withOrientation : true
       });
+      var costmapClient = new ROS2D.OccupancyGridClientCostmap({
+        ros: ros,
+        rootObject: viewer.scene,
+        continuous: false
+      });
+  
+      costmapClient.on(function(){
+        viewer.scaleToDimensions(costmapClient.currentGrid.width, costmapClient.currentGrid.height);
+        viewer.shift(costmapClient.currentGrid.pose.position.x, costmapClient.currentGrid.pose.position.y);
+      })
       var rootObject = viewer.scene || new createjs.Contianer();
       var stage;
       if (rootObject instanceof createjs.Stage) {
@@ -195,8 +205,13 @@ class MakeTableMap extends Component {
       pulse: false,
       fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65),
     });
+    if(data.id===0){
+      var tableText = new createjs.Text("대기위치", "bold 0.25px Verdana");
+    }else{
+      var tableText = new createjs.Text("Table" + data.id, "bold 0.25px Verdana");
+    }
 
-    var tableText = new createjs.Text("Table" + data.id, "bold 0.25px Verdana");
+    
     tableText.x = data.pos_x - 0.8;
     tableText.y = -data.pos_y - 0.6;
     this.state.rootObject.addChild(tableText);

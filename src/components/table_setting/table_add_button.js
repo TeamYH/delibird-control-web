@@ -49,7 +49,10 @@ class TableAddButton extends Component {
               {list.map((item, idx) => {
               return(
                 <div className="data-pose">
-                  <span className="btn-pose" >테이블 번호 : {item.id}</span>
+                  {item.id === 0 ? 
+                    <span className="btn-pose" >대기 위치</span> :
+                    <span className="btn-pose" >테이블 번호 : {item.id}</span>
+                  }
                   <span className="remove-button" ><Button  variant="contained" color="primary" onClick={() => this.onRemove(item,idx)}>삭제</Button></span>
                 </div>
               );

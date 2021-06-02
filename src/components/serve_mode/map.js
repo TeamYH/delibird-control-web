@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ROSLIB from 'roslib';
 import ROS2D from '../ros/ros2d.js';
 import {request} from '../../utils/axios';
+import { ThumbDownSharp } from '@material-ui/icons';
 /* global createjs */
 /* global THREE */
 
@@ -33,7 +34,7 @@ class Map extends Component {
     var viewer = new ROS2D.Viewer({
       divID: 'map',
       width: 800,
-      height: 750,
+      height: 500,
     });
 
     // Setup the map client.
@@ -59,31 +60,34 @@ class Map extends Component {
       viewer.scaleToDimensions(costmapClient.currentGrid.width, costmapClient.currentGrid.height);
       viewer.shift(costmapClient.currentGrid.pose.position.x, costmapClient.currentGrid.pose.position.y);
     })
+    console.log(this.state.pose)
+    if(this.state.pose){
+      const aLoop = this.state.pose.map((unit, idx) => {
+          
+        var tableMarker = new ROS2D.TablePosition({
+          size : 0.25,
+          strokeSize : 0.1,
+          pulse: false,
+          fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65),
+        });
 
-    const aLoop = this.state.pose.map((unit, idx) => {
-      var tableMarker = new ROS2D.TablePosition({
-        size : 0.25,
-        strokeSize : 0.1,
-        pulse: false,
-        fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65),
+        var tableText = new createjs.Text("Table" + idx, "bold 0.3px Verdana");
+        tableText.x = unit.pos_x - 0.8;
+        tableText.y = -unit.pos_y - 0.6;
+        gridClient.rootObject.addChild(tableText);
+
+        tableMarker.x = unit.pos_x;
+        tableMarker.y = -unit.pos_y;
+        tableMarker.rotation = new THREE.Euler().setFromQuaternion(new THREE.Quaternion(
+          unit.angle_x,
+          unit.angle_y,
+          unit.angle_z,
+          unit.angle_w
+        )).z * -180 / 3.14159;
+
+        gridClient.rootObject.addChild(tableMarker);
       });
-
-      var tableText = new createjs.Text("Table" + idx, "bold 0.3px Verdana");
-      tableText.x = unit.pos_x - 0.8;
-      tableText.y = -unit.pos_y - 0.6;
-      gridClient.rootObject.addChild(tableText);
-
-      tableMarker.x = unit.pos_x;
-      tableMarker.y = -unit.pos_y;
-      tableMarker.rotation = new THREE.Euler().setFromQuaternion(new THREE.Quaternion(
-        unit.angle_x,
-        unit.angle_y,
-        unit.angle_z,
-        unit.angle_w
-      )).z * -180 / 3.14159;
-
-      gridClient.rootObject.addChild(tableMarker);
-    });
+    }
 
 
     var robotMarker = new ROS2D.RobotPosition({

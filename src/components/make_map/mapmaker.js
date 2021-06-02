@@ -27,7 +27,7 @@ class MapMaker extends Component {
     var viewer = new ROS2D.Viewer({
       divID : 'map',
       width : 800,
-      height : 750,
+      height : 500,
     });
     
     // Setup the map client.
@@ -45,8 +45,8 @@ class MapMaker extends Component {
     });
     
     var robotMarker = new ROS2D.RobotPosition({
-        //size : 0.25,
-        //strokeSize : 0.05,
+        size : 0.25,
+        strokeSize : 0.05,
         //pulse: true,
         //fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65)
     });

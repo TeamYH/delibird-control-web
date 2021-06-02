@@ -149,10 +149,10 @@ NAV2D.Navigator = function (options) {
 
   // marker for the robot
   var robotMarker = new ROS2D.TablePosition({
-    size: 25,
-    strokeSize: 1,
-    fillColor: createjs.Graphics.getRGB(255, 128, 0, 0.66),
-    pulse: true
+      size : 0.25,
+      strokeSize : 0.1,
+      pulse: false,
+      fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65),
   });
   // wait for a pose to come in first
   robotMarker.visible = false;

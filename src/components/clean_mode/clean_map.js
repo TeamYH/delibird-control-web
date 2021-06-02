@@ -33,8 +33,8 @@ class Clean_Map extends Component {
 
     var viewer = new ROS2D.Viewer({
       divID: 'map',
-      width: 800,
-      height: 750,
+      width : 800,
+      height : 500,
     });
 
     // Setup the map client.
