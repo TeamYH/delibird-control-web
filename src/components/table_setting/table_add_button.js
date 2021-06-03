@@ -5,6 +5,7 @@ import '../../css/makemap.css';
 import TableSetModal from './table_set_modal';
 import {withStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import ConfirmModal from '../common/confirm_modal';
 
 
 const useStyles = theme => ({
@@ -43,6 +44,11 @@ class TableAddButton extends Component {
     }
     return ( 
       <div>
+        <ConfirmModal 
+          open={this.state.modalOpen}
+          close={this.closeModal}
+          msg={"저장되었습니다"}
+        />
         {this.props.isStart === true ? 
           <div>
             <Paper className={classes.paper}>

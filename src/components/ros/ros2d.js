@@ -577,7 +577,7 @@ ROS2D.RobotPosition = function(options) {
   options = options || {};
   var size = options.size || 10;
   var strokeSize = options.strokeSize || 3;
-  var strokeColor = options.strokeColor || createjs.Graphics.getRGB(51, 51, 204);
+  var strokeColor = options.strokeColor || createjs.Graphics.getRGB(255, 0, 0);
   var fillColor = options.fillColor || createjs.Graphics.getRGB(255, 0, 0);
   var pulse = options.pulse;
 
@@ -786,6 +786,7 @@ ROS2D.PathShape.prototype.setPath = function(path) {
 	if (path !== null && typeof path !== 'undefined') {
 		this.graphics.setStrokeStyle(this.strokeSize);
 		this.graphics.beginStroke(this.strokeColor);
+    
 		// this.graphics.moveTo(path.poses[0].pose.position.x / this.scaleX, path.poses[0].pose.position.y / -this.scaleY);
     this.graphics.moveTo(path.poses[0].pose.position.x, -path.poses[0].pose.position.y);
 		for (var i=1; i<path.poses.length; ++i) {

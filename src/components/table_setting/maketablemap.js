@@ -94,10 +94,9 @@ class MakeTableMap extends Component {
       // Create the main viewer.
       var viewer = new ROS2D.Viewer({
         divID : 'map',
-        width : 800,
-        height : 500,
+        width : 1000,
+        height : 700,
       });
-  
       var nav = NAV2D.OccupancyGridClientNav({
         ros : ros,
         rootObject : viewer.scene,
@@ -205,7 +204,8 @@ class MakeTableMap extends Component {
       pulse: false,
       fillColor: createjs.Graphics.getRGB(255, 0, 0, 0.65),
     });
-    if(data.id===0){
+
+    if(data.id==0){
       var tableText = new createjs.Text("대기위치", "bold 0.25px Verdana");
     }else{
       var tableText = new createjs.Text("Table" + data.id, "bold 0.25px Verdana");

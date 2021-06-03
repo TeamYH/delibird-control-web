@@ -102,7 +102,7 @@ class CleanOrders extends Component {
         });
         console.log(map_msg);
         status.stat = '청소중';
-        // status.battery = temp.state.rows[0].battery;
+        status.battery = temp.state.rows[0].battery;
         temp.setState(() => {
           return { ros: ros, rows: [status] };
         })
