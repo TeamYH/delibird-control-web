@@ -53,9 +53,22 @@ Delibird is Autonomous driving serve robot controled by Web applications.
 
 This web application allows users to control delibird and proceed with the setup. 
 And this App is associated with a delibird server to retrieve the robot's data through ROS-bridge.
-So you can use robot server by delibird_ros and delibird_control. See this.
+So you can use robot server by delibird_ros and delibird_control. 
+
+See this.
 ### [delibird_ros](https://github.com/TeamYH/delibird_ros) 
 ### [delibird_control](https://github.com/TeamYH/delibird-control)
+
+## `References`
+
+ROS provided roslibjs, ros2djs, and nav2djs were used for control and visualization of the robot. 
+
+ros2d and nav2d have been modified and added for use in react environments.
+
+you can see the modified library from `src/comonent/ros`.
+
+Original opensource library, See this.
+[ROS Web Tools](http://robotwebtools.org/tools.html)
 
 ------
 
