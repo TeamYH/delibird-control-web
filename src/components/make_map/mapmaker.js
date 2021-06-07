@@ -15,6 +15,12 @@ class MapMaker extends Component {
 
 
   componentDidMount = () =>{
+    const script = document.createElement("script");
+
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js";
+    script.async = true;
+
+    document.body.appendChild(script);
     this.rosMapData();
   }
 

@@ -120,7 +120,7 @@ navigation = (pos) =>{
                 pose  
               });
 
-      // goal.publish(goal_msg); 
+      goal.publish(goal_msg); 
   
   if(pos.id === 0 ){
     this.props.statewait();

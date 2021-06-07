@@ -72,7 +72,6 @@ class MakeTableMap extends Component {
 
     script.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js";
     script.async = true;
-    setTimeout(()=>500);
 
     document.body.appendChild(script);
 
