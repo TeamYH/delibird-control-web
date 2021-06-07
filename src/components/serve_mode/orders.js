@@ -94,14 +94,14 @@ class Orders extends Component {
       var servestart = new ROSLIB.Message({
         data: 'servestart',
       }, console.log('servestart'));
-      // rostopic.publish(servestart);
+      rostopic.publish(servestart);
     }
 
     else if(command === 1){
       var servestop = new ROSLIB.Message({
         data: 'servestop',
       }, console.log('servestop'));
-      // rostopic.publish(servestop);
+      rostopic.publish(servestop);
     }
 
 

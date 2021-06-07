@@ -241,6 +241,7 @@ class Map extends Component {
     script.async = true;
 
     document.body.appendChild(script);
+    //setTimeout(()=> 500);
 
     await this.getTableData();
     
