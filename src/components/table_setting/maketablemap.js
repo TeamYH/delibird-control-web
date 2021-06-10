@@ -49,6 +49,7 @@ class MakeTableMap extends Component {
       isStart: false,
       msgtype: 0,
       modalOpen: false,
+      saveModalOpen: false,
       pose: {
         id: 0,
         pos_x:0,
@@ -87,8 +88,8 @@ class MakeTableMap extends Component {
   rosMapData = (msgtype) => {
 
     var ros = new ROSLIB.Ros({
-        url : 'ws://15.165.36.17:9090'
-        //url : 'ws://15.165.50.106:9090'
+        url : 'ws://15.165.36.17:9090'  //server
+        //url : 'ws://15.165.50.106:9090'  //testserver
       });
   
       // Create the main viewer.
@@ -259,22 +260,13 @@ class MakeTableMap extends Component {
   }
 
   saveData = async(data) =>{
-    
-    // data.map( async(item) => {
-    //   var request_data ={
-    //     id : item.id,
-    //     pos_x : item.pos_x,
-    //     pos_y : item.pos_y,
-    //     angle_x : item.angle_x,
-    //     angle_y : item.angle_y,
-    //     angle_w : item.angle_w,
-    //     angle_z : item.angle_z,
-    //   }
-    //   var res = await request('POST', '/delibird_db/table_list?'+ qs.stringify(request_data));
-    //   console.log(res);
-    // });
-    var res = await request('POST', '/delibird_db/table_list', data);
-    console.log(res);
+    //var res = await request('POST', '/delibird_db/table_list', data);
+    //console.log(res);
+    this.setState({saveModalOpen: true});
+  }
+
+  saveCloseModal = () =>{
+    this.setState({saveModalOpen: false});
   }
 
   render() { 
@@ -301,7 +293,9 @@ class MakeTableMap extends Component {
                   openmodal={this.openModal}
                 />
               </Paper>
-              <TableAddButton 
+              <TableAddButton
+                saveCloseModal = {this.saveCloseModal}
+                saveModalOpen = {this.state.saveModalOpen} 
                 isStart={this.state.isStart} 
                 deleteTableMarker={this.deleteTableMarker} 
                 tableDelete={this.tableDelete} 

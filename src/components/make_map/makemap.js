@@ -8,13 +8,15 @@ import '../../css/makemap.css';
 import ROSLIB from 'roslib';
 import Grid from '@material-ui/core/Grid';
 import SaveIcon from '@material-ui/icons/Save';
+import ConfirmModal from '../common/confirm_modal';
 
 class MakeMap extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-        isStart: false,
-        isManual: false,
+      openModal: false,
+      isStart: false,
+      isManual: false,
     }
   }
   
@@ -26,7 +28,7 @@ class MakeMap extends Component {
 
   onSave = () =>{
     var msg = 'mapsave';
-    this.setState({isStart: true});
+    this.setState({isStart: true, openModal: true});
     this.Rosdata(msg);
   }
 
@@ -47,7 +49,7 @@ class MakeMap extends Component {
   Rosdata = (msg) => {
 
     var ros = new ROSLIB.Ros({
-      url : 'ws://15.165.36.17:9090'
+      url : 'ws://15.165.36.17:9090'  //server
     });
     ros.on('connection', function() {
       console.log('Connected to websocket server.');
@@ -76,12 +78,21 @@ class MakeMap extends Component {
     rostopic.publish(map_msg);
   }
 
+  closeModal = () =>{
+    this.setState({openModal: false});
+  }
+
   render() {
     let isStart = this.state.isStart;
 
     if(isStart === true){
       return(
         <div>
+          <ConfirmModal 
+            msg={"지도가 저장되었습니다."}
+            open ={this.state.openModal}
+            close={this.closeModal}
+          />
           <Grid container spacing = {3} direction="row" justify="center" alignItems="stretch">
             <Grid>
               <MapMaker />

@@ -26,10 +26,6 @@ class TableAddButton extends Component {
     }
   }
 
-  closeModal = () =>{
-    this.setState({modalOpen: false});
-  }
-
   onRemove = (item, idx) =>{
     this.props.tableDelete(item.id);
     this.props.deleteTableMarker(idx);
@@ -45,8 +41,8 @@ class TableAddButton extends Component {
     return ( 
       <div>
         <ConfirmModal 
-          open={this.state.modalOpen}
-          close={this.closeModal}
+          open={this.props.saveModalOpen}
+          close={this.props.saveCloseModal}
           msg={"저장되었습니다"}
         />
         {this.props.isStart === true ? 
