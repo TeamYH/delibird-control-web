@@ -88,7 +88,7 @@ class MakeTableMap extends Component {
   rosMapData = (msgtype) => {
 
     var ros = new ROSLIB.Ros({
-        url : 'ws://15.165.36.17:9090'  //server
+        url : 'ws://3.36.45.215:9090'  //server
         //url : 'ws://15.165.50.106:9090'  //testserver
       });
   

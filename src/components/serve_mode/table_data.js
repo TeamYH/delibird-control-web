@@ -99,7 +99,7 @@ class TableData extends Component {
 navigation = (pos) =>{
   // var coords = stage.globalToRos(pos.pos_x, pos.pos_y);
     var ros = new ROSLIB.Ros({
-      url : 'ws://15.165.36.17:9090'
+      url : 'ws://3.36.45.215:9090'
     });
       var goal = new ROSLIB.Topic({
         ros: ros,
