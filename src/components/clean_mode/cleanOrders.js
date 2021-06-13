@@ -35,7 +35,7 @@ class CleanOrders extends Component {
     var temp = this
 
     var ros = new ROSLIB.Ros({
-      url: 'ws://15.165.36.17:9090'
+      url: 'ws://3.35.77.32:9090'
     });
 
     ros.on('connection', function () {

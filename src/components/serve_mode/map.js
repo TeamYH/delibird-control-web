@@ -30,7 +30,7 @@ class Map extends Component {
 
   rosMapData = () => {
     var ros = new ROSLIB.Ros({
-      url: 'ws://15.165.36.17:9090'
+      url: 'ws://3.35.77.32:9090'
     });
 
     var mapTopic = new ROSLIB.Topic({
@@ -143,7 +143,7 @@ class Map extends Component {
   }
   componentDidUpdate = () =>{
     var ros = new ROSLIB.Ros({
-      url: 'ws://15.165.36.17:9090'
+      url: 'ws://3.35.77.32:9090'
     });
     console.log(this.state.height)
     var viewer = new ROS2D.Viewer({

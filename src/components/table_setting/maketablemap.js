@@ -88,7 +88,7 @@ class MakeTableMap extends Component {
   rosMapData = (msgtype) => {
 
     var ros = new ROSLIB.Ros({
-        url : 'ws://15.165.36.17:9090'  //server
+        url : 'ws://3.35.77.32:9090'  //server
         //url : 'ws://15.165.50.106:9090'  //testserver
       });
   
@@ -103,7 +103,7 @@ class MakeTableMap extends Component {
         rootObject : viewer.scene,
         viewer : viewer,
         continuous: true,
-        serverName : '/move_base',
+        serverName : '/map',
         withOrientation : true
       });
       var costmapClient = new ROS2D.OccupancyGridClientCostmap({
@@ -229,7 +229,7 @@ class MakeTableMap extends Component {
 
     this.state.rootObject.addChild(tableMarker);
     this.setState({table_object_list:this.state.table_object_list.concat(tableMarker)})
-    console.log(this.setState.table_object_list)
+    //console.log(this.setState.table_object_list)
   }
 
   opentable = () =>{
@@ -260,8 +260,8 @@ class MakeTableMap extends Component {
   }
 
   saveData = async(data) =>{
-    //var res = await request('POST', '/delibird_db/table_list', data);
-    //console.log(res);
+    var res = await request('POST', '/delibird_db/table_list', data);
+    console.log(res);
     this.setState({saveModalOpen: true});
   }
 

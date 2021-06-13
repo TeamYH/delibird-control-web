@@ -49,7 +49,7 @@ class MakeMap extends Component {
   Rosdata = (msg) => {
 
     var ros = new ROSLIB.Ros({
-      url : 'ws://15.165.36.17:9090'  //server
+      url : 'ws://3.35.77.32:9090'  //server
     });
     ros.on('connection', function() {
       console.log('Connected to websocket server.');

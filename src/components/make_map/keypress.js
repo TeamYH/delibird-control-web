@@ -15,6 +15,7 @@ class Keypress extends Component{
     Rosdata = () => {
 
         var ros = new ROSLIB.Ros({
+          url : 'ws://3.35.77.32:9090'
             //url : 'ws://15.165.36.17:9090' //server 1
         });
         ros.on('connection', function() {
