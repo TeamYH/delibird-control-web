@@ -82,10 +82,10 @@ class TableSetModal extends Component {
       angle_w : this.props.pose.angle_w,
       angle_z : this.props.pose.angle_z,
     };
-    this.props.dataUpdate(data)
-    console.log(qs.stringify(data));
-    // var res = await request('POST', '/delibird_db/table_list?'+ qs.stringify(data));
-    // console.log(res);
+    this.props.dataUpdate(data);
+    //console.log(qs.stringify(data));
+    //var res = await request('POST', '/delibird_db/table_list?', JSON.stringify(data));
+    //console.log(res);
     this.setState({modalOpen: true});
     
   }

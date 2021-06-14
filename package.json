@@ -2,7 +2,7 @@
   "name": "delibird-control-web",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://15.165.36.17:8000",
+  "proxy": "http://3.35.77.32:8000",
   "dependencies": {
     "@material-ui/core": "4.11.4",
     "@material-ui/data-grid": "4.0.0-alpha.28",
