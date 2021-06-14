@@ -100,6 +100,7 @@ navigation = (pos) =>{
   // var coords = stage.globalToRos(pos.pos_x, pos.pos_y);
     var ros = new ROSLIB.Ros({
       url : 'ws://3.35.77.32:9090'
+
     });
       var goal = new ROSLIB.Topic({
         ros: ros,

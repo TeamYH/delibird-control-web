@@ -30,7 +30,9 @@ class Map extends Component {
 
   rosMapData = () => {
     var ros = new ROSLIB.Ros({
+
       url: 'ws://3.35.77.32:9090'
+
     });
 
     var mapTopic = new ROSLIB.Topic({

@@ -19,7 +19,9 @@ class Clean_Map extends Component {
   }
   componentDidUpdate = () =>{
     var ros = new ROSLIB.Ros({
+
       url: 'ws://3.35.77.32:9090'
+
     });
     var viewer = new ROS2D.Viewer({
       divID: 'map',
